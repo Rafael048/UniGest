@@ -59,7 +59,7 @@
     flex-direction: column;
     gap: 2vw;
     animation-name: exitAnimation;
-    animation-duration: .7s;
+    animation-duration: .3s;
 
 }
 

@@ -4,6 +4,9 @@ import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import '../css/Calendar.css'
+import { motion, AnimatePresence } from 'framer-motion'
+
+
 export default function Calendar() {
     const [events, setEvents] = useState([]);
     const [isBlur, SetIsBlur] = useState(false)
@@ -11,9 +14,10 @@ export default function Calendar() {
     const [eventClicked, setEventClicked] = useState(null)
     const [filter, setFilter] = useState([]);
     const [materias, setMaterias] = useState([]);
-    const [openFiltrer, setOpenFiltrer] = useState('notFiltrerForm')
+    const [openFiltrer, setOpenFiltrer] = useState(false)
     const [animation, setAnimation] = useState('')
-    const [animationDescription, setAnimationDescription]= useState('')
+    const [animationDescription, setAnimationDescription] = useState('')
+    const [openDescription, setOpenDescription] = useState(true)
 
 
     useEffect(() => {
@@ -39,9 +43,9 @@ export default function Calendar() {
                         let dateEvent = undefined
                         if (dateDay === item.diaClase) {
                             const nuevaFecha = new Date(item.date)
-                             nuevaFecha.setDate(date.getDate() - 1)
-                             const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
-                              dateEvent = nuevaFechaISO;
+                            nuevaFecha.setDate(date.getDate() - 1)
+                            const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
+                            dateEvent = nuevaFechaISO;
                         } else {
                             let diferencia = item.diaClase - dateDay
                             if (diferencia <= 1) {
@@ -75,13 +79,13 @@ export default function Calendar() {
     }, [filter])
 
     function openFiltrerForm() {
-        if (openFiltrer === '') {
+        if (openFiltrer === true) {
             setAnimation('animation')
             setTimeout(() => {
-                setOpenFiltrer('notFiltrerForm')
+                setOpenFiltrer(false)
             }, 500);
         } else {
-            setOpenFiltrer('')
+            setOpenFiltrer(true)
             setAnimation('')
         }
     }
@@ -91,6 +95,7 @@ export default function Calendar() {
         SetIsBlur(true)
         setNoDisplay(false)
         setAnimationDescription('')
+        setOpenDescription(true)
     }
     const handleDivClick = () => {
         if (animationDescription === '') {
@@ -98,8 +103,9 @@ export default function Calendar() {
             setTimeout(() => {
                 SetIsBlur(false)
                 setNoDisplay(true)
-            }, 500);
-        }   
+                setOpenDescription(false)
+            }, 350);
+        }
     }
     function handleFilterChange(e) {
         const { value, checked } = e.target
@@ -117,7 +123,10 @@ export default function Calendar() {
 
             <section className='calendarSection'>
                 <div className={isBlur ? 'Blur calendarView ' : 'calendarView    '}>
-                <input type='button' className='buttonFiltrer' onClick={openFiltrerForm} value={'Filtrar'}/>
+                    <motion.input type='button' className='buttonFiltrer' onClick={openFiltrerForm} value={'Filtrar'}
+                        initial={{ scale: 1 }}
+                        whileHover={{ scale: 1.2 }}
+                    />
                     <FullCalendar
                         aspectRatio={2.1}
                         plugins={[dayGridPlugin, interactionPlugin]}
@@ -130,56 +139,70 @@ export default function Calendar() {
             </section>
             {eventClicked ?
                 <div className={noDisplay ? 'hide' : 'show'}>
-                    <div className={`bg-event ${animationDescription}`}>
+                    <AnimatePresence>
+                        {
+                            openDescription && (
+                                <motion.div className={`bg-event ${animationDescription}`} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}>
 
-                        <div className='cardDescription'>
-                            <h2 className='titleDescription'>
-                                {eventClicked.title}
-                            </h2>
-                            <p className='descriptionActivities'>
-                                Profesor: {eventClicked.extendedProps.profesor}
-                            </p>
-                            <p className='descriptionActivities'>
-                                Materia: {eventClicked.extendedProps.materia}
-                            </p>
-                            <p className='descriptionActivities'>
-                                Seccion: {eventClicked.extendedProps.seccion}
-                            </p>
-                            <p className='descriptionActivities'>
-                                Descripcion {eventClicked.extendedProps.descripcion}
-                            </p>
-                        </div>
-                        <div className='buttonCancelDescription'>
-                            <button onClick={() => handleDivClick()} className='buttonClose'>Cerrar</button>
-                        </div>
-                    </div>
+                                    <div className='cardDescription'>
+                                        <h2 className='titleDescription'>
+                                            {eventClicked.title}
+                                        </h2>
+                                        <p className='descriptionActivities'>
+                                            Profesor: {eventClicked.extendedProps.profesor}
+                                        </p>
+                                        <p className='descriptionActivities'>
+                                            Materia: {eventClicked.extendedProps.materia}
+                                        </p>
+                                        <p className='descriptionActivities'>
+                                            Seccion: {eventClicked.extendedProps.seccion}
+                                        </p>
+                                        <p className='descriptionActivities'>
+                                            Descripcion {eventClicked.extendedProps.descripcion}
+                                        </p>
+                                    </div>
+                                    <div className='buttonCancelDescription'>
+                                        <motion.button whileHover={{scale:.9, backgroundColor:"white", border:"2px solid #00255c", color:"#00255c"}} onClick={() => handleDivClick()} className='buttonClose'>Cerrar</motion.button>
+                                    </div>
+                                </motion.div>
+                            )}
+
+                    </AnimatePresence>
                 </div>
                 :
                 null
             }
-            <div className={`filtrerForm ${openFiltrer}`}>
-                <div className={`containFiltrer ${animation}`}>
-                    <form className='listChecked'>
-                        <div className='listFiltrer'>
-                            <h3>Filtrar por materias</h3>
-                            {materias.map((materia) => (
-                                <label key={materia.id} className='inputCheckbox'>
-                                    <input
-                                        type="checkbox"
-                                        value={materia.nombre}
-                                        onChange={handleFilterChange}
-                                        checked={filter.includes(materia.nombre)}
-                                        className='inputChecked'
-                                    />
-                                    {materia.nombre}
-                                </label>
+            <AnimatePresence>
+                {
+                    openFiltrer && (
+                        <div className={`filtrerForm`}>
+                            <motion.div className={`containFiltrer ${animation}`}
+                                initial={{ x: "-50vw", opacity: 0 }}
+                                animate={{ x: "0vw", opacity: 1 }}
+                            >
+                                <form className='listChecked'>
+                                    <div className='listFiltrer'>
+                                        <h3>Filtrar por materias</h3>
+                                        {materias.map((materia) => (
+                                            <label key={materia.id} className='inputCheckbox'>
+                                                <input
+                                                    type="checkbox"
+                                                    value={materia.nombre}
+                                                    onChange={handleFilterChange}
+                                                    checked={filter.includes(materia.nombre)}
+                                                    className='inputChecked'
+                                                />
+                                                {materia.nombre}
+                                            </label>
 
-                            ))}
+                                        ))}
+                                    </div>
+                                    <motion.input whileHover={{scale:.9, backgroundColor:"white", border:"2px solid #00255c", color:"#00255c"}} type='button' className='aceptButtonFiltrer' onClick={openFiltrerForm} value={'Aceptar'} />
+                                </form>
+                            </motion.div>
                         </div>
-                        <input type='button' className='aceptButtonFiltrer' onClick={openFiltrerForm} value={'Aceptar'} />
-                    </form>
-                </div>
-            </div>
+                    )}
+            </AnimatePresence>
 
         </section>
     )

@@ -38,7 +38,7 @@ export default function FormActivitiesAdd() {
               <div className='logoDirectorSolo'>
                 <img src={logo} alt="" width={"80%"} />
               </div>
-              <Menu btActividades={btActive} />
+              <Menu btMateria={btActive} />
 
               <div className='formGeneral'>
               <FormModify

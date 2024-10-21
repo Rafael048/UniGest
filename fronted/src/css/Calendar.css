@@ -48,20 +48,8 @@
     padding: 3vh;
     gap: 1vw;
     border-radius: 10px;
-    animation: animationDescription;
-    animation-duration: .6s;
 }
 
-@keyframes animationDescription {
-    0%{
-        transform: translateY(-50vh);
-        opacity: 0;
-    }
-    100%{
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
 
 .calendarView {
     width: 70vw;
@@ -118,26 +106,19 @@
     align-items: center;
 }
 
-@keyframes animationFiltrer {
-    0%{
-        transform: translateX(20vw);
-        opacity: .7;
-    }
-    100%{
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
 
 @keyframes animationFiltrerExit {
     0%{
-        transform: translateX(0);
+        scale: 1;
         opacity: 1;
     }
+    25%{
+        scale: 1.2;
+        opacity: .7;
+    }
     100%{
-        transform: translateX(20vw);
-        opacity: 0;
+        scale: 0;
+        opacity:0;
     }
 }
 
@@ -146,8 +127,6 @@
     background-color: white;
     width: 35%;
     border-radius: 30px;
-    animation: animationFiltrer;
-    animation-duration: .6s;
 }
 
 .listChecked{
@@ -229,6 +208,7 @@
     width: 50%;
 }
 
+
 .buttonFiltrer{
     font-size: 30px;
     padding: .5vw 2vw;
@@ -240,7 +220,7 @@
     left: 30px;
     position: relative;
     z-index: 2;
-    left: 18%;
+    left: 20%;
     top: 6%;
 }
 

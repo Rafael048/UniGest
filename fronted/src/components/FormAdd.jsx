@@ -3,6 +3,7 @@ import logoSolo from '../assets/logoSolo.png'
 import '../css/FormAdd.css'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import {motion} from 'framer-motion'
 
 export default function FormAdd(props) {
 
@@ -56,7 +57,7 @@ export default function FormAdd(props) {
                 }
                 </div>
               ))}
-              <input autoComplete="off" required type="submit" value={'Agregar'} className="submitAdd" name="" />
+              <motion.input whileHover={{scale:.9, backgroundColor:"green"}} required type="submit" value={'Agregar'} className="submitAdd" name="" />
             </form>
         </div> :
           <div className='formAll'>
@@ -76,7 +77,7 @@ export default function FormAdd(props) {
                 }
                 </div>
               ))}
-              <input autoComplete="off" required type="submit" value={'Agregar'} className="submitAdd" name="" />
+              <motion.input whileHover={{scale:.9, backgroundColor:"green"}} required type="submit" value={'Agregar'} className="submitAdd" name="" />
             </form>
           </div>
 

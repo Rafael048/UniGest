@@ -4,16 +4,15 @@
     display: flex;
     flex-direction: column;
     font-size: 30px;
-    height: 100vh;
-    justify-content: space-between;
-    animation-name: openMenuAnimation;
-    animation-duration: 2s;
+    
+    animation: openMenuAnimation;
+    animation-duration: .3s;
 }
 
 .openMenu{
     width: 5%;
-    animation-name: closeMenuAnimation;
-    animation-duration: 1.5s;
+    animation: closeMenuAnimation;
+    animation-duration: .3s;
 }
 
 @keyframes closeMenuAnimation {
@@ -46,6 +45,10 @@
     font-weight: bolder;
 }
 
+.linksMenu > div{
+    display: flex;
+    gap: 2vw;
+}
 .btMenu{
     background: none;
     outline: none;
@@ -64,4 +67,12 @@
 
 .closeLinks{
     display: none;
+}
+
+
+.linksOrder{
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    justify-content: space-between;
 }
