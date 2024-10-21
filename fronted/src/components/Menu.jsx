@@ -41,7 +41,6 @@ export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividad
 
     function handleCancel() {
         setExitEmer(false)
-        console.log('hola')
     }
 
     return (
