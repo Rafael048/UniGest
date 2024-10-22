@@ -5,7 +5,7 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 export default function Error401() {
     useEffect(()=>{
         setTimeout(() => {
-            window.location.replace('/Login')
+            window.location.replace('/')
         }, 5000);
     })
     return (
@@ -19,10 +19,10 @@ export default function Error401() {
                         autoplay
                     />
                 <p className="textError">
-                    <b className="textError">Error 401</b>: No estas autorizado para ingresar a esta seccion, por favor inicia sesion para continuar.
+                    <b className="textError">Error 401</b>: No estas autorizado para ingresar a esta seccion.
                 </p>
                 <p className="textError">
-                    Reedirigiendo al inicio de sesion...
+                    Reedirigiendo a la pagina principal...
                 </p>
             </div>
         </div>

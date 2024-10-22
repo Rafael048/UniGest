@@ -35,7 +35,7 @@
     width: 80%;
     height: 3vw;
     color: white;
-    font-size: 30px;
+    font-size: 1.7vw;
     padding: 5px;
     padding-left: 0;
 }
@@ -48,7 +48,7 @@
     width: 45%;
     height: 3vw;
     color: white;
-    font-size: 30px;
+    font-size: 1.7vw;
     padding: 5px;
     padding-left: 0;
 }
@@ -79,5 +79,5 @@
 }
 
 .titleForm{
-    font-size: 80px;
+    font-size: 4.2vw;
 }

@@ -215,8 +215,8 @@ export default function Tables(props) {
                     }
                   </td>
                 ))}
-                <td>
-                  {(role === "Director" && props.uri !== "actividades") || (role === "Profesor" && props.uri === "actividades") ?
+                {(role === "Director" && props.uri !== "actividades") || (role === "Profesor" && props.uri === "actividades") ?
+                  <td>
                     <div className="buttonsTable">
                       <motion.button className="tableButton" onClick={() => handleModify(item)} whileHover={{ scale: 1.2, color: "#00255c" }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="2vw" height="2vw" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -246,9 +246,9 @@ export default function Tables(props) {
                         </svg>
                       </motion.button>
                     </div>
-                    : null
-                  }
-                </td>
+                  </td>
+                  : undefined
+                }
               </tr>
             ))}
             <tr>
@@ -267,7 +267,7 @@ export default function Tables(props) {
           </tbody>
         </table>
       </div>
-            <SearchNull searchNull={searchNull} animateAviso={animateAviso}  onCancel={handleCancelError} />
+      <SearchNull searchNull={searchNull} animateAviso={animateAviso} onCancel={handleCancelError} />
     </>
   )
 }

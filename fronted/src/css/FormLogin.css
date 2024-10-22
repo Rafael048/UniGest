@@ -1,10 +1,10 @@
 .loginForm{
     display: flex;
     flex-direction: column;
-    width: 30vw;
-    height: 60vh;
+    width: 100%;
     gap: 2vw;
     padding: 1vw;
+    height: 60vh;
     justify-content: center;
     align-items: center;
 }
@@ -13,10 +13,11 @@
     background-color: rgba(255, 255, 255, 0.753);
     padding: 1vw;
     border-radius: 30px;
+    width: 30vw;
 }
 
 .nameLogin{
-    font-size: 36px;
+    font-size: 2vw;
     font-weight: bolder;
     text-align: center;
 }
@@ -28,7 +29,7 @@
     width: 100%;
     height: 3vw;
     color: rgb(0, 0, 0);
-    font-size: 28px;
+    font-size: 1.5vw;
     padding: 5px;
     padding-left: 0;
 }
@@ -38,6 +39,10 @@
     width: 100%;
     justify-content: space-around;
     border-bottom: 2px solid black;
+}
+
+.svg{
+    width: 10%;
 }
 
 .inputLogin::placeholder{
@@ -51,13 +56,13 @@
     height: 4vw;
     border: 0px;
     font-weight: bold;
-    font-size: 28px;
+    font-size: 1.6vw;
     color: white;
     background-color: rgb(0, 0, 0);
 }
 
 .registerLogin{
-    font-size: 24px;
+    font-size: 1.4vw;
     color: rgba(0, 0, 0, 0.651);
 }
 
@@ -71,6 +76,139 @@
     position: absolute;
     z-index: 1;
     top: 5%;
-    width: 30vw;
+    width: 28%;
     text-align: center;
 }
+
+.errorRegister{
+    color: red;
+    font-size: 1.3vw;
+}
+
+
+@media (max-width:1440px) {
+    .buildLogin{
+        width: 40%;
+    }
+    .imageLogin{
+        width: 38%;
+    }
+    .errorRegister, .inputLogin, .nameLogin, .submitLogin, .registerLogin {
+        font-size: 2vw;
+    }
+}
+
+@media (max-width:1300px) {
+    .loginForm{
+        gap: 3vw;
+    }
+}
+
+@media (max-width:1024px) {
+    .loginForm{
+        height: 50vh;
+    }
+    .buildLogin{
+        width: 45%;
+    }
+    .imageLogin{
+        width: 42.5%;
+        top: 12%;
+    }
+    .errorRegister, .inputLogin, .nameLogin, .submitLogin, .registerLogin {
+        font-size: 2.2vw;
+    }
+
+    .logosIn > svg{
+        font-size: 4vw;
+    }
+}
+@media (max-width:850px) {
+    .loginForm{
+        height: 50vh;
+    }
+    .buildLogin{
+        width: 80%;
+    }
+    .imageLogin{
+        width: 78.6%;
+        top: 12%;
+    }
+    .errorRegister, .inputLogin, .nameLogin, .submitLogin, .registerLogin {
+        font-size: 3vw;
+    }
+
+    .logosIn > svg{
+        font-size: 4vw;
+    }
+}
+
+
+
+@media (max-width:768px) {
+    .loginForm{
+        height: 60vh;
+    }
+    .buildLogin{
+        width: 80%;
+    }
+    .imageLogin{
+        width: 77.6%;
+        top:5%;
+    }
+    .inputLogin{
+        height: 5vh;
+    }
+    .loginForm{
+        gap: 3vw;
+    }
+    .errorRegister, .inputLogin, .nameLogin, .submitLogin, .registerLogin {
+        font-size: 3vw;
+    }
+    .submitLogin{
+        height: 5vh;
+    }
+
+
+}
+
+@media (max-width:542px) {
+    .loginForm{
+        height: 50vh;
+    }
+    .buildLogin{
+        width: 80%;
+    }
+    .imageLogin{
+        width: 77.6%;
+        top:12%;
+    }
+    .inputLogin{
+        height: 20px;
+    }
+    .loginForm{
+        gap: 3vw;
+    }
+    .errorRegister, .inputLogin, .nameLogin, .submitLogin, .registerLogin {
+        font-size: 4vw;
+    }
+}
+@media (max-width:425px) {
+    .loginForm{
+        height: 40vh;
+    }
+    .buildLogin{
+        width: 80%;
+    }
+    .imageLogin{
+        width: 77.6%;
+        top:21%;
+    }
+    .loginForm{
+        gap: 4vw;
+    }
+    .errorRegister, .inputLogin, .nameLogin, .submitLogin, .registerLogin {
+        font-size: 4.2vw;
+    }
+}
+

@@ -15,10 +15,10 @@ export default function RegisterUser() {
       </motion.a>
       <div className='image'>
         <div className='logoRegister'>
-          <img src={logo} alt="logo" />
+          <img src={logo} alt="logo" width='100%'/>
         </div>
         <div className='imageRegister'>
-          <img src={img} alt="logoregistro" width='75%' />
+          <img src={img} alt="logoregistro" width='70%' />
         </div>
       </div>
       <FormRegister />

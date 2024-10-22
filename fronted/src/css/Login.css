@@ -18,3 +18,16 @@
     left: 1vw;
 
 }
+
+@media (max-width:1300px) {
+    .login{
+        background-position: center;
+        background-size: cover;   
+    }
+}
+
+@media (max-width:768px) {
+    .back{
+        width: 10%;
+    }
+}
