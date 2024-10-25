@@ -17,6 +17,7 @@ export default function FormAdd(props) {
     })
     if(props.uri === "profesores"){
       let cedula = Cookies.get('cedula')
+      Cookies.remove('cedula')
       await axios.put(`http://localhost:3000/editar/${cedula}`, obj)
       .then((result) => {
         console.log(result)

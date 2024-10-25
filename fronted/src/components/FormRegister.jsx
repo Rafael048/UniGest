@@ -3,7 +3,7 @@ import '../css/FormRegister.css'
 import axios from "axios";
 import Cookies from 'js-cookie'
 
-export default function FormRegister() {
+export default function FormRegister(props) {
     const [error, setError] = useState(null)
     async function handleSubmit(e) {
         e.preventDefault();
@@ -37,7 +37,7 @@ export default function FormRegister() {
     }
     return (
         <form onSubmit={(e) => handleSubmit(e)} className='form'>
-            <h1 className='titleForm'>Bienvenido</h1>
+            <h1 className='titleForm'>{props.uri?"Agregar Profesor":"Bienvenido"}</h1>
             <input type="number" className="inputNumber" placeholder="Cedula" name="cedula" min={'0'} autoComplete="off" required />
             <div className="inputNew">
                 <input type="text" className="input" placeholder="Nombre" name="name" autoComplete="off" required />
@@ -49,8 +49,11 @@ export default function FormRegister() {
             </div>
             <div className="inputNew">
                 <select name="puesto" id="" className='list' required>
+                    {props.uri?
                     <option className='select' value="Profesor">Profesor</option>
+                    :
                     <option className='select' value="Director">Director</option>
+                }
                 </select>
                 <input type="password" className='input' placeholder='Clave de registro' name="registerpass" autoComplete="off" required />
 

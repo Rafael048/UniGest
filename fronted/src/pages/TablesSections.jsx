@@ -11,11 +11,13 @@ import Error401 from '../components/Error401'
 export default function TablesSections() {
   const token = Cookies.get('jwt')
   const [active, setActive] = useState(null)
+  const[loading, setLoading] = useState(true)
   useEffect(() => {
     async function getData(token) {
       await axios.get(`http://localhost:3000/verify/${token}`)
         .then((result) => {
           setActive(result.data.user.rol)
+          setLoading(false)
         })
         .catch((err) => {
           console.log(err)
@@ -29,7 +31,9 @@ export default function TablesSections() {
   return (
 
     <div>
-      {
+      {loading?
+      <p>Cargando...</p>  
+    :
         active === 'Director' ?
           <>
             <section className='mainTable'>

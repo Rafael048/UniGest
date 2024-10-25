@@ -1,28 +1,33 @@
 import { React} from 'react'
 import Menu from '../components/Menu'
-import FormAdd from '../components/FormAdd'
+import FormRegister from '../components/FormRegister'
 import Footer from '../components/Footer'
-import '../css/FormActivitiesAdd.css'
+import '../css/RegisterUser.css'
+import img from '../assets/Register.png'
 import logo from '../assets/logo.png'
+import { motion } from 'framer-motion'
 
 export default function FormActivitiesAdd() {
   const btActive = 'activeMenu'
 
   return (
-    <div>
-      <div className='directorView'>
-        <div className='logoDirectorSolo'>
-          <img src={logo} alt="" width={"80%"} />
+    <section className='registerForm'>
+      <motion.a href='/profesores' className="back" whileHover={{scale:1.2, color:"#E4F1F8"}}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" className="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+          <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
+        </svg>
+      </motion.a>
+      <div className='image'>
+        <div className='logoRegister'>
+          <img src={logo} alt="logo" width='100%'/>
         </div>
-        <Menu btProfesores={btActive} />
-        <div className='formGeneral'>
-          <FormAdd
-            uri="profesores"
-            propiedades={["el nombre", "el apellido"]}
-          />
+        <div className='imageRegister'>
+          <img src={img} alt="logoregistro" width='70%' />
         </div>
       </div>
-      <Footer />
-    </div>
+      <FormRegister
+      uri= "profesor"
+      />
+    </section>
   )
 }

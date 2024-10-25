@@ -12,13 +12,15 @@ import Error401 from '../components/Error401'
 export default function TableTeachers() {
   const btActive = 'activeMenu'
   const token = Cookies.get('jwt')
+  const[loading, setLoading] = useState(true)
   const [active, setActive] = useState(null)
   useEffect(() => {
     async function getData(token) {
       await axios.get(`http://localhost:3000/verify/${token}`)
         .then((result) => {
-          console.log(result.data.user)
+          console.log(result.data.user.rol)
           setActive(result.data.user.rol)
+          setLoading(false)
         })
         .catch((err) => {
           console.log(err)
@@ -28,8 +30,11 @@ export default function TableTeachers() {
     getData(token)
   }, [token])
   return (
+   
     <div>
-      {
+      {loading?
+      <p>Cargando...</p>
+      :
         active === 'Director' ?
       <>
         <section className='mainTable'>

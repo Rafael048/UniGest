@@ -175,7 +175,8 @@ export default function Tables(props) {
         <table>
           <thead>
             <tr>
-
+              {propertyName.length<1?<th>No se han ingresado elementos</th>:
+              <>
               {propertyName.map((property, index) => (
                 <th key={index}>
                   {property}
@@ -183,6 +184,7 @@ export default function Tables(props) {
 
               ))}
               {(role === "Director" && props.uri !== "actividades") || (role === "Profesor" && props.uri === "actividades") ? <th>Accion</th> : null}
+              </> }
             </tr>
           </thead>
           <tbody>
