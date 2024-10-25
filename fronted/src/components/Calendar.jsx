@@ -14,6 +14,7 @@ export default function Calendar() {
     const [eventClicked, setEventClicked] = useState(null)
     const [filter, setFilter] = useState([]);
     const [materias, setMaterias] = useState([]);
+    const [profesores, setProfesores] = useState([]);
     const [openFiltrer, setOpenFiltrer] = useState(false)
     const [animation, setAnimation] = useState('')
     const [animationDescription, setAnimationDescription] = useState('')
@@ -27,12 +28,14 @@ export default function Calendar() {
                 .then(async (result) => {
                     const materiasRes = await axios.get('http://localhost:3000/materias');
                     setMaterias(materiasRes.data.body);
+                    const profesoresRes = await axios.get('http://localhost:3000/profesores')
+                    setProfesores(profesoresRes.data.body)
                     let arrTemp = []
                     let arrSubjectsFilter = []
 
                     if (filter.length !== 0) {
                         arrSubjectsFilter = result.data.body.filter(evento =>
-                            filter.includes(evento.materia)
+                            filter.includes(evento.materia)|| filter.includes(evento.profesor)
                         );
                     } else {
                         arrSubjectsFilter = result.data.body;
@@ -182,6 +185,8 @@ export default function Calendar() {
                             >
                                 <form className='listChecked'>
                                     <div className='listFiltrer'>
+                                        <div>
+
                                         <h3>Filtrar por materias</h3>
                                         {materias.map((materia) => (
                                             <label key={materia.id} className='inputCheckbox'>
@@ -194,8 +199,23 @@ export default function Calendar() {
                                                 />
                                                 {materia.nombre}
                                             </label>
-
                                         ))}
+                                        </div>
+                                        <div>
+                                        <h3>Filtrar por Profesor</h3>
+                                         {profesores.map((profesor) => (
+                                            <label key={profesor.id} className='inputCheckbox'>
+                                                <input
+                                                    type="checkbox"
+                                                    value={profesor.nombre}
+                                                    onChange={handleFilterChange}
+                                                    checked={filter.includes(profesor.nombre)}
+                                                    className='inputChecked'
+                                                />
+                                                {profesor.nombre}
+                                            </label>
+                                        ))}
+                                        </div>
                                     </div>
                                     <motion.input whileHover={{scale:.9, backgroundColor:"white", border:"2px solid #00255c", color:"#00255c"}} type='button' className='aceptButtonFiltrer' onClick={openFiltrerForm} value={'Aceptar'} />
                                 </form>
