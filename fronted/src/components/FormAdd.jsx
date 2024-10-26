@@ -14,6 +14,9 @@ export default function FormAdd(props) {
       const key = element.split(" ")[1]
       obj[key] = e.target[key].value
     })
+    if(props.uri==="actividades"){
+      obj.creador = user.id
+    }
     await axios.post(`http://localhost:3000/${props.uri}/agregar`, obj)
       .then((result) => {
         console.log(result)
@@ -25,10 +28,13 @@ export default function FormAdd(props) {
 
   const token = Cookies.get('jwt')
   const [active, setActive] = useState(null)
+  const [user, setUser] = useState({})
+
   useEffect(() => {
     async function getData(token) {
       await axios.get(`http://localhost:3000/verify/${token}`)
         .then((result) => {
+          setUser(result.data.user)
           setActive(result.data.user.rol)
         })
         .catch((err) => {

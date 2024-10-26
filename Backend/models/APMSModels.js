@@ -28,6 +28,7 @@ class APMSModels {
   }
   Create(data) {
     return new Promise((resolve, reject) => {
+      console.log(data)
       let idPMS = data.idPMS;
       let idActividades = data.idActividades;
       if(idPMS==undefined||idActividades==undefined||idPMS.trim()==""||idActividades.trim()===""){
