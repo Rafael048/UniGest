@@ -30,6 +30,7 @@ export default function Header({ landing, active, activities, color, plani }) {
                 <li><a href="/" className={landing ? 'link active' : 'link'}>Inicio</a></li>
                 <li><a href="Actividades" className={activities ? 'link active' : 'link'}>Actividades</a></li>
                 <li><a href="/calendario" className={plani ? 'link active' : 'link'}>Planificación</a></li>
+                <li><a href="/ajustes" className={plani ? 'link active' : 'link'}>Ajustes</a></li>
                 <li onClick={() => handleShowExit()}><p className='link'>Cerrar Sesión</p></li>
               </> :
               <>
