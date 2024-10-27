@@ -21,6 +21,7 @@ import AsingActivitie from './pages/AsingActivities';
 import Error401 from './components/Error401';
 import FormModifyProfessors from './pages/FormModifyProfessors'
 import FormModifySubjects from './pages/FormModifySubjects'
+import FormModifyUser from './pages/FormModifyUser'
 import FormModifySections from './pages/FormModifySections'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -45,6 +46,7 @@ root.render(
       <Route path='ModificarMaterias' element={<FormModifySubjects/>}/>
       <Route path='ModificarSecciones' element={<FormModifySections/>}/>
       <Route path='Calendario' element={<CalendarPage/>}/>
+      <Route path='ModificarUsuario' element={<FormModifyUser/>}/>
     </Routes>
   </BrowserRouter>
 );
