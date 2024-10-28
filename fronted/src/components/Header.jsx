@@ -2,7 +2,6 @@ import { React, useState } from 'react'
 import img from '../assets/logo.png'
 import '../css/Header.css'
 import Exit from './Exit'
-import { motion } from 'framer-motion'
 
 export default function Header({ landing, active, activities, color, plani }) {
   const [exitEmer, setExitEmer] = useState(null)
@@ -45,7 +44,7 @@ export default function Header({ landing, active, activities, color, plani }) {
                 <li><a href="/" className={landing ? 'link active' : 'link'}>Inicio</a></li>
                 <li><a href="Actividades" className={activities ? 'link active' : 'link'}>Actividades</a></li>
                 <li><a href="/calendario" className={plani ? 'link active' : 'link'}>Planificación</a></li>
-                <li onClick={() => handleShowExit()}><p className='link'>Cerrar Sesión</p></li>
+                <li onClick={() => handleShowExit()}><a href='#' className='link'>Cerrar Sesión</a></li>
               </> :
                 <>
                   <li className='buttonHeaderClose'>

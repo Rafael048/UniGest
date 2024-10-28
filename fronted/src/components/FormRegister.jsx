@@ -18,17 +18,22 @@ export default function FormRegister(props) {
         }
         await axios.post('http://localhost:3000/register', data)
             .then(async () => {
-                await axios.post('http://localhost:3000/login', data)
-                    .then((result) => {
-                        const token = result.data
-                        Cookies.set('jwt', token, { expires: 1 })
-                        window.location.href = '/'
-                    })
-                    .catch((err) => {
-                        if (err.response) {
-                            console.log(err.response.data.error)
-                        }
-                    })
+                if(props.uri){
+                    window.location.replace('/profesores')
+                }else{
+                    await axios.post('http://localhost:3000/login', data)
+                        .then((result) => {
+    
+                            const token = result.data
+                            Cookies.set('jwt', token, { expires: 1 })
+                            window.location.href = '/'
+                        })
+                        .catch((err) => {
+                            if (err.response) {
+                                console.log(err.response.data.error)
+                            }
+                        })
+                }
             })
             .catch((err) => {
                 console.log(err.response.data.error)

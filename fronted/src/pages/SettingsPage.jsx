@@ -3,8 +3,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Settings from '../components/Settings';
 import Menu from '../components/Menu';
-import '../css/TablesActivities.css'
-import '../css/TableViewDirector.css'
+import '../css/SettingPage.css'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import logo from '../assets/logo.png'
@@ -16,7 +15,7 @@ export default function TablesActivities() {
   const color = 'blue'
   const token = Cookies.get('jwt')
   const [active, setActive] = useState(null)
-  const[loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     async function getData(token) {
       await axios.get(`http://localhost:3000/verify/${token}`)
@@ -35,19 +34,18 @@ export default function TablesActivities() {
   return (
     <div className='activitiesView'>
 
-{loading?
-      <p>Cargando...</p>  
-    :
+      {loading ?
+        <p>Cargando...</p>
+        :
         active === 'Director' ?
           <>
-            <section className='mainTable'>
+            <section className='mainSetting'>
               <div className='logoDirector'>
                 <img src={logo} alt="" width={"80%"} />
               </div>
-              <Menu btActividades={btActive} />
-              <article className='tableGeneral'>
-                <Settings></Settings>
-
+              <Menu btAjustes={btActive} />
+              <article className='backgroundSetting'>
+                <Settings/>
               </article>
             </section>
             <Footer />

@@ -1,0 +1,56 @@
+.settingContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1vw;
+    height: 80vh;
+}
+
+.settingList{
+    width: 40%;
+    background-color: rgba(255, 255, 255, 0.829);
+    padding: 2vw;
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+}
+
+.titleSetting{
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+}
+
+.titleSetting > h1{
+    font-size: 40px;
+    font-weight: 800;
+}
+
+.nameSetting{
+    text-transform: capitalize; 
+}
+
+.textSetting{
+    font-size: 28px;
+}
+
+.settingDescription{
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.buttonSettingsContainer{
+    display: flex;
+    justify-content: center;
+    gap: 1vw;
+}
+
+.buttonSetting{
+    background-color: #00255c;
+    color: white;
+    font-size: 30px;
+    padding: .5vw 3vw;
+    border: 0px;
+    border-radius: 30px;
+}

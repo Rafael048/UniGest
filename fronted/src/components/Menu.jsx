@@ -3,7 +3,7 @@ import '../css/Menu.css'
 import Exit from './Exit'
 import { motion, AnimatePresence } from 'framer-motion'
 
-export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividades, btProfesores }) {
+export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividades, btProfesores, btAjustes }) {
 
     const [open, setOpen] = useState(false)
     const [classLinks, setClassLinks] = useState('')
@@ -15,6 +15,7 @@ export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividad
     const seccion = btSeccion
     const actividades = btActividades
     const profesores = btProfesores
+    const ajustes = btAjustes
 
     async function openMenu() {
         if (open === false) {
@@ -62,6 +63,7 @@ export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividad
                     <AnimatePresence>
 
                         <div className='linksDirector'>
+
                             <div className='buttons'>
                                 <a href="/" className={`linksMenu ${ini}`}>
                                     <motion.div whileHover={{ scale: 1.1 }}>
@@ -70,19 +72,6 @@ export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividad
                                         </svg>
                                         <motion.p animate={open ? linkClose : linkOpen} transition={{ duration: .5 }} className={classLinks}>
                                             Inicio
-                                        </motion.p>
-                                    </motion.div>
-                                </a>
-                            </div>
-                            <div className='buttons'>
-                                <a href="/calendario" className={`linksMenu ${plani}`}>
-                                    <motion.div whileHover={{ scale: 1.1 }}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="2vw" height="2vw" fillRule="currentColor" className="bi bi-card-checklist" viewBox="0 0 16 16">
-                                            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z" />
-                                            <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0" />
-                                        </svg>
-                                        <motion.p animate={open ? linkClose : linkOpen} transition={{ duration: .5 }} className={classLinks}>
-                                            Planificación
                                         </motion.p>
                                     </motion.div>
                                 </a>
@@ -138,12 +127,11 @@ export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividad
                                     </motion.div>
                                 </a>
                             </div>
-                        </div>
-                        <div className='buttons'>
-                                <a href="/ajustes" className={`linksMenu ${materia}`}>
+                            <div className='buttons'>
+                                <a href="/ajustes" className={`linksMenu ${ajustes}`}>
                                     <motion.div whileHover={{ scale: 1.1 }}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="2vw" height="2vw" fillRule="currentColor" className="bi bi-list-check" viewBox="0 0 16 16">
-                                            <path fillRule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0m0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0m0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="2vw" height="2vw" fill="currentColor" class="bi bi-sliders" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1z" />
                                         </svg>
                                         <motion.p animate={open ? linkClose : linkOpen} transition={{ duration: .5 }} className={classLinks}>
                                             Ajustes
@@ -151,16 +139,19 @@ export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividad
                                     </motion.div>
                                 </a>
                             </div>
+                        </div>
                         <div onClick={() => handleShowExit()} className='buttons'>
-                            <motion.div className='linksMenu' whileHover={{ scale: 1.1 }}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="2vw" height="2vw" fillRule="currentColor" className="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                                    <path fillRule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-                                    <path fillRule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-                                </svg>
-                                <motion.p animate={open ? linkClose : linkOpen} transition={{ duration: .5 }} className={classLinks}>
-                                    Cerrar Sesión
-                                </motion.p>
-                            </motion.div>
+                            <a href="#" className='linksMenu'>
+                                <motion.div whileHover={{ scale: 1.1 }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="2vw" height="2vw" fillRule="currentColor" className="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                        <path fillRule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                        <path fillRule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                    </svg>
+                                    <motion.p href='#' animate={open ? linkClose : linkOpen} transition={{ duration: .5 }} className={classLinks}>
+                                        Cerrar Sesión
+                                    </motion.p>
+                                </motion.div>
+                            </a>
                         </div>
                     </AnimatePresence>
                 </div>
