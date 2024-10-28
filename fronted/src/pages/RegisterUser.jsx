@@ -18,7 +18,8 @@ export default function RegisterUser() {
           <img src={logo} alt="logo" width='100%'/>
         </div>
         <div className='imageRegister'>
-          <img src={img} alt="logoregistro" width='70%' />
+          <img src={img} alt="logoregistro" width='100%' />
+          <a href="/" className='unigest'>Unigest</a>
         </div>
       </div>
       <FormRegister />

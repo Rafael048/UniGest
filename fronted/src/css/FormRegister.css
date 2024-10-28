@@ -35,7 +35,7 @@
     width: 80%;
     height: 3vw;
     color: white;
-    font-size: 1.7vw;
+    font-size: 32px;
     padding: 5px;
     padding-left: 0;
 }
@@ -48,7 +48,7 @@
     width: 45%;
     height: 3vw;
     color: white;
-    font-size: 1.7vw;
+    font-size: 32px;
     padding: 5px;
     padding-left: 0;
 }
@@ -61,7 +61,7 @@
     height: 3vw;
     width: 45%;
     border-bottom: 2px solid white;
-    font-size: 30px;
+    font-size: 32px;
 }
 
 .select{
@@ -71,7 +71,7 @@
 .submit{
     border-radius: 40px;
     width: 70%;
-    height: 80px;
+    height: 8vh;
     font-weight: bold;
     border: 0;
     font-size: 30px;
@@ -79,5 +79,62 @@
 }
 
 .titleForm{
-    font-size: 4.2vw;
+    font-size: 80px;
 }
+
+@media (max-width:1300px) {
+    .submit,.input,.inputNumber,.list{
+        font-size: 24px;
+    }
+    .titleForm{
+        font-size: 70px;
+    }
+}
+
+@media (max-width:1024px){
+    .submit,.input,.inputNumber,.list{
+        font-size: 20px;
+    }
+    .titleForm{
+        font-size: 50px;
+    }
+    .submit{
+        height: 6vh;
+    }
+
+}
+
+@media (max-width:900px) {
+    .form{
+        padding-top: 10vh;
+        width: 80%;
+        gap: 5vw;
+    }
+    .submit{
+        height: 5vh;
+    }
+    .input,.inputNumber,.list{
+        height: 5vw;
+    }
+}
+
+@media (max-width:650px) {
+    .submit,.input,.inputNumber,.list{
+        font-size: 18px;
+    }
+    .titleForm{
+        font-size: 40px;
+    }  
+    .form{
+        width: 100%;
+        gap: 4vh;
+    }
+}
+
+@media (max-width:425px) {
+    .input,.inputNumber,.list{
+        height: 7vw;
+        font-size: 14px;
+    }
+}
+

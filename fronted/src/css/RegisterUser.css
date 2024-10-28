@@ -2,6 +2,7 @@
     display: flex;
     height: 100vh;
     padding: 1vw;
+    padding-bottom: 0;
     background: linear-gradient(to right, white 50%, #1C1D21 50%);
 }
 
@@ -10,14 +11,85 @@
     flex-direction: column;
     width: 50%;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     padding-top: 3vw;
 }
 
 .logoRegister, .imageRegister{
     text-align: center;
 }
+.logoRegister{
+    width: 40%;
+}
+
+.imageRegister{
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+    gap: 2vw;
+}
 
 .error{
     color: red;
+}
+
+.unigest{
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+@media (max-width:1300px) {
+    .imageRegister{
+        width: 100%;
+    }
+    .logoRegister{
+        width: 50%;
+    }
+}
+
+@media (max-width:1024px) {
+    .imageRegister{
+        width: 100%;
+    }
+    .logoRegister{
+        width:60%;
+    }
+    .image{
+        justify-content: center;
+    }
+}
+
+@media (max-Width:900px) {
+    .unigest{
+        display: block;
+        font-size: 28px;
+    }
+
+    .imageRegister{
+        width: 70%;
+    }
+
+    .registerForm{      
+        flex-direction: column-reverse;
+        background: linear-gradient(to right, #1C1D21 50%, #1C1D21 50%);
+        align-items: center;
+        justify-content: center;
+    }
+    .logoRegister{
+        display: none;
+    }
+
+    .registerForm{
+        justify-content: space-between;
+    }
+}
+
+@media (max-width:650px) {
+    .imageRegister{
+        width: 70%;
+    }
 }
