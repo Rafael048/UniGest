@@ -45,8 +45,8 @@ router.get("/verify/:token", function (req, res, next) {
         .json({ error: "Error al autenticar", message: e.message });
     });
 });
-router.put('/editar/:cedula',function(req,res){
-  let cedula = req.params.cedula
+router.put('/editar',function(req,res){
+  let cedula = req.query.cedula
   const nuevosValores = req.body
   AutenticationControllers.Modify(cedula,nuevosValores)
   .then(() => {

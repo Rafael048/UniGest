@@ -7,7 +7,8 @@ import Cookies from 'js-cookie'
 export default function FormAdd(props) {
 
   let id = Cookies.get('id')
-
+  const token = Cookies.get('jwt')
+  const [active, setActive] = useState({})
   async function handleSubmit(e) {
     e.preventDefault()
     let obj = {}
@@ -18,30 +19,41 @@ export default function FormAdd(props) {
     if(props.uri === "profesores"){
       let cedula = Cookies.get('cedula')
       Cookies.remove('cedula')
-      await axios.put(`http://localhost:3000/editar/${cedula}`, obj)
+      obj.warning = true
+      await axios.put(`http://localhost:3000/editar?cedula=${cedula}`, obj)
       .then((result) => {
         console.log(result)
       }).catch((err) => {
         console.log(err)
       });
     }
-    await axios.put(`http://localhost:3000/${props.uri}/editar/${id}`, obj)
+    if(props.uri === "usuario"){
+      obj.rol = active.rol
+      await axios.put(`http://localhost:3000/editar?cedula=${active.cedula}`, obj)
       .then((result) => {
         console.log(result)
-        window.location.replace(`/${props.uri}`)
+        window.location.replace("/")
       }).catch((err) => {
         console.log(err)
       });
-      Cookies.remove('id')
+    }else{
+      await axios.put(`http://localhost:3000/${props.uri}/editar/${id}`, obj)
+        .then((result) => {
+          console.log(result)
+          window.location.replace(`/${props.uri}`)
+        }).catch((err) => {
+          console.log(err)
+        });
+        Cookies.remove('id')
+    }
   }
 
-  const token = Cookies.get('jwt')
-  const [active, setActive] = useState(null)
+
   useEffect(() => {
     async function getData(token) {
       await axios.get(`http://localhost:3000/verify/${token}`)
         .then((result) => {
-          setActive(result.data.user.rol)
+          setActive(result.data.user)
         })
         .catch((err) => {
           console.log(err)
@@ -50,12 +62,12 @@ export default function FormAdd(props) {
         })
     }
     getData(token)
-  })
+  },[token])
 
   return (
     <div>
       {
-        active === 'Director' ? 
+        active.rol === 'Director' ? 
         <div className="allForm">
           <form onSubmit={(e) => handleSubmit(e)} className='formDirectorAdd'>
               <label className='activities'> {props.uri.charAt(0).toUpperCase() + props.uri.slice(1)} </label>

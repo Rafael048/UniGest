@@ -49,9 +49,10 @@ class ProfessorsModels{
   }
  Modify(idReq, nuevosValores) {
   return new Promise((resolve, reject) => {
+    console.log(nuevosValores.nombre)
     let nombreUs = nuevosValores.nombre
     let apellidoUS= nuevosValores.apellido
-    if(nombreUS==undefined|| apellidoUS==undefined || cedula==undefined||nombreUs.trim()===" "|| apellidoUS.trim()===" " || cedula.trim()===""){
+    if(nombreUs==undefined|| apellidoUS==undefined||nombreUs.trim()===" "|| apellidoUS.trim()===" "){
       reject(new Error("No se pueden pasar datos vacios"))
     }
     let consult = `UPDATE profesores SET nombre = '${nombreUs}', apellido = '${apellidoUS}' WHERE id = ${idReq}`

@@ -20,7 +20,7 @@ export default function Tables(props) {
   const token = Cookies.get('jwt')
   const [searchNull, setSearchNull] = useState(false)
   const [animateAviso, setAnimateAviso] = useState(false)
-
+  const [user, setUser]= useState(null)
   function handleShowWarning(item) {
     setIdDelete(item)
     setWarning(true)
@@ -115,32 +115,50 @@ export default function Tables(props) {
     window.location.replace(`/Modificar${props.uri}`)
 
   }
-  useEffect(() => {
-    async function getData() {
-      await axios.get(`http://localhost:3000/${props.uri}`)
-        .then((result) => {
-          setData(result.data.body.slice(0, 5))
-          setAllData(result.data.body)
-          setPropertyName(Object.getOwnPropertyNames(result.data.body[0]))
-          if (result.data.body.length > 5) {
-            setNextData(result.data.body.slice(5))
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
+  useEffect(()=>{
     async function verify() {
       await axios.get(`http://localhost:3000/verify/${token}`)
         .then((result) => {
           setRole(result.data.user.rol)
+          setUser(result.data.user)
         }).catch((err) => {
           console.log(err)
         });
     }
     verify()
+  },[token])
+  useEffect(() => {
+    async function getData() {
+        
+        await axios.get(`http://localhost:3000/${props.uri}`)
+          .then((result) => {
+  
+              if(props.uri==="actividades"&&role==="Profesor"){
+                let filter = result.data.body.filter((creador)=>{
+                 return creador.creador===user.userName
+                })
+                  setData(filter.slice(0, 5))
+                   setAllData(filter)
+                 setPropertyName(Object.getOwnPropertyNames(filter[0]))
+                  if (filter.length > 5) {
+                  setNextData(filter.slice(5))
+                  }
+                }else{
+                setData(result.data.body.slice(0, 5))
+                setAllData(result.data.body)
+                setPropertyName(Object.getOwnPropertyNames(result.data.body[0]))
+                if (result.data.body.length > 5) {
+                  setNextData(result.data.body.slice(5))
+                }
+              }
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+    }
+   
     getData()
-  }, [props.uri, token])
+  }, [props.uri,role,user ])
   return (
     <>
       <div className="center">
@@ -189,10 +207,11 @@ export default function Tables(props) {
           </thead>
           <tbody>
             {data.map((item, rowIndex) => (
-              <tr key={rowIndex}>
-                {propertyName.map((property, colIndex) => (
+              
+              <tr key={rowIndex} id="prueba">
+              {propertyName.map((property, colIndex) => (
                   <td key={colIndex}>
-                    {Array.isArray(item[property])
+                  {   Array.isArray(item[property])
                       ? (
                         item[property].length > 0 || (props.uri === "actividades" && role === "Profesor") || (role === "Director" && props.uri === "profesores")
                           ?
@@ -213,7 +232,7 @@ export default function Tables(props) {
 
                       )
                       : item[property]
-
+                      
                     }
                   </td>
                 ))}

@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken')
 const bcryptjs = require('bcryptjs')
 require('dotenv').config();
 const ProfessorsControllers = require("../controllers/ProfessorsControllers");
-const e = require("express");
 
 
 
@@ -131,20 +130,78 @@ Modify(cedula,values){
        let cedulaFront = cedula
        let nombre = values.nombre
        let apellido = values.apellido
-       if(nombre==undefined||apellido==undefined||nombre==" "||apellido==" "){
-        reject(new Error("No se peuden enviar datos vacios"))
-    }
-       let consult = `UPDATE users SET nombre = '${nombre}', apellido = '${apellido}' WHERE cedula = ${cedulaFront}`
-       connection.query(consult, function(err, results, fields) {
-        if(err){
-            reject(err)
+       if(!values.warning){
+        let user = values.usuario
+        let newPassword = values.nueva
+        let oldPassword = values.contraseña
+
+        if(nombre==undefined||apellido==undefined||nombre.trim()==" "||apellido.trim()==" "||user==undefined||user.trim()==""||newPassword==undefined||newPassword.trim()==""||oldPassword==undefined||oldPassword.trim()==""){
+            reject(new Error("No se peuden enviar datos vacios"))
         }else{
-            if(results.length===0){
-                reject(new Error("No se encontro el usuario"))
-            }
-            resolve()
+            let queryPass = `SELECT * FROM users WHERE cedula = ${cedulaFront}`
+            connection.query(queryPass,async function(err,result){
+                if(err){
+                    reject(err)
+                }else{
+                    if(result.length==0){
+                        reject(new Error("No se encontró el usuario"))
+                    }else{
+                        let passwordHash = result[0].password
+                        let comparation = await bcryptjs.compare(oldPassword, passwordHash)
+                        if(comparation){
+                            let newPassHash = await bcryptjs.hash(newPassword,8)
+                            let queryUpdate = `UPDATE users SET nombre = '${nombre}', apellido = '${apellido}', userName = '${user}', password = '${newPassHash}' WHERE cedula = ${cedulaFront}`
+                            connection.query(queryUpdate,function(err,results){
+                                if(err){
+                                    reject(err)
+                                }else{
+                                    if(values.rol){
+                                        let queryID = `SELECT * FROM profesores WHERE cedula = ${cedulaFront}`
+                                        connection.query(queryID,function(err,result){
+                                            if(err){
+                                                reject(err)
+                                            }else{
+                                                if(result.length==0){
+                                                    reject(new Error("No se encontró el profesor"))
+                                                }else{
+                                                    let id = result[0].id
+                                                    let obj = {nombre:nombre,apellido:apellido}
+                                                    ProfessorsControllers.Modify(id,obj)
+                                                    .then(() => {
+                                                        console.log("Actualizado")
+                                                        resolve()
+                                                    }).catch((err) => {
+                                                        reject(err)
+                                                    });
+                                                }
+                                            }
+                                        })
+                                    }
+                                }
+                            })
+                        }else{
+                            reject(new Error("Contraseña incorrecta"))
+                        }
+                    }
+                }
+            })
         }
-       })
+       }else{
+           if(nombre==undefined||apellido==undefined||nombre.trim()==" "||apellido.trim()==" "){
+            reject(new Error("No se peuden enviar datos vacios"))
+        }
+           let consult = `UPDATE users SET nombre = '${nombre}', apellido = '${apellido}' WHERE cedula = ${cedulaFront}`
+           connection.query(consult, function(err, results, fields) {
+            if(err){
+                reject(err)
+            }else{
+                if(results.length===0){
+                    reject(new Error("No se encontro el usuario"))
+                }
+                resolve()
+            }
+           })
+       }
     })
 }
 
