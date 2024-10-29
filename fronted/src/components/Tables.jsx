@@ -20,7 +20,8 @@ export default function Tables(props) {
   const token = Cookies.get('jwt')
   const [searchNull, setSearchNull] = useState(false)
   const [animateAviso, setAnimateAviso] = useState(false)
-  const [user, setUser]= useState(null)
+  const [user, setUser] = useState(null)
+
   function handleShowWarning(item) {
     setIdDelete(item)
     setWarning(true)
@@ -115,7 +116,7 @@ export default function Tables(props) {
     window.location.replace(`/Modificar${props.uri}`)
 
   }
-  useEffect(()=>{
+  useEffect(() => {
     async function verify() {
       await axios.get(`http://localhost:3000/verify/${token}`)
         .then((result) => {
@@ -126,39 +127,39 @@ export default function Tables(props) {
         });
     }
     verify()
-  },[token])
+  }, [token])
   useEffect(() => {
     async function getData() {
-        
-        await axios.get(`http://localhost:3000/${props.uri}`)
-          .then((result) => {
-  
-              if(props.uri==="actividades"&&role==="Profesor"){
-                let filter = result.data.body.filter((creador)=>{
-                 return creador.creador===user.userName
-                })
-                  setData(filter.slice(0, 5))
-                   setAllData(filter)
-                 setPropertyName(Object.getOwnPropertyNames(filter[0]))
-                  if (filter.length > 5) {
-                  setNextData(filter.slice(5))
-                  }
-                }else{
-                setData(result.data.body.slice(0, 5))
-                setAllData(result.data.body)
-                setPropertyName(Object.getOwnPropertyNames(result.data.body[0]))
-                if (result.data.body.length > 5) {
-                  setNextData(result.data.body.slice(5))
-                }
-              }
+
+      await axios.get(`http://localhost:3000/${props.uri}`)
+        .then((result) => {
+
+          if (props.uri === "actividades" && role === "Profesor") {
+            let filter = result.data.body.filter((creador) => {
+              return creador.creador === user.userName
             })
-            .catch((err) => {
-              console.log(err)
-            })
+            setData(filter.slice(0, 5))
+            setAllData(filter)
+            setPropertyName(Object.getOwnPropertyNames(filter[0]))
+            if (filter.length > 5) {
+              setNextData(filter.slice(5))
+            }
+          } else {
+            setData(result.data.body.slice(0, 5))
+            setAllData(result.data.body)
+            setPropertyName(Object.getOwnPropertyNames(result.data.body[0]))
+            if (result.data.body.length > 5) {
+              setNextData(result.data.body.slice(5))
+            }
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
-   
+
     getData()
-  }, [props.uri,role,user ])
+  }, [props.uri, role, user])
   return (
     <>
       <div className="center">
@@ -193,25 +194,25 @@ export default function Tables(props) {
         <table>
           <thead>
             <tr>
-              {propertyName.length<1?<th>No se han ingresado elementos</th>:
-              <>
-              {propertyName.map((property, index) => (
-                <th key={index}>
-                  {property}
-                </th>
+              {propertyName.length < 1 ? <th>No se han ingresado elementos</th> :
+                <>
+                  {propertyName.map((property, index) => (
+                    <th key={index}>
+                      {property}
+                    </th>
 
-              ))}
-              {(role === "Director" && props.uri !== "actividades") || (role === "Profesor" && props.uri === "actividades") ? <th>Accion</th> : null}
-              </> }
+                  ))}
+                  {(role === "Director" && props.uri !== "actividades") || (role === "Profesor" && props.uri === "actividades") ? <th>Accion</th> : null}
+                </>}
             </tr>
           </thead>
           <tbody>
             {data.map((item, rowIndex) => (
-              
-              <tr key={rowIndex} id="prueba">
-              {propertyName.map((property, colIndex) => (
-                  <td key={colIndex}>
-                  {   Array.isArray(item[property])
+
+              <tr key={rowIndex} id="prueba" className="tableResponsive">
+                {propertyName.map((property, colIndex) => (
+                  <td data-label={property+" "} key={colIndex}>
+                    {Array.isArray(item[property])
                       ? (
                         item[property].length > 0 || (props.uri === "actividades" && role === "Profesor") || (role === "Director" && props.uri === "profesores")
                           ?
@@ -232,15 +233,15 @@ export default function Tables(props) {
 
                       )
                       : item[property]
-                      
+
                     }
                   </td>
                 ))}
                 {(role === "Director" && props.uri !== "actividades") || (role === "Profesor" && props.uri === "actividades") ?
-                  <td>
+                  <td data-label="Accion">
                     <div className="buttonsTable">
                       <motion.button className="tableButton" onClick={() => handleModify(item)} whileHover={{ scale: 1.2, color: "#00255c" }}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="2vw" height="2vw" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
                           <path d="M15.502 1.95a.5.5 0 0 1 0 .706L15.559 3.69l-2-2L13.502.656a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.556-2-2L5.939 9.21a.5.5 0 0 0-.121.196l-.805 2.515a.25.25 0 0 0 .316.316l2.515-.805a.5.5 0 0 0 .196-.12l6.813-6.815z" />
                           <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                         </svg>
@@ -262,7 +263,7 @@ export default function Tables(props) {
                       </div>
                       <motion.button onClick={() => handleShowWarning(item)} className="tableButton"
                         whileHover={{ rotate: 20 }}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="2vw" height="2vw" fill="red" className="bi bi-trash3-fill" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="red" className="bi bi-trash3-fill" viewBox="0 0 16 16">
                           <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
                         </svg>
                       </motion.button>
@@ -287,6 +288,7 @@ export default function Tables(props) {
             </tr>
           </tbody>
         </table>
+
       </div>
       <SearchNull searchNull={searchNull} animateAviso={animateAviso} onCancel={handleCancelError} />
     </>

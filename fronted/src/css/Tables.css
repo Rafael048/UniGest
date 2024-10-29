@@ -134,3 +134,54 @@ td{
 .subItem{
     padding: .4vw;
 }
+
+@media screen and (max-width:650px) {
+    .headTable{
+        flex-direction: column;
+    }
+    .searchButton, .inputSearch, .addButton{
+        font-size: 20px;
+    }
+    .inputSearch{
+        height: 25px;
+    }
+
+    thead{
+        display: none;
+    }
+    tr{
+        margin-bottom: 8px;
+        border-bottom: 2px solid #00255C;
+        display: block;
+    }
+    th,td{
+        font-size: 18px;
+    }
+    td{
+        display: flex;
+        gap: 1vw;
+        border: 0;
+        text-align: left;
+    }   
+    td:last-child{
+        border-bottom: 0;
+    }
+
+    td::before{
+        content: attr(data-label);
+        width: 30%;
+    }
+
+    .buttonsTable {
+        font-size: 20px;
+        justify-content: left;
+    } 
+    
+    .nextPrev::before{
+        content: none;
+    }
+    .nextPrev{
+        border-bottom: 2px solid white;
+    }
+
+}
