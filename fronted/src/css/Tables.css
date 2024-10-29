@@ -139,11 +139,11 @@ td{
     .headTable{
         flex-direction: column;
     }
-    .searchButton, .inputSearch, .addButton{
-        font-size: 20px;
+    .searchButton, .inputSearch, .addButton, .assignButton{
+        font-size: 18px;
     }
     .inputSearch{
-        height: 25px;
+        height: 20px;
     }
 
     thead{
@@ -151,7 +151,6 @@ td{
     }
     tr{
         margin-bottom: 8px;
-        border-bottom: 2px solid #00255C;
         display: block;
     }
     th,td{
@@ -162,14 +161,17 @@ td{
         gap: 1vw;
         border: 0;
         text-align: left;
-    }   
+    } 
+    .tableResponsive{
+        border-bottom: 2px solid #00255C;
+    }  
     td:last-child{
         border-bottom: 0;
     }
 
     td::before{
         content: attr(data-label);
-        width: 30%;
+        width: 50%;
     }
 
     .buttonsTable {
