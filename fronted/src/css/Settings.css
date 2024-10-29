@@ -53,4 +53,10 @@
     padding: .5vw 3vw;
     border: 0px;
     border-radius: 30px;
+    cursor: pointer;
+
+}
+
+.data{
+    text-transform: capitalize;
 }

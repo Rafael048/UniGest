@@ -37,13 +37,13 @@ export default function Settings() {
                             </h1>
                         </div>
                         <div className="settingDescription">
-                            <p className="textSetting"> <b>Nombre: </b> {user.nombre}</p>
-                            <p className="textSetting"><b>Apellido:</b> {user.apellido} </p>
-                            <p className="textSetting"><b>Puesto:</b> {user.rol} </p>
+                            <p className="textSetting"><b>Nombre: </b> <span className="data">{user.nombre}</span></p>
+                            <p className="textSetting"><b>Apellido:</b> <span className="data">{user.apellido}</span></p>
+                            <p className="textSetting"><b>Puesto:</b> <span className="data">{user.rol}</span></p>
                         </div>
                         <div className="buttonSettingsContainer">
-                            <motion.button onClick={() => window.location.replace('/modificarUsuario')} whileHover={{backgroundColor:"#0947a5", scale:.9}} className="buttonSetting">Editar</motion.button>
-                            <motion.button whileHover={{backgroundColor:"red", scale:.9}} className="buttonSetting">Eliminar</motion.button>
+                            <motion.button onClick={() => window.location.replace('/modificarUsuario')} whileHover={{ backgroundColor: "#0947a5", scale: .9 }} className="buttonSetting">Editar</motion.button>
+                            <motion.button whileHover={{ backgroundColor: "red", scale: .9 }} className="buttonSetting">Eliminar</motion.button>
                         </div>
 
                     </div>

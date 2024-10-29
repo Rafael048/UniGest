@@ -41,7 +41,7 @@
 }
 
 .bg-event {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.781);
     display: flex;
     width: 25%;
     flex-direction: column;
@@ -55,7 +55,7 @@
     width: 70vw;
     background-color: rgb(255, 255, 255);
     padding: 1vw;
-    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 9px 1px rgba(0, 0, 0, 0.363);
     border-radius: 30px;
 }
 

@@ -41,10 +41,9 @@ export default function Header({ landing, active, activities, color, plani }) {
           <ul className={openHeader ? 'links' : 'links closeHeader'}>
             {
               active ? <>
-                <li><a href="/" className={landing ? 'link active' : 'link'}>Inicio</a></li>
-                <li><a href="Actividades" className={activities ? 'link active' : 'link'}>Actividades</a></li>
                 <li><a href="/calendario" className={plani ? 'link active' : 'link'}>Planificación</a></li>
-                <li onClick={() => handleShowExit()}><a href='#' className='link'>Cerrar Sesión</a></li>
+                <li><a href="/Actividades" className={activities ? 'link active' : 'link'}>Actividades</a></li>
+                <li onClick={() => handleShowExit()}><a href='/#' className='link'>Cerrar Sesión</a></li>
               </> :
                 <>
                   <li className='buttonHeaderClose'>
@@ -54,9 +53,6 @@ export default function Header({ landing, active, activities, color, plani }) {
                       </svg>
                     </button>
                   </li>
-                  {
-                    plani ? <li className='linksHeaderli'><a href="/" className={landing ? 'link active' : 'link'}>Inicio</a></li> : null
-                  }
                   <li className='linksHeaderli'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fillRule="currentColor" className="bi bi-card-checklist" viewBox="0 0 16 16">
                       <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z" />
