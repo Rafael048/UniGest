@@ -1,4 +1,4 @@
-.center{
+.center {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -9,7 +9,7 @@
     box-shadow: 0px 0px 9px 1px rgba(0, 0, 0, 0.363);
 }
 
-.headTable{
+.headTable {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
@@ -20,21 +20,22 @@
     gap: 1vw;
 }
 
-.svgtables{
+.svgtables {
     width: 30px;
     height: 30px;
 }
-.svgNextPrev{
+
+.svgNextPrev {
     width: 50px;
     height: 50px;
 }
 
-.searchsvg{
+.searchsvg {
     width: 25px;
     height: 25px;
 }
 
-.addSearch{
+.addSearch {
     display: flex;
     font-size: 24px;
     justify-content: space-around;
@@ -42,7 +43,7 @@
     gap: 1vw;
 }
 
-.search{
+.search {
     display: flex;
     align-items: center;
     background-color: #E4F1F8;
@@ -54,14 +55,15 @@
     width: 50%;
 }
 
-.searchButton{
+.searchButton {
     font-size: 30px;
     background: none;
     outline: none;
-    border: 0;   
+    border: 0;
 }
 
-.addButton, .assignButton{
+.addButton,
+.assignButton {
     font-size: 24px;
     padding: .5vw 1.6vw;
     background-color: #00255C;
@@ -70,30 +72,31 @@
     border-radius: 30px;
     cursor: pointer;
 }
-.showButton{
+
+.showButton {
     display: block;
 }
 
-.notShowButton{
+.notShowButton {
     display: none;
 }
 
-.tableButton{
-    background:none;
+.tableButton {
+    background: none;
     outline: none;
     border: 0;
     cursor: pointer;
 }
 
 
-.buttonsTable{
+.buttonsTable {
     display: flex;
     gap: 1vw;
     justify-content: center;
 }
 
-.inputSearch{
-    background:none;
+.inputSearch {
+    background: none;
     outline: none;
     border: 0;
     height: 2vw;
@@ -101,24 +104,25 @@
     width: 70%;
 }
 
-.formtable{
+.formtable {
     display: flex;
     align-items: center;
     gap: 1vw;
 }
 
-table{
+table {
     width: 100%;
     border-collapse: collapse;
 }
-th{
+
+th {
     background-color: #E4F1F8;
     text-transform: capitalize;
     padding: .5vw;
     font-size: 24px;
 }
 
-td{
+td {
     text-align: center;
     text-transform: capitalize;
     font-size: 20px;
@@ -126,115 +130,160 @@ td{
     border-bottom: 1px solid black;
 }
 
-.titleTable{
+.titleTable {
     text-transform: capitalize;
 }
 
-.nextPrev{
+.nextPrev {
     border: 0;
 }
 
-.nextPrevButton{
+.nextPrevButton {
     background: none;
     border: 0;
     outline: none;
 }
 
-.nextPrev{
+.nextPrev {
     display: flex;
     justify-content: space-between;
 }
 
-.subItem{
+.subItem {
     padding: .4vw;
 }
 
 @media screen and (max-width:1300px) {
-    .titleTable{
+    .titleTable {
         font-size: 30px;
     }
-    .searchButton, .inputSearch, .addButton, .assignButton{
+
+    .searchButton,
+    .inputSearch,
+    .addButton,
+    .assignButton {
         font-size: 24px;
     }
-    .inputSearch{
+
+    .inputSearch {
         height: 20px;
     }
-    th{
-       font-size: 20px; 
+
+    th {
+        font-size: 20px;
     }
-    td{
+
+    td {
         font-size: 18px;
     }
 }
+
 @media screen and (max-width:1024px) {
-    .titleTable{
+    .titleTable {
         font-size: 28px;
     }
-    .searchButton, .inputSearch, .addButton, .assignButton{
+
+    .searchButton,
+    .inputSearch,
+    .addButton,
+    .assignButton {
         font-size: 20px;
     }
-    .inputSearch, th{
+
+    .inputSearch,
+    th {
         height: 18px;
     }
-    td{
+
+    td {
         font-size: 16px;
     }
 }
 
 @media screen and (max-width:768px) {
-    .subItem{
+    .subItem {
         display: flex;
         flex-direction: column;
     }
-    .materiasSeccion{
+
+    .materiasSeccion {
         display: flex;
         flex-direction: column;
         gap: 1.5vw;
         align-items: start;
     }
-    .headTable{
+
+    .headTable {
         flex-direction: column;
     }
-    .searchButton, .inputSearch, .addButton, .assignButton{
+
+    .searchButton,
+    .inputSearch,
+    .addButton,
+    .assignButton {
         font-size: 18px;
     }
-    .inputSearch{
+
+    .inputSearch {
         height: 20px;
     }
-    thead{
+
+    thead {
         display: none;
     }
-    tr{
+
+    tr {
         margin-bottom: 8px;
         display: block;
     }
-    th,td{
+
+    th,
+    td {
         font-size: 18px;
     }
-    td{
+
+    td {
         display: flex;
         gap: 1vw;
         border: 0;
         text-align: left;
         padding: 2vw;
-    } 
-    .tableResponsive{
+    }
+
+    .tableResponsive {
         border-bottom: 2px solid #00255C;
-    }  
-    td:last-child{
+    }
+
+    td:last-child {
         border-bottom: 0;
     }
 
-    td::before{
+    td::before {
         content: attr(data-label);
         width: 50%;
     }
-    
-    .nextPrev::before{
+
+    .nextPrev::before {
         content: none;
     }
-    .nextPrev{
+
+    .nextPrev {
         border-bottom: 2px solid white;
     }
 
+}
+
+@media screen and (max-width:450px) {
+
+    .searchButton,
+    .inputSearch,
+    .addButton,
+    .assignButton {
+        font-size: 14px;
+    }
+
+    th,
+    td {
+        font-size: 14px;
+    }
 }
