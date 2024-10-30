@@ -216,7 +216,7 @@ export default function Tables(props) {
                       ? (
                         item[property].length > 0 || (props.uri === "actividades" && role === "Profesor") || (role === "Director" && props.uri === "profesores")
                           ?
-                          <>
+                          <div className="materiasSeccion">
                             {item[property].map((subItem, subIndex) => (
                               <div key={subIndex} className="subItem">{subItem} </div>
                             ))}
@@ -227,7 +227,7 @@ export default function Tables(props) {
                               :
                               null
                             }
-                          </>
+                          </div>
                           :
                           <p>Sin Asignar</p>
 

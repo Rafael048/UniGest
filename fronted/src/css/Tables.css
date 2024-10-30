@@ -182,6 +182,16 @@ td{
 }
 
 @media screen and (max-width:768px) {
+    .subItem{
+        display: flex;
+        flex-direction: column;
+    }
+    .materiasSeccion{
+        display: flex;
+        flex-direction: column;
+        gap: 1.5vw;
+        align-items: start;
+    }
     .headTable{
         flex-direction: column;
     }
