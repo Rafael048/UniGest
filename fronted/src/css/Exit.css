@@ -1,6 +1,6 @@
-.exit{
+.exit {
     position: fixed;
-    z-index: 4;
+    z-index: 6;
     width: 100%;
     height: 100%;
     right: 0;
@@ -10,9 +10,9 @@
     justify-content: center;
 }
 
-.warning{
+.warning {
     position: fixed;
-    z-index: 7;
+    z-index: 10;
     width: 100%;
     height: 100%;
     right: 0;
@@ -27,31 +27,34 @@
 }
 
 @keyframes exitAnimation {
-    0%{
+    0% {
         transform: translateY(-50vh);
     }
-    100%{
+
+    100% {
         transform: translateY(0);
     }
 }
 
-.cancelButton:hover{
+.cancelButton:hover {
     background-color: #5EA9D4;
     color: white;
-    transition: all .5s ease;
+    transform: scale(.9);
+    transition: all .3s ease;
 }
 
-.aceptButton:hover{
+.aceptButton:hover {
     background-color: #FF0000;
     color: white;
-    transition: all .5s ease;
+    transform: scale(.9);
+    transition: all .3s ease;
 }
 
-.windonws{
+.windonws {
     background-color: #262626;
     width: 40vw;
     padding: 3vw;
-    border-radius:20px;
+    border-radius: 20px;
     color: white;
     font-size: 40px;
     font-weight: bold;
@@ -63,18 +66,18 @@
 
 }
 
-.textExit{
+.textExit {
     text-align: center;
     display: flex;
     justify-content: center;
 }
 
-.textExit>p{
+.textExit>p {
     width: 90%;
     font-size: 50px;
 }
 
-.buttonsExit{
+.buttonsExit {
     padding: 1vw .5vw;
     background-color: white;
     color: black;
@@ -82,16 +85,82 @@
     font-size: 30px;
     border-radius: 40px;
     font-weight: bold;
-    width: 50%;
     border: 0;
+    cursor: pointer;
 }
 
-.buttonsExitWindows{
+.buttonsExitWindows {
     display: flex;
     gap: 2vw;
     justify-content: center;
+    align-items: center;
 }
 
-.cancel{
+.cancel {
     display: none;
+}
+
+.iconExit{
+    display: none;
+}
+
+@media screen and (max-width:1440px) {
+
+    .textExit>p {
+        width: 100%;
+        font-size: 34px;
+    }
+
+    .buttonsExit {
+        font-size: 25px;
+    }
+}
+
+@media screen and (max-width:1054px) {
+
+    .textExit>p {
+        font-size: 32px;
+    }
+
+    .windonws {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    .textExit>p {
+        font-size: 26px;
+    }
+    .buttonsExit{
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width:625px) {
+    .windonws{
+        width: 70%;
+        height: 25vh;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width:450px) {
+    .buttonText{
+        display: none;
+    }
+    .svgExit{
+        width: 30%;
+    }
+    .iconExit{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .buttonsExit{
+        padding: .5vw .5vw;
+    }
+    .textExit>p {
+        font-size: 20px;
+    }
 }

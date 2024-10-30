@@ -1,4 +1,4 @@
-import { React} from 'react'
+import { React } from 'react'
 import FormAdd from '../components/FormAdd'
 import Menu from '../components/Menu'
 import Footer from '../components/Footer'
@@ -12,7 +12,7 @@ export default function FormActivitiesAdd() {
   return (
     <>
       <div className='directorView'>
-        <div className='logoDirectorSolo'>
+        <div className='logoUnigest'>
           <img src={logo} alt="" width={"80%"} />
         </div>
         <Menu btMateria={btActive} />

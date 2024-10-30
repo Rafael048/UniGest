@@ -13,7 +13,7 @@ export default function FormActivitiesAdd() {
   return (
     <>
       <div className='directorView'>
-        <div className='logoDirectorSolo'>
+      <div className='logoUnigest'>
           <img src={logo} alt="" width={"80%"} />
         </div>
         <Menu btSeccion={btActive} />

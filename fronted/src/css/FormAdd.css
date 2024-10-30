@@ -136,3 +136,20 @@
     border: 0;
     font-weight: bold;
 }
+
+@media screen and (max-width:1440px) {
+    .inputAdd{
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width:1024px) {
+    .formDirectorAdd{
+        width: 60%;
+    }
+    .inputAdd{
+        font-size: 20px;
+        height: 40px;
+        border-radius: 10px;
+    }
+}

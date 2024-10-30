@@ -24,6 +24,7 @@ import FormModifySubjects from './pages/FormModifySubjects'
 import FormModifyUser from './pages/FormModifyUser'
 import FormModifySections from './pages/FormModifySections'
 import SettingsPage from './pages/SettingsPage';
+import TestResponsivetemp from './pages/TestResponsivetemp';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
@@ -49,6 +50,7 @@ root.render(
       <Route path='Calendario' element={<CalendarPage/>}/>
       <Route path='ModificarUsuario' element={<FormModifyUser/>}/>
       <Route path='Ajustes' element={<SettingsPage/>}/>
+      <Route path='test' element={<TestResponsivetemp/>}/>
     </Routes>
   </BrowserRouter>
 );

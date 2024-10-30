@@ -38,4 +38,18 @@
     top: 0;
     padding: .5vw;
 }
+.logoUnigest{
+    position: absolute;
+    width: 25vw;
+    z-index: 21;
+    left: 8vw;
+    top: 0;
+    padding: .5vw;
+}
+
+@media screen and (max-width:768px) {
+    .directorView{
+        height: 100vh;
+    }
+}
 

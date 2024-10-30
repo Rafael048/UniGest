@@ -14,8 +14,9 @@
 .link{
     text-decoration: none;
     color: black;
-    padding: 10px 20px 10px 20px;
-    border-radius: 35px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 30px;
 }
 .linksHeaderli > svg{
     display: none;
@@ -23,6 +24,10 @@
 
 .active{
     background-color: black;
+    padding: 10px 20px 10px 20px;
+    border-radius: 30px;
+}
+.active>a{
     color: white;
 }
 
@@ -99,6 +104,14 @@
 }
 
 @media (max-width:768px){
+
+    .svgHeader{
+        width: 30px;
+    }
+    .active{
+        background-color: #A6D0E7;
+    }
+
     .closeHeader{
         display: none;
     }
@@ -117,7 +130,7 @@
         right: 0;
         top: 0;
         justify-content: start;
-        z-index: 2;
+        z-index: 4;
         height: 100vh;
         width: 50vw;
         padding: 2vw;
@@ -137,6 +150,7 @@
         text-align: justify;
     }
     .buttonHeaderClose{
+        width: 100%;
         display: flex;
         justify-content: end;
     }
@@ -154,10 +168,16 @@
         max-height: 100vh;
     }
     .linksHeaderli{
-        width: 70%;
-        font-size: 24px;
+        flex-direction: column;
+        width: 50%;
+        height: 20vh;
+        font-size: 28px;
+        padding: 5px;
         justify-content: center;
         align-items: center;
+    }
+    .active{
+        border-radius: 10px 30px ;
     }
     .linksHeaderli > svg{
         font-size: 20px;

@@ -68,6 +68,7 @@
     align-items: center;
     font-weight: bolder;
     width: 100%;
+    cursor: pointer;
 }
 
 .linksMenu>div {
@@ -166,6 +167,7 @@
         position: fixed;
         width: 100%;
         z-index: 20;
+        top: 0;
         height: 100vh;
         animation: openMenuAnimationMobile;
         animation-duration: .3s;
