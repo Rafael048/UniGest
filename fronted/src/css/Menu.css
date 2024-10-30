@@ -165,6 +165,7 @@
     .menu {
         position: fixed;
         width: 100%;
+        z-index: 20;
         height: 100vh;
         animation: openMenuAnimationMobile;
         animation-duration: .3s;
@@ -172,8 +173,8 @@
     }
 
     .openMenu {
-        width: 5%;
-        height: 5vh;
+        width: auto;
+        height: 7vh;
         border-radius: 10px;
         animation: closeMenuAnimationMobile;
         animation-duration: .3s;
@@ -185,6 +186,81 @@
 
     .mobile {
         display: none;
+    }
+    .linksMenu{
+        width:100%;
+        height: 20vh;
+        border: 2px solid #00255C;
+        border-radius: 0 30px 30px 30px;
+    }
+    .containerLink{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .buttons{
+        width: 25%;
+        height: 20vh;
+    }
+    .activeMenu{
+        height: 20vh;
+    }
+    .closeSesion{
+        width: 25%;
+        height: 20vh;
+        text-align: center;
+    }
+    .logout{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .linksDirector{
+       flex-direction: row;
+       flex-wrap: wrap;
+    }
+    .linksOrder{
+        gap: 1vw;
+    }
+    .svgMenu {
+        width: 40px;
+    }
+}
+
+@media screen and (max-width:652px) {
+    .svgMenu{
+        width: 30px;
+    }
+    .openMenu{
+        height: 5vh;
+    }
+    .linksMenu, .buttons{
+        height: 15vh;
+    }
+    .menu{
+        font-size: 16px;
+    }
+
+}
+@media screen and (max-width:375px) {
+    .buttons{
+        width: 40%;
+    }
+    .logout{
+        width: 100%;
+    }
+    .closeSesion{
+        width: 40%;
+    }
+    .menu{
+        font-size: 18px;
+    }
+    .linksDirector{
+        gap: 2vw;
+    }
+    .linksOrder{
+        gap: 2vw;
     }
 
 }

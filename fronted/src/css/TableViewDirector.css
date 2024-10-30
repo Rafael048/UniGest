@@ -13,7 +13,7 @@
 .logoDirector{
     position: absolute;
     width: 15vw;
-    z-index: 1;
+    z-index: 21;
     left: 5vw;
     padding: .5vw;
 }
@@ -25,6 +25,20 @@
 }
 @media screen and (max-width:768px) {
     .logoDirector{
+        left: 8vw;
         width: 25vw;
+    }
+}
+@media screen and (max-width:627px) {
+    .logoDirector{
+        left: 8vw;
+        width: 30vw;
+    }
+}
+@media screen and (max-width:425px) {
+    .logoDirector{
+        left: 10vw;
+        top: .5vh;
+        width: 40vw;
     }
 }

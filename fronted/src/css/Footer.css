@@ -1,11 +1,15 @@
-footer{
+footer {
     background-color: #F0F0F0;
     display: flex;
     padding: 2vw;
     align-items: center;
 }
 
-.logo{
+.iconGithub {
+    width: 20px;
+}
+
+.logo {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -13,20 +17,24 @@ footer{
     gap: 1vw;
 }
 
-.textFooter{
+.imgLogoFooter {
+    width: 10%;
+}
+
+.textFooter {
     text-align: left;
 }
 
-.textFooter > h1{
+.textFooter>h1 {
     font-size: 32px;
 }
 
-.textFooter > p{
+.textFooter>p {
     font-size: 24px;
 }
 
-.Collaborators{
-    display: flex; 
+.Collaborators {
+    display: flex;
     width: 50%;
     flex-direction: row;
     align-items: center;
@@ -34,16 +42,19 @@ footer{
     gap: 2vw;
 }
 
-.github{
+.github {
     display: flex;
     flex-direction: row;
 }
 
-.name, .github{
+.name,
+.github {
     text-align: left;
 }
 
-.name, .github, .logoGit{
+.name,
+.github,
+.logoGit {
     display: flex;
     flex-direction: column;
     gap: .5vw;
@@ -51,7 +62,133 @@ footer{
 
 }
 
-.github > a {
+.github>a {
     color: black;
     text-decoration: none;
+}
+
+
+@media screen and (max-width:1024px) {
+    .textFooter>p {
+        font-size: 20px;
+    }
+
+    .name,
+    .github,
+    .logoGit {
+        font-size: 18px;
+
+    }
+
+    .imgLogoFooter {
+        width: 15%;
+    }
+
+
+}
+
+@media screen and (max-width:860px) {
+    .textFooter>p {
+        font-size: 16px;
+    }
+
+    .textFooter>h1 {
+        font-size: 24px;
+    }
+
+    .name,
+    .github,
+    .logoGit {
+        font-size: 16px;
+
+    }
+}
+
+@media screen and (max-width:686px) {
+    .textFooter>p {
+        font-size: 18px;
+    }
+
+    .textFooter>h1 {
+        font-size: 24px;
+    }
+
+    .name,
+    .github,
+    .logoGit {
+        font-size: 18px;
+
+    }
+
+    .iconGithub {
+        width: 20px;
+    }
+
+    .logo {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .Collaborators {
+        width: 80%;
+    }
+
+    .name,
+    .github,
+    .logoGit {
+        gap: 2vw;
+    }
+
+    footer {
+        min-height: 20vh;
+        flex-direction: column;
+        gap: 2vw;
+    }
+}
+
+
+
+@media screen and (max-width:425px) {
+    footer {
+        padding: 20px;
+    }
+
+    .textFooter>p {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .textFooter>h1 {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .textFooter>h1 {
+        font-size: 18px;
+    }
+
+    .imgLogoFooter {
+        width: 10%;
+    }
+
+    .imgLogoFooter {
+        display: none;
+    }
+
+    .name,
+    .github,
+    .logoGit {
+        font-size: 16px;
+
+    }
+
+    .iconGithub {
+        width: 16px;
+    }
+
+    .Collaborators {
+        width: 100%;
+        justify-content: center;
+    }
+
 }
