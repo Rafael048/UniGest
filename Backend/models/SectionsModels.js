@@ -12,6 +12,7 @@ class SectionsModels{
             let dateTemp = new Date(Element.periodoAcademico)
             Element.periodoAcademico = dateTemp.toISOString().slice(0,10).replace('T','')
           });
+  
           resolve(results)
         }
       })

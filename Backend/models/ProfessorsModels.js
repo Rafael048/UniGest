@@ -4,7 +4,7 @@ const PMSControllers = require("../controllers/PMSControllers");
 class ProfessorsModels{
   All() {
     return new Promise((resolve,reject)=>{
-      let consult = "SELECT * FROM profesores"
+      let consult = "SELECT nombre,apellido,id FROM profesores"
       connection.query(consult,function(error,results,fields){
         if(error){
          reject(error)

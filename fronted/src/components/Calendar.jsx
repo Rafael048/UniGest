@@ -136,6 +136,8 @@ export default function Calendar() {
                         initialView="dayGridMonth"
                         eventClick={handleEventClick}
                         events={events}
+                        locales={'esLocales'}
+                        locale={'es'}
                     />
                 </div>
 

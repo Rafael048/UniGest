@@ -38,6 +38,7 @@ class SubjectsModels{
         let nombreR = registro.nombre
         let diaClase = null
         let diaUpper = registro.dia.charAt(0).toUpperCase() + registro.dia.slice(1)
+        let fail = false
         if(nombreR==undefined||diaUpper==undefined||nombreR.trim()===""||diaUpper.trim()===""){
           reject(new Error("No se pueden enviar datos vacios"))
         }
@@ -56,15 +57,20 @@ class SubjectsModels{
           break;
           case "Sabado": diaClase = 6
           break;
+          default:  fail = true
         }
-             let consult = `INSERT INTO materias (nombre,diaClase) VALUES ('${nombreR}','${diaClase}')`
-             connection.query(consult,function(error,results,fields){
-              if(error){
-                reject(error)
-              }else{
-                resolve(results)
-              }
-             })
+        if(!fail){
+          let consult = `INSERT INTO materias (nombre,diaClase) VALUES ('${nombreR}','${diaClase}')`
+          connection.query(consult,function(error,results,fields){
+           if(error){
+             reject(error)
+           }else{
+             resolve(results)
+           }
+          })
+        }else{
+          reject(new Error("Se debe pasar un dia de la semana valido "))
+        }
       })
     }
 

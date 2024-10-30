@@ -23,6 +23,7 @@ export default function Tables(props) {
   const [user, setUser] = useState(null)
 
   function handleShowWarning(item) {
+    
     setIdDelete(item)
     setWarning(true)
   }
@@ -138,17 +139,26 @@ export default function Tables(props) {
             let filter = result.data.body.filter((creador) => {
               return creador.creador === user.userName
             })
+            filter.forEach(element => {
+              delete element.creador
+            });
             setData(filter.slice(0, 5))
             setAllData(filter)
-            setPropertyName(Object.getOwnPropertyNames(filter[0]))
+            let muestra = Object.getOwnPropertyNames(filter[0])
+            let indexID = muestra.findIndex((element=>element==="id"))
+            muestra.splice(indexID,1)
+            setPropertyName(muestra)
             if (filter.length > 5) {
               setNextData(filter.slice(5))
             }
           } else {
             setData(result.data.body.slice(0, 5))
             setAllData(result.data.body)
-            setPropertyName(Object.getOwnPropertyNames(result.data.body[0]))
-            if (result.data.body.length > 5) {
+            let muestra = Object.getOwnPropertyNames(result.data.body[0])
+            let indexID = muestra.findIndex((element=>element==="id"))
+            muestra.splice(indexID,1)
+            setPropertyName(muestra)         
+               if (result.data.body.length > 5) {
               setNextData(result.data.body.slice(5))
             }
           }
@@ -194,13 +204,14 @@ export default function Tables(props) {
         <table>
           <thead>
             <tr>
-              {propertyName.length < 1 ? <th>No se han ingresado elementos</th> :
+              {propertyName.length <= 0 ? <th>No se han ingresado elementos</th> :
                 <>
                   {propertyName.map((property, index) => (
-                    <th key={index}>
-                      {property}
-                    </th>
-
+                    
+                      <th key={index}>
+                        {property}
+                      </th>
+                      
                   ))}
                   {(role === "Director" && props.uri !== "actividades") || (role === "Profesor" && props.uri === "actividades") ? <th>Accion</th> : null}
                 </>}
