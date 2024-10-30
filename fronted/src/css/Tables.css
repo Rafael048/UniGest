@@ -20,6 +20,20 @@
     gap: 1vw;
 }
 
+.svgtables{
+    width: 30px;
+    height: 30px;
+}
+.svgNextPrev{
+    width: 50px;
+    height: 50px;
+}
+
+.searchsvg{
+    width: 25px;
+    height: 25px;
+}
+
 .addSearch{
     display: flex;
     font-size: 24px;
@@ -135,7 +149,39 @@ td{
     padding: .4vw;
 }
 
-@media screen and (max-width:650px) {
+@media screen and (max-width:1300px) {
+    .titleTable{
+        font-size: 30px;
+    }
+    .searchButton, .inputSearch, .addButton, .assignButton{
+        font-size: 24px;
+    }
+    .inputSearch{
+        height: 20px;
+    }
+    th{
+       font-size: 20px; 
+    }
+    td{
+        font-size: 18px;
+    }
+}
+@media screen and (max-width:1024px) {
+    .titleTable{
+        font-size: 28px;
+    }
+    .searchButton, .inputSearch, .addButton, .assignButton{
+        font-size: 20px;
+    }
+    .inputSearch, th{
+        height: 18px;
+    }
+    td{
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width:768px) {
     .headTable{
         flex-direction: column;
     }
@@ -145,7 +191,6 @@ td{
     .inputSearch{
         height: 20px;
     }
-
     thead{
         display: none;
     }
@@ -161,6 +206,7 @@ td{
         gap: 1vw;
         border: 0;
         text-align: left;
+        padding: 2vw;
     } 
     .tableResponsive{
         border-bottom: 2px solid #00255C;
@@ -173,11 +219,6 @@ td{
         content: attr(data-label);
         width: 50%;
     }
-
-    .buttonsTable {
-        font-size: 20px;
-        justify-content: left;
-    } 
     
     .nextPrev::before{
         content: none;

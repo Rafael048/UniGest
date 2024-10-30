@@ -6,11 +6,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividades, btProfesores, btAjustes }) {
 
     const [open, setOpen] = useState(false)
-    const [classLinks, setClassLinks] = useState('')
-    const [displayMenu, setDisplayMenu] = useState('')
+    const [classLinks, setClassLinks] = useState('closeLinks')
+    const [displayMenu, setDisplayMenu] = useState('openMenu')
     const [exitEmer, setExitEmer] = useState(null)
+    const [mobile, setMobile] = useState('mobile')
     const ini = btIni
-    const plani = btPlani
     const materia = btMateria
     const seccion = btSeccion
     const actividades = btActividades
@@ -22,13 +22,13 @@ export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividad
             setOpen(true)
             setDisplayMenu('openMenu')
             setClassLinks('closeLinks')
-            console.log('open')
+            setMobile('mobile')
         } else {
             if (open === true) {
                 setOpen(false)
                 setDisplayMenu('')
                 setClassLinks('')
-                console.log('close')
+                setMobile('')
             }
         }
 
@@ -54,7 +54,7 @@ export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividad
                 transition={{ duration: .6 }}>
                 <div className='btOpen'>
                     <motion.button className='btMenu' onClick={() => openMenu()} whileHover={{ scale: 1.2 }}>
-                        <motion.svg whileHover={{ color: "green" }} xmlns="http://www.w3.org/2000/svg" width="2.5vw" height="2.5vw" fillRule="currentColor" className="bi bi-list" viewBox="0 0 16 16">
+                        <motion.svg whileHover={{ color: "green" }} xmlns="http://www.w3.org/2000/svg" fillRule="currentColor" className="bi bi-list svgMenu" viewBox="0 0 16 16">
                             <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
                         </motion.svg>
                     </motion.button>
@@ -62,12 +62,12 @@ export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividad
                 <div className='linksOrder'>
                     <AnimatePresence>
 
-                        <div className='linksDirector'>
+                        <div className={`linksDirector ${mobile}`}>
 
                             <div className='buttons'>
                                 <a href="/" className={`linksMenu ${ini}`}>
                                     <motion.div whileHover={{ scale: 1.1 }}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="2vw" height="2vw" fillRule="currentColor" className="bi bi-house" viewBox="0 0 16 16">
+                                        <svg xmlns="http://www.w3.org/2000/svg"  fillRule="currentColor" className="bi bi-house svgMenu" viewBox="0 0 16 16">
                                             <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
                                         </svg>
                                         <motion.p animate={open ? linkClose : linkOpen} transition={{ duration: .5 }} className={classLinks}>
@@ -79,7 +79,7 @@ export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividad
                             <div className='buttons'>
                                 <a href="/profesores" className={`linksMenu ${profesores}`}>
                                     <motion.div whileHover={{ scale: 1.1 }}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="2vw" height="2vw" fillRule="currentColor" className="bi bi-people-fill" viewBox="0 0 16 16">
+                                        <svg xmlns="http://www.w3.org/2000/svg"  fillRule="currentColor" className="bi bi-people-fill svgMenu" viewBox="0 0 16 16">
                                             <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
                                         </svg>
                                         <motion.p animate={open ? linkClose : linkOpen} transition={{ duration: .5 }} className={classLinks}>
@@ -92,7 +92,7 @@ export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividad
                             <div className='buttons'>
                                 <a href="/materias" className={`linksMenu ${materia}`}>
                                     <motion.div whileHover={{ scale: 1.1 }}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="2vw" height="2vw" fillRule="currentColor" className="bi bi-list-check" viewBox="0 0 16 16">
+                                        <svg xmlns="http://www.w3.org/2000/svg"  fillRule="currentColor" className="bi bi-list-check svgMenu" viewBox="0 0 16 16">
                                             <path fillRule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0m0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0m0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0" />
                                         </svg>
                                         <motion.p animate={open ? linkClose : linkOpen} transition={{ duration: .5 }} className={classLinks}>
@@ -104,7 +104,7 @@ export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividad
                             <div className='buttons'>
                                 <a href="/secciones" className={`linksMenu ${seccion}`}>
                                     <motion.div whileHover={{ scale: 1.1 }}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="2vw" height="2vw" fillRule="currentColor" className="bi bi-columns-gap" viewBox="0 0 16 16">
+                                        <svg xmlns="http://www.w3.org/2000/svg"  fillRule="currentColor" className="bi bi-columns-gap svgMenu" viewBox="0 0 16 16">
                                             <path d="M6 1v3H1V1zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1zm14 12v3h-5v-3zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1zM6 8v7H1V8zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zm14-6v7h-5V1zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z" />
                                         </svg>
                                         <motion.p animate={open ? linkClose : linkOpen} transition={{ duration: .5 }} className={classLinks}>
@@ -117,7 +117,7 @@ export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividad
                             <div className='buttons'>
                                 <a href="/actividades" className={`linksMenu ${actividades}`}>
                                     <motion.div whileHover={{ scale: 1.1 }}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="2vw" height="2vw" fillRule="currentColor" className="bi bi-clipboard2-check-fill" viewBox="0 0 16 16">
+                                        <svg xmlns="http://www.w3.org/2000/svg"  fillRule="currentColor" className="bi bi-clipboard2-check-fill svgMenu" viewBox="0 0 16 16">
                                             <path d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5" />
                                             <path d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585q.084.236.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5q.001-.264.085-.5m6.769 6.854-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708" />
                                         </svg>
@@ -130,7 +130,7 @@ export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividad
                             <div className='buttons'>
                                 <a href="/ajustes" className={`linksMenu ${ajustes}`}>
                                     <motion.div whileHover={{ scale: 1.1 }}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="2vw" height="2vw" fill="currentColor" class="bi bi-sliders" viewBox="0 0 16 16">
+                                        <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" className="bi bi-sliders svgMenu" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1z" />
                                         </svg>
                                         <motion.p animate={open ? linkClose : linkOpen} transition={{ duration: .5 }} className={classLinks}>
@@ -140,10 +140,10 @@ export default function Menu({ btIni, btPlani, btMateria, btSeccion, btActividad
                                 </a>
                             </div>
                         </div>
-                        <div onClick={() => handleShowExit()} className='buttons'>
-                            <a href="#" className='linksMenu'>
+                        <div onClick={() => handleShowExit()} className={`buttons ${mobile}`}>
+                            <a href="/#" className='linksMenu'>
                                 <motion.div whileHover={{ scale: 1.1 }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="2vw" height="2vw" fillRule="currentColor" className="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg"  fillRule="currentColor" className="bi bi-box-arrow-right svgMenu" viewBox="0 0 16 16">
                                         <path fillRule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
                                         <path fillRule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
                                     </svg>

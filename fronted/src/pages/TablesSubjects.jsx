@@ -37,7 +37,7 @@ export default function TablesSubjects() {
           <div>
             <section className='mainTable'>
               <div className='logoDirector'>
-                <img src={logo} alt="" width={"80%"} />
+                <img src={logo} alt="" width="80%"/>
               </div>
               <Menu btMateria={btActive} />
               <article className='tableGeneral'>

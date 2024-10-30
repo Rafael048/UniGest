@@ -5,14 +5,26 @@
 .tableGeneral{
     width: 100%;
     padding: 3vw;
-    padding-top: 6vw;
+    padding-top: 100px;
     background-color: #F4F4F4;
 }
 
 
 .logoDirector{
     position: absolute;
+    width: 15vw;
     z-index: 1;
     left: 5vw;
     padding: .5vw;
+}
+
+@media screen and (max-width:1024px) {
+    .logoDirector{
+        width: 20vw;
+    }
+}
+@media screen and (max-width:768px) {
+    .logoDirector{
+        width: 25vw;
+    }
 }

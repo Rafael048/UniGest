@@ -1,25 +1,25 @@
-.menu{
+.menu {
     width: 30%;
     background-color: #E4F1F8;
     display: flex;
     flex-direction: column;
     font-size: 30px;
-    
     animation: openMenuAnimation;
     animation-duration: .3s;
 }
 
-.openMenu{
+.openMenu {
     width: 5%;
     animation: closeMenuAnimation;
     animation-duration: .3s;
 }
 
 @keyframes closeMenuAnimation {
-    0%{
+    0% {
         width: 30%;
-    } 
-    100%{
+    }
+
+    100% {
         width: 5%;
     }
 }
@@ -28,51 +28,163 @@
     from {
         width: 5%;
     }
-    to{
+
+    to {
         width: 30%;
     }
 }
 
+@keyframes closeMenuAnimationMobile {
+    0% {
+        width: 100%;
+        height: 100vh;
+    }
 
-.linksMenu{
+    100% {
+        width: 5%;
+        height: 5vh;
+    }
+}
+
+@keyframes openMenuAnimationMobile {
+    from {
+        width: 5%;
+        height: 5vh;
+    }
+
+    to {
+        width: 100%;
+        height: 100vh;
+    }
+}
+
+
+.linksMenu {
     text-decoration: none;
     color: black;
     display: flex;
     gap: 1vw;
     padding: 1vw;
     align-items: center;
-    font-family:  mont-Bold;
     font-weight: bolder;
+    width: 100%;
 }
 
-.linksMenu > div{
+.linksMenu>div {
     display: flex;
     gap: 2vw;
 }
-.btMenu{
+
+.btMenu {
     background: none;
     outline: none;
     border: 0;
 }
 
-.btOpen{
+.btOpen {
     padding: 1vw;
     width: 10%;
 }
 
-.activeMenu{
+.buttons {
+    width: 100%;
+}
+
+.activeMenu {
     background-color: #A6D0E7;
     border-left: 8px solid #00255C;
 }
 
-.closeLinks{
+.closeLinks {
     display: none;
 }
 
 
-.linksOrder{
+.linksOrder {
     display: flex;
     flex-direction: column;
     height: 90vh;
     justify-content: space-between;
+}
+
+.linksDirector {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw;
+}
+
+.svgMenu {
+    width: 40px;
+}
+
+@media screen and (max-width:1440px) {
+    .svgMenu {
+        width: 30px;
+    }
+}
+
+@media screen and (max-width:1300px) {
+    .menu {
+        font-size: 24px;
+        gap: 20px;
+    }
+
+    .linksMenu {
+        gap: 20px;
+    }
+}
+
+@media screen and (max-width:1024px) {
+    .menu {
+        font-size: 20px;
+    }
+
+    .svgMenu {
+        width: 25px;
+    }
+
+    .activeMenu {
+        border-left: 4px solid #00255C;
+    }
+
+    .openMenu {
+        width: 6%;
+    }
+
+}
+
+@media screen and (max-width:850px) {
+    .menu {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .menu {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        animation: openMenuAnimationMobile;
+        animation-duration: .3s;
+
+    }
+
+    .openMenu {
+        width: 5%;
+        height: 5vh;
+        border-radius: 10px;
+        animation: closeMenuAnimationMobile;
+        animation-duration: .3s;
+    }
+
+    .linksOrder {
+        justify-content: start;
+    }
+
+    .mobile {
+        display: none;
+    }
+
 }
