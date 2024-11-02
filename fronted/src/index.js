@@ -12,7 +12,6 @@ import TablesActivities from './pages/TablesActivities';
 import TableTeachers from './pages/TableTeachers';
 import TablesSections from './pages/TablesSections';
 import TablesSubjects from './pages/TablesSubjects';
-import FormProfessorsAdd from './pages/FromProfessorsAdd'
 import FormSectionsAdd from './pages/FormSectionsAdd'
 import FormSubjectsAdd from './pages/FormSubjectsAdd'
 import AsingProfessor from './pages/AsingProfessor'
@@ -30,10 +29,10 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path='/' exact element={<App/>} />
-      <Route path='RegisterUser' element={<RegisterUser/>}/>
+      <Route path='AgregarUsuario' element={<RegisterUser/>}/>
       <Route path='Login' element={<Login/>}/>
       <Route path='AgregarActividades' element={<FormActivitiesAdd/>}/>
-      <Route path='AgregarProfesores' element={<FormProfessorsAdd/>}/>
+      <Route path='AgregarProfesores' element={<RegisterUser/>}/>
       <Route path='AgregarMaterias' element={<FormSubjectsAdd/>}/>
       <Route path='AgregarSecciones' element={<FormSectionsAdd/>}/>
       <Route path='ModificarActividades' element={<FormModifyActivities/>}/>

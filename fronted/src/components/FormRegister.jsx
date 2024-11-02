@@ -57,12 +57,10 @@ export default function FormRegister(props) {
             <div className="inputNew">
 
                 <select name="puesto" id="" className='list' required>
-                    {props.uri ?
 
                         <option className='select' value="Profesor">Profesor</option>
-                        :
                         <option className='select' value="Director">Director</option>
-                    }
+                    
                 </select>
 
                 <input type="password" className='input' placeholder='Clave de registro' name="registerpass" autoComplete="off" required />

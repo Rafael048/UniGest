@@ -13,13 +13,13 @@ class ProfessorsModels{
           .then((pms) => {
             for (let i = 0; i < results.length; i++) {
               results[i].materias_Secciones = []
-              
               for (let j = 0; j < pms.length; j++) {
                 if (results[i].id == pms[j].idProf) {
-                  results[i].materias_Secciones.push(pms[j].Materias+ " " +pms[j].Secciones)
+                  results[i].materias_Secciones.push(pms[j].Materias+ " " +pms[j].Secciones+ " ",pms[j].id)
                 }
               }
             }
+            console.log(results)
             resolve(results)
           }).catch((e) => {
             reject(e)

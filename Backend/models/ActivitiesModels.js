@@ -11,11 +11,12 @@ class ActivitiesModels{
         }else{
           APMSControllers.All()
           .then((apms) => {
+            console.log(apms)
             for (let i = 0; i < results.length; i++) {
               results[i].Clase = []
               for (let j = 0; j < apms.length; j++) {
                 if (results[i].id == apms[j].idAct) {
-                  results[i].Clase.push(apms[j].profesor+ " " +apms[j].materia+ " " +apms[j].seccion)
+                  results[i].Clase.push(apms[j].profesor+ " " +apms[j].materia+ " " +apms[j].seccion,apms[j].id)
                 }
               }
             }

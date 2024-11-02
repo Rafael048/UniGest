@@ -96,6 +96,21 @@ export default function Tables(props) {
         console.log(err)
       });
   }
+  async function handleDesAsing(index,arr){
+    let id = arr[index]
+    let direcction = null
+    if(props.uri==="profesores"){
+      direcction = "pms"
+    }else{
+      direcction = "apms"
+    }
+    await axios.delete(`http://localhost:3000/${direcction}/eliminar/${id}`)
+    .then(() => {
+      window.location.reload()
+    }).catch((err) => {
+      console.log(err)
+    });
+  }
   async function handleAsing(name) {
     Cookies.set('name', name[0])
     Cookies.set('id', name[1])
@@ -117,6 +132,7 @@ export default function Tables(props) {
     window.location.replace(`/Modificar${props.uri}`)
 
   }
+  
   useEffect(() => {
     async function verify() {
       await axios.get(`http://localhost:3000/verify/${token}`)
@@ -151,6 +167,7 @@ export default function Tables(props) {
             if (filter.length > 5) {
               setNextData(filter.slice(5))
             }
+  
           } else {
             setData(result.data.body.slice(0, 5))
             setAllData(result.data.body)
@@ -228,8 +245,18 @@ export default function Tables(props) {
                         item[property].length > 0 || (props.uri === "actividades" && role === "Profesor") || (role === "Director" && props.uri === "profesores")
                           ?
                           <div className="materiasSeccion">
+                          
                             {item[property].map((subItem, subIndex) => (
-                              <div key={subIndex} className="subItem">{subItem} </div>
+                              Number.isInteger(subItem)?null:
+                              <div key={subIndex} className="subItem">{subItem} 
+                              { (role === "Director" && props.uri === "profesores")?
+                              <button onClick={()=>handleDesAsing(item.materias_Secciones.indexOf(subItem)+1,item.materias_Secciones)}> Desasignar</button>:
+                              role === "Profesor" && props.uri==="actividades"?
+                              <button onClick={()=>handleDesAsing(item.Clase.indexOf(subItem)+1,item.Clase)}> Desasignar</button>:
+                              null
+                            }
+                              
+                              </div> 
                             ))}
                             {(role === "Director" && props.uri === "profesores") || (role === "Profesor" && props.uri === "actividades") ?
                               <motion.button className="assignButton" onClick={() => handleAsing([item.nombre, item.id])} whileHover={{ scale: 1.2, backgroundColor: "white", color: "#00255c", border: "1px solid #00255c" }}>
