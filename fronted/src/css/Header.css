@@ -167,6 +167,9 @@
         align-items: center;
         max-height: 100vh;
     }
+    .link{
+        font-size: 20px;
+    }
     .linksHeaderli{
         flex-direction: column;
         width: 50%;
@@ -178,6 +181,7 @@
     }
     .active{
         border-radius: 10px 30px ;
+        padding: 0;
     }
     .linksHeaderli > svg{
         font-size: 20px;

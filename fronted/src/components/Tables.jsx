@@ -22,7 +22,7 @@ export default function Tables(props) {
   const [nextButton, setNextButton] = useState(false)
 
   function handleShowWarning(item) {
-    
+
     setIdDelete(item)
     setWarning(true)
   }
@@ -88,20 +88,20 @@ export default function Tables(props) {
         console.log(err)
       });
   }
-  async function handleDesAsing(index,arr){
+  async function handleDesAsing(index, arr) {
     let id = arr[index]
     let direcction = null
-    if(props.uri==="profesores"){
+    if (props.uri === "profesores") {
       direcction = "pms"
-    }else{
+    } else {
       direcction = "apms"
     }
     await axios.delete(`http://localhost:3000/${direcction}/eliminar/${id}`)
-    .then(() => {
-      window.location.reload()
-    }).catch((err) => {
-      console.log(err)
-    });
+      .then(() => {
+        window.location.reload()
+      }).catch((err) => {
+        console.log(err)
+      });
   }
   async function handleAsing(name) {
     Cookies.set('name', name[0])
@@ -124,7 +124,7 @@ export default function Tables(props) {
     window.location.replace(`/Modificar${props.uri}`)
 
   }
-  
+
   useEffect(() => {
     async function verify() {
       await axios.get(`http://localhost:3000/verify/${token}`)
@@ -152,8 +152,8 @@ export default function Tables(props) {
             });
             setData(filter)
             let muestra = Object.getOwnPropertyNames(filter[0])
-            let indexID = muestra.findIndex((element=>element==="id"))
-            muestra.splice(indexID,1)
+            let indexID = muestra.findIndex((element => element === "id"))
+            muestra.splice(indexID, 1)
             setPropertyName(muestra)
             setNextButton(result.data.body.button)
   
@@ -192,7 +192,7 @@ export default function Tables(props) {
                   </svg>
                 </button>
                 <div className={`tablebutton ${showX}`}>
-                  <svg onClick={() => getClicked()} xmlns="http://www.w3.org/2000/svg"  fill="currentColor" className="bi bi-x-circle searchsvg" viewBox="0 0 16 16">
+                  <svg onClick={() => getClicked()} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-x-circle searchsvg" viewBox="0 0 16 16">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
                   </svg>
@@ -211,11 +211,11 @@ export default function Tables(props) {
               {propertyName.length <= 0 ? <th>No se han ingresado elementos</th> :
                 <>
                   {propertyName.map((property, index) => (
-                    
-                      <th key={index}>
-                        {property}
-                      </th>
-                      
+
+                    <th key={index}>
+                      {property}
+                    </th>
+
                   ))}
                   {(role === "Director" && props.uri !== "actividades") || (role === "Profesor" && props.uri === "actividades") ? <th>Accion</th> : null}
                 </>}
@@ -226,33 +226,36 @@ export default function Tables(props) {
 
               <tr key={rowIndex} id="prueba" className="tableResponsive">
                 {propertyName.map((property, colIndex) => (
-                  <td data-label={property+" "} key={colIndex}>
+                  <td data-label={property + " "} key={colIndex}>
                     {Array.isArray(item[property])
                       ? (
                         item[property].length > 0 || (props.uri === "actividades" && role === "Profesor") || (role === "Director" && props.uri === "profesores")
                           ?
                           <div className="materiasSeccion">
-                          
+
                             {item[property].map((subItem, subIndex) => (
-                              Number.isInteger(subItem)?null:
-                              <div key={subIndex} className="subItem">{subItem} 
-                              { (role === "Director" && props.uri === "profesores")?
-                                  <svg onClick={()=>handleDesAsing(item.Clase.indexOf(subItem)+1,item.Clase)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-journal-minus searchsvg" viewBox="0 0 16 16" >
-                                  <path fill-rule="evenodd" d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5"/>
-                                  <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
-                                  <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
-                                </svg> :
-                              role === "Profesor" && props.uri==="actividades"?
-                              <svg onClick={()=>handleDesAsing(item.Clase.indexOf(subItem)+1,item.Clase)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-journal-minus searchsvg" viewBox="0 0 16 16" >
-  <path fill-rule="evenodd" d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5"/>
-  <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
-  <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
-</svg>
-                            :
-                              null
-                            }
-                              
-                              </div> 
+                              Number.isInteger(subItem) ? null :
+                                <div key={subIndex} className="subItem">{subItem}
+                                  {(role === "Director" && props.uri === "profesores") ?
+                                    <div>
+                                      <svg onClick={() => handleDesAsing(item.Clase.indexOf(subItem) + 1, item.Clase)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-journal-minus searchsvg" viewBox="0 0 16 16" >
+                                        <path fill-rule="evenodd" d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5" />
+                                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+                                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+                                      </svg>
+                                    </div>
+                                    :
+                                    role === "Profesor" && props.uri === "actividades" ?
+                                      <svg onClick={() => handleDesAsing(item.Clase.indexOf(subItem) + 1, item.Clase)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-journal-minus searchsvg" viewBox="0 0 16 16" >
+                                        <path fill-rule="evenodd" d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5" />
+                                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+                                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+                                      </svg>
+                                      :
+                                      null
+                                  }
+
+                                </div>
                             ))}
                             {(role === "Director" && props.uri === "profesores") || (role === "Profesor" && props.uri === "actividades") ?
                               <motion.button className="assignButton" onClick={() => handleAsing([item.nombre, item.id])} whileHover={{ scale: 1.2, backgroundColor: "white", color: "#00255c", border: "1px solid #00255c" }}>
@@ -275,7 +278,7 @@ export default function Tables(props) {
                   <td data-label="Accion">
                     <div className="buttonsTable">
                       <motion.button className="tableButton" onClick={() => handleModify(item)} whileHover={{ scale: 1.2, color: "#00255c" }}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"  fill="currentColor" className="bi bi-pencil-square svgtables" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-pencil-square svgtables" viewBox="0 0 16 16">
                           <path d="M15.502 1.95a.5.5 0 0 1 0 .706L15.559 3.69l-2-2L13.502.656a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.556-2-2L5.939 9.21a.5.5 0 0 0-.121.196l-.805 2.515a.25.25 0 0 0 .316.316l2.515-.805a.5.5 0 0 0 .196-.12l6.813-6.815z" />
                           <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                         </svg>
