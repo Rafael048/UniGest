@@ -94,6 +94,11 @@
     gap: 1vw;
     justify-content: center;
 }
+.materiasSeccion{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .inputSearch {
     background: none;
@@ -151,6 +156,9 @@ td {
 
 .subItem {
     padding: .4vw;
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
 }
 
 

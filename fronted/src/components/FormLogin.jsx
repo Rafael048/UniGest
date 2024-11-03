@@ -55,10 +55,6 @@ export default function FormLogin() {
           error ? <motion.div initial={{ y: 0, opacity: 0 }} animate={{ y: 10, opacity: 1 }} className='errorRegister'> {error} </motion.div> : null
         }
         <motion.input whileHover={{ scale: .9, backgroundColor: "#000000e7", border: "2px solid black" }} transition={{ ease: "linear" }} className='submitLogin' type="submit" value='Iniciar Sesión' />
-        <p className='registerLogin'>
-          ¿No estás registrado?
-          <a href="RegisterUser"> Registrarse</a>
-        </p>
       </form>
       <div className='nameLogin'>
         <a href="/"> Unigest</a>
