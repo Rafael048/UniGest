@@ -2,9 +2,9 @@ const SubjectsModels = require("../models/SubjectModels");
 
 
 class SubjectsControllers{
-    All(){
+    All(offset){
       return new Promise((resolve, reject) => {   
-        SubjectsModels.All()
+        SubjectsModels.All(offset)
         .then((results) => {
           resolve(results)
       })

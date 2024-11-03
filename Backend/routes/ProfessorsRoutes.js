@@ -2,10 +2,19 @@ const express = require("express");
 const router = express.Router();
 const ProfessorsControllers = require("../controllers/ProfessorsControllers");
 router.get("/", function (req, res, next) {
-    ProfessorsControllers.All()
+  let button = null
+
+    ProfessorsControllers.All(req.query.offset)
     .then((result) => {
-      res.status(200).json({ message: "Peticion exitosa", body: result });
-    })
+      if(result[5]){
+        button=true
+        result.pop()
+      }else{
+        button=false
+      }
+     
+      res.status(200).json({ message: "Peticion exitosa", body: result , button:button });
+    })    
     .catch((e) => {
       res
         .status(500)

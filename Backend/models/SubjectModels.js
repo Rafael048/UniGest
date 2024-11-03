@@ -1,32 +1,38 @@
 const connection = require('../connection')
 class SubjectsModels{
-    All(){
+    All(offset){
       return new Promise((resolve,reject)=>{
-        let consult = "SELECT * FROM materias"
+        let consult = `SELECT * FROM materias LIMIT 6 OFFSET ${offset}`
         connection.query(consult,function(error,results,fields){
           if(error){
            reject(error)
-          }else{results.forEach(element => {
+          }else{
+            if(results.length>0){
+              results.forEach(element => {
+              
+              switch(element.diaClase){
+                case 0:  element.diaClase = "Domingo"
+                break;
+                case 1: element.diaClase = "Lunes"
+                break;
+                case 2:  element.diaClase = "Martes"
+                break;
+                case 3:  element.diaClase = "Miercoles"
+                break;
+                case 4:  element.diaClase = "Jueves"
+                break;
+                case 5:  element.diaClase = "Viernes"
+                break;
+                case 6:  element.diaClase = "Sabado"
+                break;
+        
+              }
+            });
+              resolve(results)
             
-            switch(element.diaClase){
-              case 0:  element.diaClase = "Domingo"
-              break;
-              case 1: element.diaClase = "Lunes"
-              break;
-              case 2:  element.diaClase = "Martes"
-              break;
-              case 3:  element.diaClase = "Miercoles"
-              break;
-              case 4:  element.diaClase = "Jueves"
-              break;
-              case 5:  element.diaClase = "Viernes"
-              break;
-              case 6:  element.diaClase = "Sabado"
-              break;
-      
+            }else{
+              reject(new Error("No hay datos para mostrar"))
             }
-          });
-            resolve(results)
           }
         })
       });

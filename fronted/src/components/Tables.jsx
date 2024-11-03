@@ -8,9 +8,6 @@ import SearchNull from "./SearchNull";
 export default function Tables(props) {
   const [data, setData] = useState([])
   const [propertyName, setPropertyName] = useState([])
-  const [nextData, setNextData] = useState([])
-  const [previusData, setPreviusData] = useState([])
-  const [allData, setAllData] = useState([])
   const [clicked, setClicked] = useState(false)
   const [role, setRole] = useState(null)
   const [showSearch, setShowSearch] = useState('showButton')
@@ -21,6 +18,8 @@ export default function Tables(props) {
   const [searchNull, setSearchNull] = useState(false)
   const [animateAviso, setAnimateAviso] = useState(false)
   const [user, setUser] = useState(null)
+  const [offset, setOffset] = useState(0)
+  const [nextButton, setNextButton] = useState(false)
 
   function handleShowWarning(item) {
     
@@ -35,20 +34,13 @@ export default function Tables(props) {
 
 
   function getNextData() {
-    if (nextData.length > 0) {
-      setPreviusData([...previusData, ...data]);
-      setData(nextData.slice(0, 5));
-      setNextData(nextData.slice(5));
-    }
+      setOffset(offset+5)
+    
 
   }
   function getPreviusData() {
-    if (previusData.length > 0) {
-      setNextData([...data, ...nextData])
-      const previousSlice = previusData.slice(-5)
-      setData(previousSlice)
-      setPreviusData(previusData.slice(0, -5))
-    }
+      setOffset(offset-5)
+    
   }
 
   function getOneElement(e) {
@@ -56,7 +48,7 @@ export default function Tables(props) {
     setClicked(true)
     let element = e.target.element.value
     let arrTemp = []
-    arrTemp.push(allData.find((elements) => {
+    arrTemp.push(data.find((elements) => {
       return Number(elements.id) === Number(element)
     }))
     if (arrTemp[0] === undefined) {
@@ -78,7 +70,7 @@ export default function Tables(props) {
 
   function getClicked() {
     if (clicked) {
-      setData(allData.slice(0, 5))
+      setData(data.slice(0, 5))
       setClicked(false)
     } else {
       setClicked(true)
@@ -148,7 +140,7 @@ export default function Tables(props) {
   useEffect(() => {
     async function getData() {
 
-      await axios.get(`http://localhost:3000/${props.uri}`)
+      await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}`)
         .then((result) => {
 
           if (props.uri === "actividades" && role === "Profesor") {
@@ -158,26 +150,21 @@ export default function Tables(props) {
             filter.forEach(element => {
               delete element.creador
             });
-            setData(filter.slice(0, 5))
-            setAllData(filter)
+            setData(filter)
             let muestra = Object.getOwnPropertyNames(filter[0])
             let indexID = muestra.findIndex((element=>element==="id"))
             muestra.splice(indexID,1)
             setPropertyName(muestra)
-            if (filter.length > 5) {
-              setNextData(filter.slice(5))
-            }
+            setNextButton(result.data.body.button)
   
           } else {
-            setData(result.data.body.slice(0, 5))
-            setAllData(result.data.body)
+            setData(result.data.body)
             let muestra = Object.getOwnPropertyNames(result.data.body[0])
             let indexID = muestra.findIndex((element=>element==="id"))
             muestra.splice(indexID,1)
             setPropertyName(muestra)         
-               if (result.data.body.length > 5) {
-              setNextData(result.data.body.slice(5))
-            }
+            setNextButton(result.data.button)
+
           }
         })
         .catch((err) => {
@@ -186,7 +173,7 @@ export default function Tables(props) {
     }
 
     getData()
-  }, [props.uri, role, user])
+  }, [props.uri, role, user,offset])
   return (
     <>
       <div className="center">
@@ -322,15 +309,24 @@ export default function Tables(props) {
             ))}
             <tr>
               <td className="nextPrev">
-                {previusData.length > 0 ? <motion.button onClick={() => getPreviusData()} className="nextPrevButton" whileHover={{ scale: 1.1, color: "#00255c" }}>
+              {offset>0?
+                 <motion.button onClick={() => getPreviusData()} className="nextPrevButton" whileHover={{ scale: 1.1, color: "#00255c" }}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-arrow-left-circle-fill svgNextPrev" viewBox="0 0 16 16">
                     <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
                   </svg>
-                </motion.button> : null}
-                {nextData.length > 0 ? <motion.button onClick={() => getNextData()} className="nextPrevButton" whileHover={{ scale: 1.1, color: "#00255c" }}>
+                </motion.button> 
+                 :
+                 null
+             }
+             {nextButton?
+                 <motion.button onClick={() => getNextData()} className="nextPrevButton" whileHover={{ scale: 1.1, color: "#00255c" }}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-arrow-right-circle-fill svgNextPrev" viewBox="0 0 16 16">
                     <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
-                  </svg></motion.button> : null}
+                  </svg></motion.button> 
+                  :
+                  null
+            }
+                 
               </td>
             </tr>
           </tbody>

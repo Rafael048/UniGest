@@ -1,9 +1,9 @@
 const ActivitiesModels = require("../models/ActivitiesModels");
 
 class ActivitiesControllers{
-    All(){
+    All(offset){
       return new Promise((resolve, reject) => {   
-        ActivitiesModels.All()
+        ActivitiesModels.All(offset)
        .then((result) => {
         resolve(result)
        }).catch((e) => {

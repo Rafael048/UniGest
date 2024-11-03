@@ -1,9 +1,9 @@
 const connection = require('../connection')
 
 class SectionsModels{
-  All() {
+  All(offset) {
     return new Promise((resolve,reject)=>{
-      let consult = "SELECT * FROM secciones"
+      let consult = `SELECT * FROM secciones LIMIT 6 OFFSET ${offset}`
       connection.query(consult,function(error,results,fields){
         if(error){
          reject(error)

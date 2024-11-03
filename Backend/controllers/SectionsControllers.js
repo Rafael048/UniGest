@@ -1,9 +1,9 @@
 const SectionsModels = require("../models/SectionsModels");
 
 class SectionsControllers{
-  All() {
+  All(offset) {
     return new Promise((resolve, reject) => {   
-      SectionsModels.All()
+      SectionsModels.All(offset)
       .then((results) => {
         resolve(results)
       })

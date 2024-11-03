@@ -2,9 +2,9 @@ const e = require('express');
 const connection = require('../connection')
 const PMSControllers = require("../controllers/PMSControllers");
 class ProfessorsModels{
-  All() {
+  All(offset) {
     return new Promise((resolve,reject)=>{
-      let consult = "SELECT nombre,apellido,id FROM profesores"
+      let consult = `SELECT nombre,apellido,id FROM profesores LIMIT 6 OFFSET ${offset}`
       connection.query(consult,function(error,results,fields){
         if(error){
          reject(error)

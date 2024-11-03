@@ -1,9 +1,9 @@
 var ProfessorsModels = require("../models/ProfessorsModels");
 
 class ProfessorsControllers{
-  All() {
+  All(offset) {
     return new Promise((resolve, reject) => {   
-     ProfessorsModels.All()
+     ProfessorsModels.All(offset)
      .then((results) => {
       resolve(results)
       })
