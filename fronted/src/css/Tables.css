@@ -20,6 +20,16 @@
     gap: 1vw;
 }
 
+.viewPlani{
+    font-size: 24px;
+    padding: .5vw 1.4vw;
+    background-color: #00255C;
+    color: white;
+    border: 0;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
 .svgtables {
     width: 30px;
     height: 30px;
@@ -31,8 +41,9 @@
 }
 
 .searchsvg {
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
+    color: #00255C;
 }
 
 .addSearch {
@@ -170,7 +181,8 @@ td {
     .searchButton,
     .inputSearch,
     .addButton,
-    .assignButton {
+    .assignButton,
+    .viewPlani {
         font-size: 24px;
     }
 
@@ -195,7 +207,8 @@ td {
     .searchButton,
     .inputSearch,
     .addButton,
-    .assignButton {
+    .assignButton,
+    .viewPlani {
         font-size: 20px;
     }
 
@@ -231,6 +244,10 @@ td {
     .addButton,
     .assignButton {
         font-size: 18px;
+    }
+
+    .viewPlani{
+        font-size: 16px;
     }
 
     .inputSearch {
@@ -287,7 +304,8 @@ td {
     .searchButton,
     .inputSearch,
     .addButton,
-    .assignButton {
+    .assignButton,
+    .viewPlani {
         font-size: 14px;
     }
 

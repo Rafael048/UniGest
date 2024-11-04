@@ -210,18 +210,16 @@
 
 
 .buttonFiltrer{
-    font-size: 30px;
-    padding: .5vw 2vw;
-    width: 20%;
+    font-size: 28px;
+    padding: .5vw 1vw;
+    width: 15%;
     background-color: #00255C;
     color: white;
     border: 0;
     border-radius: 30px;
-    left: 30px;
+    left: 25%;
     position: relative;
     z-index: 2;
-    left: 20%;
-    top: 6%;
 }
 
 .inputCheckbox {
@@ -234,4 +232,11 @@
 input[type="checkbox"]{
     width: 20px;
     height: 20px;
+}
+
+.divFiltrerButton{
+    width: 70%;
+    display: flex;
+    position: absolute;
+    padding: .5vw;
 }
