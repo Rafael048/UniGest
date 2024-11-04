@@ -151,7 +151,7 @@ export default function Tables(props) {
         await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}&table=${true}`)
           .then((result) => {
             let filter = result.data.body.filter((pms) => {
-              return pms.user === user.cedula
+              return pms.user=== user.cedula
             })
             filter.forEach(element => {
               delete element.user
