@@ -269,7 +269,7 @@ export default function Tables(props) {
                                   {(role === "Director" && props.uri === "profesores") ?
                                     <motion.div whileHover={{ scale: 1.5 }}>
                                       <IconContext.Provider value={{ className: "searchsvg" }} >
-                                        <FcDeleteRow onClick={() => handleDesAsing(item.Clase.indexOf(subItem) + 1, item.Clase)} />
+                                        <FcDeleteRow onClick={() => handleDesAsing(item.materias_Secciones.indexOf(subItem) + 1, item.materias_Secciones)} />
                                       </IconContext.Provider>
                                     </motion.div>
                                     :
