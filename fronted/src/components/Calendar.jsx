@@ -124,16 +124,16 @@ export default function Calendar() {
 
     return (
         <section className='viewAllCalendar'>
-            <div className='divFiltrerButton'>
-                <motion.input type='button' className='buttonFiltrer' onClick={openFiltrerForm} value={'Filtrar'}
-                    initial={{ scale: 1 }}
-                    whileHover={{ scale: 1.2 }}
-                />
-
-            </div>
 
             <section className='calendarSection'>
                 <div className={isBlur ? 'Blur calendarView ' : 'calendarView    '}>
+                    <div className='divFiltrerButton'>
+                        <motion.input type='button' className='buttonFiltrer' onClick={openFiltrerForm} value={'Filtrar'}
+                            initial={{ scale: 1 }}
+                            whileHover={{ scale: 1.2 }}
+                        />
+
+                    </div>
                     <FullCalendar
                         aspectRatio={2.1}
                         plugins={[dayGridPlugin, interactionPlugin]}
