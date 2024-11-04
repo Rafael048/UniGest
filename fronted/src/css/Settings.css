@@ -1,4 +1,4 @@
-.settingContainer{
+.settingContainer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,7 +6,7 @@
     height: 80vh;
 }
 
-.settingList{
+.settingList {
     width: 40%;
     background-color: rgba(255, 255, 255, 0.829);
     padding: 2vw;
@@ -15,38 +15,42 @@
     gap: 2vw;
 }
 
-.titleSetting{
+.titleSetting {
     display: flex;
     align-items: center;
     gap: 2vw;
 }
 
-.titleSetting > h1{
+.imgSetting {
+    width: 20%;
+}
+
+.titleSetting>h1 {
     font-size: 40px;
     font-weight: 800;
 }
 
-.nameSetting{
-    text-transform: capitalize; 
+.nameSetting {
+    text-transform: capitalize;
 }
 
-.textSetting{
+.textSetting {
     font-size: 28px;
 }
 
-.settingDescription{
+.settingDescription {
     display: flex;
     flex-direction: column;
     gap: 1vw;
 }
 
-.buttonSettingsContainer{
+.buttonSettingsContainer {
     display: flex;
     justify-content: center;
     gap: 1vw;
 }
 
-.buttonSetting{
+.buttonSetting {
     background-color: #00255c;
     color: white;
     font-size: 30px;
@@ -57,6 +61,79 @@
 
 }
 
-.data{
+.data {
     text-transform: capitalize;
+}
+
+
+@media screen and (max-width:1440px) {
+    .titleSetting>h1 {
+        font-size: 38px;
+    }
+
+    .settingList {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width:1200px) {
+    .titleSetting>h1 {
+        font-size: 34px;
+    }
+
+    .textSetting {
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width:1024px) {
+    .buttonSetting {
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .titleSetting>h1 {
+        font-size: 30px;
+    }
+
+    .imgSetting {
+        width: 30%;
+    }
+
+    .settingList {
+        width: 70%;
+        padding: 30px;
+        justify-content: space-around;
+    }
+
+}
+
+@media screen and (max-width:650px) {
+    .titleSetting>h1 {
+        font-size: 5vw;
+    }
+}
+
+@media screen and (max-width:650px) {
+    .titleSetting>h1 {
+        font-size: 5vw;
+    }
+
+    .textSetting{
+        font-size: 20px;
+    }
+
+    .settingList {
+        width: 80%;
+        padding: 30px;
+        justify-content: space-around;
+    }
+
+}
+
+@media screen and (max-width:425px) {
+    .buttonSetting {
+        font-size: 18px;
+    }
 }

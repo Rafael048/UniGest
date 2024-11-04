@@ -4,6 +4,14 @@ import '../css/Tables.css'
 import Cookies from 'js-cookie'
 import { motion } from "framer-motion";
 import SearchNull from "./SearchNull";
+import { IconContext } from "react-icons"
+import { FcDeleteRow } from "react-icons/fc";
+import { MdDeleteForever } from "react-icons/md";
+import { MdMode } from "react-icons/md";
+import { BiSolidSearchAlt2 } from "react-icons/bi";
+import { LuSearchX } from "react-icons/lu";
+
+
 
 export default function Tables(props) {
   const [data, setData] = useState([])
@@ -33,13 +41,13 @@ export default function Tables(props) {
 
 
   function getNextData() {
-      setOffset(offset+5)
-    
+    setOffset(offset + 5)
+
 
   }
   function getPreviusData() {
-      setOffset(offset-5)
-    
+    setOffset(offset - 5)
+
   }
 
   function getOneElement(e) {
@@ -139,9 +147,9 @@ export default function Tables(props) {
   }, [token])
   useEffect(() => {
     async function getData() {
-      if(props.uri==="pms"){
+      if (props.uri === "pms") {
         await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}&table=${true}`)
-        .then((result) => {
+          .then((result) => {
             let filter = result.data.body.filter((pms) => {
               return pms.user === user.cedula
             })
@@ -150,20 +158,20 @@ export default function Tables(props) {
             });
             setData(filter)
             let muestra = Object.getOwnPropertyNames(filter[0])
-            
+
             setPropertyName(muestra)
             setNextButton(result.data.body.button)
-          
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-        
-      }else{
+
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+
+      } else {
 
         await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}`)
           .then((result) => {
-  
+
             if (props.uri === "actividades" && role === "Profesor") {
               let filter = result.data.body.filter((creador) => {
                 return creador.creador === user.userName
@@ -177,25 +185,25 @@ export default function Tables(props) {
               muestra.splice(indexID, 1)
               setPropertyName(muestra)
               setNextButton(result.data.body.button)
-    
+
             } else {
               setData(result.data.body)
               let muestra = Object.getOwnPropertyNames(result.data.body[0])
-              let indexID = muestra.findIndex((element=>element==="id"))
-              muestra.splice(indexID,1)
-              setPropertyName(muestra)         
+              let indexID = muestra.findIndex((element => element === "id"))
+              muestra.splice(indexID, 1)
+              setPropertyName(muestra)
               setNextButton(result.data.button)
-  
+
             }
           })
           .catch((err) => {
             console.log(err)
           })
       }
-      }
+    }
 
     getData()
-  }, [props.uri, role, user,offset])
+  }, [props.uri, role, user, offset])
   return (
     <>
       <div className="center">
@@ -209,15 +217,14 @@ export default function Tables(props) {
               <div className="search">
                 <input type="number" name="element" placeholder="ID" className="inputSearch" />
                 <button type="submit" className={`tableButton ${showSearch}`}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-search searchsvg" viewBox="0 0 16 16">
-                    <path d="M11.752 10.355a6.5 6.5 0 1 0-1.397 1.398h-.001q.055.06.098.115l3.85 3.85a1 1 0 0 0 1.515-1.515l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                  </svg>
+                  <IconContext.Provider value={{ className: "searchsvg" }}>
+                    <BiSolidSearchAlt2 />
+                  </IconContext.Provider>
                 </button>
                 <div className={`tablebutton ${showX}`}>
-                  <svg onClick={() => getClicked()} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-x-circle searchsvg" viewBox="0 0 16 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                  </svg>
+                  <IconContext.Provider value={{className:"searchsvg"}}>
+                    <LuSearchX onClick={() => getClicked()}/>
+                  </IconContext.Provider>
                 </div>
               </div>
             </form>
@@ -240,7 +247,7 @@ export default function Tables(props) {
 
                   ))}
                   {(role === "Director" && props.uri !== "actividades") || (role === "Profesor" && props.uri === "actividades") ? <th>Accion</th> : null}
-                  {role === "Profesor"&&props.uri==="pms"?<th>Planificacion</th>:null}
+                  {role === "Profesor" && props.uri === "pms" ? <th>Planificacion</th> : null}
                 </>}
             </tr>
           </thead>
@@ -260,20 +267,18 @@ export default function Tables(props) {
                               Number.isInteger(subItem) ? null :
                                 <div key={subIndex} className="subItem">{subItem}
                                   {(role === "Director" && props.uri === "profesores") ?
-                                    <div>
-                                      <svg onClick={() => handleDesAsing(item.materias_Secciones.indexOf(subItem) + 1, item.materias_Secciones)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-journal-minus searchsvg" viewBox="0 0 16 16" >
-                                        <path fill-rule="evenodd" d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5" />
-                                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
-                                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
-                                      </svg>
-                                    </div>
+                                    <motion.div whileHover={{ scale: 1.5 }}>
+                                      <IconContext.Provider value={{ className: "searchsvg" }} >
+                                        <FcDeleteRow onClick={() => handleDesAsing(item.Clase.indexOf(subItem) + 1, item.Clase)} />
+                                      </IconContext.Provider>
+                                    </motion.div>
                                     :
                                     role === "Profesor" && props.uri === "actividades" ?
-                                      <svg onClick={() => handleDesAsing(item.Clase.indexOf(subItem) + 1, item.Clase)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-journal-minus searchsvg" viewBox="0 0 16 16" >
-                                        <path fill-rule="evenodd" d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5" />
-                                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
-                                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
-                                      </svg>
+                                    <motion.div whileHover={{ scale: 1.5 }}>
+                                      <IconContext.Provider value={{ className: "searchsvg" }} >
+                                        <FcDeleteRow onClick={() => handleDesAsing(item.Clase.indexOf(subItem) + 1, item.Clase)} />
+                                      </IconContext.Provider>
+                                    </motion.div>
                                       :
                                       null
                                   }
@@ -301,10 +306,9 @@ export default function Tables(props) {
                   <td data-label="Accion">
                     <div className="buttonsTable">
                       <motion.button className="tableButton" onClick={() => handleModify(item)} whileHover={{ scale: 1.2, color: "#00255c" }}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-pencil-square svgtables" viewBox="0 0 16 16">
-                          <path d="M15.502 1.95a.5.5 0 0 1 0 .706L15.559 3.69l-2-2L13.502.656a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.556-2-2L5.939 9.21a.5.5 0 0 0-.121.196l-.805 2.515a.25.25 0 0 0 .316.316l2.515-.805a.5.5 0 0 0 .196-.12l6.813-6.815z" />
-                          <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                        </svg>
+                        <IconContext.Provider value={{ className: "searchsvg" }}>
+                          <MdMode />
+                        </IconContext.Provider>
                       </motion.button>
                       <div className={`warning ${warning ? '' : 'cancel'}`}>
                         <div className='windonws'>
@@ -323,37 +327,37 @@ export default function Tables(props) {
                       </div>
                       <motion.button onClick={() => handleShowWarning(item)} className="tableButton"
                         whileHover={{ rotate: 20 }}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="red" className="bi bi-trash3-fill svgtables" viewBox="0 0 16 16">
-                          <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
-                        </svg>
+                        <IconContext.Provider value={{ color: "red", className: "searchsvg" }}>
+                          <MdDeleteForever />
+                        </IconContext.Provider>
                       </motion.button>
                     </div>
                   </td>
                   : undefined
                 }
-                {role === "Profesor"&&props.uri==="pms"?<td><button> Ver Planificacion</button></td>:null}
+                {role === "Profesor" && props.uri === "pms" ? <td><motion.button className="viewPlani" whileHover={{scale:1.2, backgroundColor:"#0947a5"}}> Ver Planificacion</motion.button></td> : null}
               </tr>
             ))}
             <tr>
               <td className="nextPrev">
-              {offset>0?
-                 <motion.button onClick={() => getPreviusData()} className="nextPrevButton" whileHover={{ scale: 1.1, color: "#00255c" }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-arrow-left-circle-fill svgNextPrev" viewBox="0 0 16 16">
-                    <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
-                  </svg>
-                </motion.button> 
-                 :
-                 null
-             }
-             {nextButton?
-                 <motion.button onClick={() => getNextData()} className="nextPrevButton" whileHover={{ scale: 1.1, color: "#00255c" }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-arrow-right-circle-fill svgNextPrev" viewBox="0 0 16 16">
-                    <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
-                  </svg></motion.button> 
+                {offset > 0 ?
+                  <motion.button onClick={() => getPreviusData()} className="nextPrevButton" whileHover={{ scale: 1.1, color: "#00255c" }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-arrow-left-circle-fill svgNextPrev" viewBox="0 0 16 16">
+                      <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
+                    </svg>
+                  </motion.button>
                   :
                   null
-            }
-                 
+                }
+                {nextButton ?
+                  <motion.button onClick={() => getNextData()} className="nextPrevButton" whileHover={{ scale: 1.1, color: "#00255c" }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-arrow-right-circle-fill svgNextPrev" viewBox="0 0 16 16">
+                      <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
+                    </svg></motion.button>
+                  :
+                  null
+                }
+
               </td>
             </tr>
           </tbody>

@@ -1,6 +1,7 @@
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
+import esLocale from '@fullcalendar/core/locales/es';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import '../css/Calendar.css'
@@ -35,7 +36,7 @@ export default function Calendar() {
 
                     if (filter.length !== 0) {
                         arrSubjectsFilter = result.data.body.filter(evento =>
-                            filter.includes(evento.materia)|| filter.includes(evento.profesor)
+                            filter.includes(evento.materia) || filter.includes(evento.profesor)
                         );
                     } else {
                         arrSubjectsFilter = result.data.body;
@@ -126,18 +127,20 @@ export default function Calendar() {
 
             <section className='calendarSection'>
                 <div className={isBlur ? 'Blur calendarView ' : 'calendarView    '}>
-                    <motion.input type='button' className='buttonFiltrer' onClick={openFiltrerForm} value={'Filtrar'}
-                        initial={{ scale: 1 }}
-                        whileHover={{ scale: 1.2 }}
-                    />
+                    <div className='divFiltrerButton'>
+                        <motion.input type='button' className='buttonFiltrer' onClick={openFiltrerForm} value={'Filtrar'}
+                            initial={{ scale: 1 }}
+                            whileHover={{ scale: 1.2 }}
+                        />
+
+                    </div>
                     <FullCalendar
                         aspectRatio={2.1}
                         plugins={[dayGridPlugin, interactionPlugin]}
                         initialView="dayGridMonth"
                         eventClick={handleEventClick}
                         events={events}
-                        locales={'esLocales'}
-                        locale={'es'}
+                        locale={esLocale}
                     />
                 </div>
 
@@ -167,7 +170,7 @@ export default function Calendar() {
                                         </p>
                                     </div>
                                     <div className='buttonCancelDescription'>
-                                        <motion.button whileHover={{scale:.9, backgroundColor:"white", border:"2px solid #00255c", color:"#00255c"}} onClick={() => handleDivClick()} className='buttonClose'>Cerrar</motion.button>
+                                        <motion.button whileHover={{ scale: .9, backgroundColor: "white", border: "2px solid #00255c", color: "#00255c" }} onClick={() => handleDivClick()} className='buttonClose'>Cerrar</motion.button>
                                     </div>
                                 </motion.div>
                             )}
@@ -189,37 +192,37 @@ export default function Calendar() {
                                     <div className='listFiltrer'>
                                         <div>
 
-                                        <h3>Filtrar por materias</h3>
-                                        {materias.map((materia) => (
-                                            <label key={materia.id} className='inputCheckbox'>
-                                                <input
-                                                    type="checkbox"
-                                                    value={materia.nombre}
-                                                    onChange={handleFilterChange}
-                                                    checked={filter.includes(materia.nombre)}
-                                                    className='inputChecked'
-                                                />
-                                                {materia.nombre}
-                                            </label>
-                                        ))}
+                                            <h3>Filtrar por materias</h3>
+                                            {materias.map((materia) => (
+                                                <label key={materia.id} className='inputCheckbox'>
+                                                    <input
+                                                        type="checkbox"
+                                                        value={materia.nombre}
+                                                        onChange={handleFilterChange}
+                                                        checked={filter.includes(materia.nombre)}
+                                                        className='inputChecked'
+                                                    />
+                                                    {materia.nombre}
+                                                </label>
+                                            ))}
                                         </div>
                                         <div>
-                                        <h3>Filtrar por Profesor</h3>
-                                         {profesores.map((profesor) => (
-                                            <label key={profesor.id} className='inputCheckbox'>
-                                                <input
-                                                    type="checkbox"
-                                                    value={profesor.nombre}
-                                                    onChange={handleFilterChange}
-                                                    checked={filter.includes(profesor.nombre)}
-                                                    className='inputChecked'
-                                                />
-                                                {profesor.nombre}
-                                            </label>
-                                        ))}
+                                            <h3>Filtrar por Profesor</h3>
+                                            {profesores.map((profesor) => (
+                                                <label key={profesor.id} className='inputCheckbox'>
+                                                    <input
+                                                        type="checkbox"
+                                                        value={profesor.nombre}
+                                                        onChange={handleFilterChange}
+                                                        checked={filter.includes(profesor.nombre)}
+                                                        className='inputChecked'
+                                                    />
+                                                    {profesor.nombre}
+                                                </label>
+                                            ))}
                                         </div>
                                     </div>
-                                    <motion.input whileHover={{scale:.9, backgroundColor:"white", border:"2px solid #00255c", color:"#00255c"}} type='button' className='aceptButtonFiltrer' onClick={openFiltrerForm} value={'Aceptar'} />
+                                    <motion.input whileHover={{ scale: .9, backgroundColor: "white", border: "2px solid #00255c", color: "#00255c" }} type='button' className='aceptButtonFiltrer' onClick={openFiltrerForm} value={'Aceptar'} />
                                 </form>
                             </motion.div>
                         </div>

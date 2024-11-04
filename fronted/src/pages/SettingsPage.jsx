@@ -10,7 +10,7 @@ import logo from '../assets/logo.png'
 
 
 export default function TablesActivities() {
-  const activities = true
+  const setting = true
   const btActive = 'activeMenu'
   const color = 'blue'
   const token = Cookies.get('jwt')
@@ -51,10 +51,10 @@ export default function TablesActivities() {
             <Footer />
           </>
           : <>
-            <Header active={active} color={color} activities={activities} />
+            <Header active={active} color={color} setting={setting} />
             <section className='tableActivities'>
               <article className='tableShow'>
-                <Settings></Settings>
+                <Settings/>
               </article>
             </section>
             <Footer />
