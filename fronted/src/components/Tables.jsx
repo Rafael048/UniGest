@@ -20,7 +20,6 @@ export default function Tables(props) {
   const [user, setUser] = useState(null)
   const [offset, setOffset] = useState(0)
   const [nextButton, setNextButton] = useState(false)
-
   function handleShowWarning(item) {
 
     setIdDelete(item)
@@ -139,38 +138,60 @@ export default function Tables(props) {
   }, [token])
   useEffect(() => {
     async function getData() {
-
-      await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}`)
+      if(props.uri==="pms"){
+        await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}&table=${true}`)
         .then((result) => {
-
-          if (props.uri === "actividades" && role === "Profesor") {
-            let filter = result.data.body.filter((creador) => {
-              return creador.creador === user.userName
+            let filter = result.data.body.filter((pms) => {
+              return pms.user === user.cedula
             })
             filter.forEach(element => {
-              delete element.creador
+              delete element.user
             });
             setData(filter)
             let muestra = Object.getOwnPropertyNames(filter[0])
-            let indexID = muestra.findIndex((element => element === "id"))
-            muestra.splice(indexID, 1)
+            
             setPropertyName(muestra)
             setNextButton(result.data.body.button)
-  
-          } else {
-            setData(result.data.body)
-            let muestra = Object.getOwnPropertyNames(result.data.body[0])
-            let indexID = muestra.findIndex((element=>element==="id"))
-            muestra.splice(indexID,1)
-            setPropertyName(muestra)         
-            setNextButton(result.data.button)
-
-          }
+          
         })
         .catch((err) => {
           console.log(err)
         })
-    }
+        
+      }else{
+
+        await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}`)
+          .then((result) => {
+  
+            if (props.uri === "actividades" && role === "Profesor") {
+              let filter = result.data.body.filter((creador) => {
+                return creador.creador === user.userName
+              })
+              filter.forEach(element => {
+                delete element.creador
+              });
+              setData(filter)
+              let muestra = Object.getOwnPropertyNames(filter[0])
+              let indexID = muestra.findIndex((element => element === "id"))
+              muestra.splice(indexID, 1)
+              setPropertyName(muestra)
+              setNextButton(result.data.body.button)
+    
+            } else {
+              setData(result.data.body)
+              let muestra = Object.getOwnPropertyNames(result.data.body[0])
+              let indexID = muestra.findIndex((element=>element==="id"))
+              muestra.splice(indexID,1)
+              setPropertyName(muestra)         
+              setNextButton(result.data.button)
+  
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+      }
 
     getData()
   }, [props.uri, role, user,offset])
@@ -218,6 +239,7 @@ export default function Tables(props) {
 
                   ))}
                   {(role === "Director" && props.uri !== "actividades") || (role === "Profesor" && props.uri === "actividades") ? <th>Accion</th> : null}
+                  {role === "Profesor"&&props.uri==="pms"?<th>Planificacion</th>:null}
                 </>}
             </tr>
           </thead>
@@ -308,6 +330,7 @@ export default function Tables(props) {
                   </td>
                   : undefined
                 }
+                {role === "Profesor"&&props.uri==="pms"?<td><button> Ver Planificacion</button></td>:null}
               </tr>
             ))}
             <tr>
