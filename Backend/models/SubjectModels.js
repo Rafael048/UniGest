@@ -2,7 +2,12 @@ const connection = require('../connection')
 class SubjectsModels{
     All(offset){
       return new Promise((resolve,reject)=>{
-        let consult = `SELECT * FROM materias LIMIT 6 OFFSET ${offset}`
+        let consult = null
+        if(offset){
+           consult = `SELECT * FROM materias LIMIT 6 OFFSET ${offset}`
+        }else{
+          consult = `SELECT * FROM materias `
+        }
         connection.query(consult,function(error,results,fields){
           if(error){
            reject(error)

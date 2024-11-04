@@ -3,16 +3,29 @@ const router = express.Router();
 const SubjectsControllers = require("../controllers/SubjectsControllers");
 router.get("/", function (req, res, next) {
     let button = null
-    console.log(req.query.offset)
-    SubjectsControllers.All(req.query.offset)
+    if(req.query.offset){
+      SubjectsControllers.All(req.query.offset)
+        .then((result) => {
+          if(result[5]){
+            button=true
+            result.pop()
+          }else{
+            button=false
+          }
+         
+          res.status(200).json({ message: "Peticion exitosa", body: result , button:button });
+        })
+        .catch((e) => {
+          res
+            .status(500)
+            .json({
+              message: "Algo no ha salido como se esperaba",
+              error: e.message,
+            });
+        });
+    }else{
+      SubjectsControllers.All(null)
       .then((result) => {
-        if(result[5]){
-          button=true
-          result.pop()
-        }else{
-          button=false
-        }
-       
         res.status(200).json({ message: "Peticion exitosa", body: result , button:button });
       })
       .catch((e) => {
@@ -23,6 +36,7 @@ router.get("/", function (req, res, next) {
             error: e.message,
           });
       });
+    }
   }
 );
 router.post("/agregar", function (req, res, next) {

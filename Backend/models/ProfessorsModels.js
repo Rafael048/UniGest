@@ -4,7 +4,12 @@ const PMSControllers = require("../controllers/PMSControllers");
 class ProfessorsModels{
   All(offset) {
     return new Promise((resolve,reject)=>{
-      let consult = `SELECT nombre,apellido,id FROM profesores LIMIT 6 OFFSET ${offset}`
+      let consult = null
+      if(offset){
+         consult = `SELECT nombre,apellido,id FROM profesores LIMIT 6 OFFSET ${offset}`
+      }else{
+        consult = `SELECT nombre,apellido,id FROM profesores`
+      }
       connection.query(consult,function(error,results,fields){
         if(error){
          reject(error)

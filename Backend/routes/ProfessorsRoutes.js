@@ -3,18 +3,31 @@ const router = express.Router();
 const ProfessorsControllers = require("../controllers/ProfessorsControllers");
 router.get("/", function (req, res, next) {
   let button = null
-
+  if(req.query.offset){
     ProfessorsControllers.All(req.query.offset)
+      .then((result) => {
+        if(result[5]){
+          button=true
+          result.pop()
+        }else{
+          button=false
+        }
+       
+        res.status(200).json({ message: "Peticion exitosa", body: result , button:button });
+      })
+      .catch((e) => {
+        res
+          .status(500)
+          .json({
+            message: "Algo no ha salido como se esperaba",
+            error: e.message,
+          });
+      });
+  }else{
+    ProfessorsControllers.All(null)
     .then((result) => {
-      if(result[5]){
-        button=true
-        result.pop()
-      }else{
-        button=false
-      }
-     
       res.status(200).json({ message: "Peticion exitosa", body: result , button:button });
-    })    
+    })
     .catch((e) => {
       res
         .status(500)
@@ -24,6 +37,7 @@ router.get("/", function (req, res, next) {
         });
     });
   }
+}
 );
 
 router.post("/agregar", function (req, res, next) {
