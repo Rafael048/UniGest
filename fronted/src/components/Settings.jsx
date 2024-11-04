@@ -30,7 +30,9 @@ export default function Settings() {
                 <div className="settingContainer">
                     <div className="settingList">
                         <div className="titleSetting">
-                            <img src={image} alt="" />
+                            <div className="imgSetting">
+                                <img src={image} alt="" width={"100%"}/>
+                            </div>
                             <h1>Configuracion de <span className="nameSetting">
                                 {user.userName}
                             </span>

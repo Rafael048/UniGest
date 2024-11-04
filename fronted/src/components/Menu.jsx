@@ -2,16 +2,16 @@ import React, { useState } from 'react'
 import '../css/Menu.css'
 import Exit from './Exit'
 import { motion, AnimatePresence } from 'framer-motion'
-import { HiMiniHome } from "react-icons/hi2";
-import { HiMenu } from "react-icons/hi";
+import { HiMiniHome } from "react-icons/hi2"; //Inicio icon
+import { HiMenu } from "react-icons/hi"; //Menu icon
 import { IconContext } from 'react-icons/lib';
-import { IoListCircleOutline } from "react-icons/io5";
-import { FaUsers } from "react-icons/fa";
-import { CiGrid32 } from "react-icons/ci";
-import { MdAssignmentTurnedIn } from "react-icons/md";
-import { AiOutlineUserAdd } from "react-icons/ai";
-import { GrUserSettings } from "react-icons/gr";
-import { IoLogOutOutline } from "react-icons/io5";
+import { IoListCircleOutline } from "react-icons/io5"; //Materias icon 
+import { FaUsers } from "react-icons/fa"; // Profesores icon
+import { CiGrid32 } from "react-icons/ci"; //  seccion icon
+import { MdAssignmentTurnedIn } from "react-icons/md"; //Actividades icon
+import { AiOutlineUserAdd } from "react-icons/ai"; // Agregar usuarios Icon
+import { GrUserSettings } from "react-icons/gr"; //Ajustes icon
+import { IoLogOutOutline } from "react-icons/io5"; //Cerrar sesion
 
 
 
