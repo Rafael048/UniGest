@@ -1,7 +1,5 @@
 import { React} from 'react'
-import Menu from '../components/Menu'
 import FormRegister from '../components/FormRegister'
-import Footer from '../components/Footer'
 import '../css/RegisterUser.css'
 import img from '../assets/Register.png'
 import logo from '../assets/logo.png'

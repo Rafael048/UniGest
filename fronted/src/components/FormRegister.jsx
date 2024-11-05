@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import '../css/FormRegister.css'
 import axios from "axios";
-import Cookies from 'js-cookie'
 import { motion } from "framer-motion";
 
 export default function FormRegister(props) {
@@ -19,23 +18,12 @@ export default function FormRegister(props) {
         }
         await axios.post('http://localhost:3000/register', data)
             .then(async () => {
-                if (props.uri) {
+                if(props.uri==="profesor"){
                     window.location.replace('/profesores')
-                } else {
-                    await axios.post('http://localhost:3000/login', data)
-                        .then((result) => {
-
-                            const token = result.data
-                            Cookies.set('jwt', token, { expires: 1 })
-                            window.location.href = '/'
-                        })
-                        .catch((err) => {
-                            if (err.response) {
-                                console.log(err.response.data.error)
-                            }
-                        })
+                }else{
+                    window.location.replace('/')
                 }
-            })
+                })
             .catch((err) => {
                 console.log(err.response.data.error)
                 setError(err.response.data.error)

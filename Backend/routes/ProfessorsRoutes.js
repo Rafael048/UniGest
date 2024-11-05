@@ -43,9 +43,7 @@ router.get("/", function (req, res, next) {
 router.post("/agregar", function (req, res, next) {
   ProfessorsControllers.Create(req.body)
     .then(() => {
-      ProfessorsControllers.All().then((result) => {
-        res.status(200).json({ message: "Peticion exitosa", body: result });
-      });
+      res.status(200).json({message:"Agregado Correctamente"})
     })
     .catch((e) => {
       res
@@ -62,9 +60,7 @@ router.put("/editar/:id", function (req, res, next) {
   const nuevosValores = req.body;
   ProfessorsControllers.Modify(idReq, nuevosValores)
     .then(() => {
-      ProfessorsControllers.All().then((result) => {
-        res.status(200).json({ message: "Peticion exitosa", body: result });
-      });
+      res.status(200).json({message:"Modificado Correctamente"})
     })
     .catch((e) => {
       res
@@ -78,9 +74,7 @@ router.put("/editar/:id", function (req, res, next) {
 router.delete("/eliminar/:id", function (req, res, next) {
   ProfessorsControllers.Delete(req.params.id)
     .then(() => {
-      ProfessorsControllers.All().then((result) => {
-        res.status(200).json({ message: "Peticion exitosa", body: result });
-      });
+      res.status(200).json({message:"Eliminado Correctamente"})
     })
     .catch((e) => {
       res

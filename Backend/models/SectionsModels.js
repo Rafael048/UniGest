@@ -3,7 +3,13 @@ const connection = require('../connection')
 class SectionsModels{
   All(offset) {
     return new Promise((resolve,reject)=>{
-      let consult = `SELECT * FROM secciones LIMIT 6 OFFSET ${offset}`
+      let consult = null
+      if(offset){
+        consult = `SELECT * FROM secciones LIMIT 6 OFFSET ${offset}`
+      }else{
+        consult = `SELECT * FROM secciones`
+
+      }
       connection.query(consult,function(error,results,fields){
         if(error){
          reject(error)

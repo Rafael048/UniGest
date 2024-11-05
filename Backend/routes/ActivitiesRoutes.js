@@ -44,7 +44,7 @@ router.put("/editar/:id", function (req, res, next) {
   const nuevosValores = req.body;
   ActivitiesControllers.Modify(idReq, nuevosValores)
     .then(() => {
-      ActivitiesControllers.All().then((result) => {
+      ActivitiesControllers.All(0).then((result) => {
         res.status(200).json({ message: "Peticion exitosa", body: result });
       });
     })
@@ -59,10 +59,8 @@ router.put("/editar/:id", function (req, res, next) {
 });
 router.delete("/eliminar/:id", function (req, res, next) {
   ActivitiesControllers.Delete(req.params.id)
-    .then(() => {
-      ActivitiesControllers.All().then((result) => {
+    .then((result) => {
         res.status(200).json({ message: "Peticion exitosa", body: result });
-      });
     })
     .catch((e) => {
       res

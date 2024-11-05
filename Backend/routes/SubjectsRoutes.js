@@ -42,9 +42,7 @@ router.get("/", function (req, res, next) {
 router.post("/agregar", function (req, res, next) {
   SubjectsControllers.Create(req.body)
     .then(() => {
-      SubjectsControllers.All().then((result) => {
-        res.status(200).json({ message: "Peticion exitosa", body: result });
-      });
+      res.status(200).json({message:"Agregado Correctamente"})
     })
     .catch((e) => {
       res
