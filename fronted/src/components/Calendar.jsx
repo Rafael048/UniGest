@@ -14,6 +14,7 @@ export default function Calendar() {
     const [noDisplay, setNoDisplay] = useState(false)
     const [eventClicked, setEventClicked] = useState(null)
     const [filter, setFilter] = useState([]);
+    const [filterProfessor, setFilterProfessor] = useState([]);
     const [materias, setMaterias] = useState([]);
     const [profesores, setProfesores] = useState([]);
     const [openFiltrer, setOpenFiltrer] = useState(false)
@@ -34,9 +35,17 @@ export default function Calendar() {
                     let arrTemp = []
                     let arrSubjectsFilter = []
 
-                    if (filter.length !== 0) {
+                    if(filter.length!==0&&filterProfessor.length!==0){
                         arrSubjectsFilter = result.data.body.filter(evento =>
-                            filter.includes(evento.materia) || filter.includes(evento.profesor)
+                            filter.includes(evento.materia) && filterProfessor.includes(evento.profesor)
+                        )
+                    }else if (filter.length !== 0) {
+                        arrSubjectsFilter = result.data.body.filter(evento =>
+                            filter.includes(evento.materia) 
+                        );
+                    }else if (filterProfessor.length !== 0) {
+                        arrSubjectsFilter = result.data.body.filter(evento =>
+                             filterProfessor.includes(evento.profesor)
                         );
                     } else {
                         arrSubjectsFilter = result.data.body;
@@ -90,7 +99,7 @@ export default function Calendar() {
                 });
         }
         getEvents()
-    }, [filter])
+    }, [filter,filterProfessor])
 
     function openFiltrerForm() {
         if (openFiltrer === true) {
@@ -122,14 +131,24 @@ export default function Calendar() {
         }
     }
     function handleFilterChange(e) {
-        const { value, checked } = e.target
-        setFilter(prevState => {
-            if (checked) {
-                return [...prevState, value]
-            } else {
-                return prevState.filter(materia => materia !== value)
-            }
-        });
+        const { value, checked, name } = e.target
+        if(name === "materias"){
+            setFilter(prevState => {
+                if (checked) {
+                    return [...prevState, value]
+                } else {
+                    return prevState.filter(materia => materia !== value)
+                }
+            });
+        }else{
+            setFilterProfessor(prevState => {
+                if (checked) {
+                    return [...prevState, value]
+                } else {
+                    return prevState.filter(profesor => profesor !== value)
+                 }
+                })
+        }
     }
 
     return (
@@ -211,6 +230,7 @@ export default function Calendar() {
                                                         onChange={handleFilterChange}
                                                         checked={filter.includes(materia.nombre)}
                                                         className='inputChecked'
+                                                        name='materias'
                                                     />
                                                     {materia.nombre}
                                                 </label>
@@ -224,8 +244,9 @@ export default function Calendar() {
                                                         type="checkbox"
                                                         value={profesor.nombre}
                                                         onChange={handleFilterChange}
-                                                        checked={filter.includes(profesor.nombre)}
+                                                        checked={filterProfessor.includes(profesor.nombre)}
                                                         className='inputChecked'
+                                                        name='profesores'
                                                     />
                                                     {profesor.nombre}
                                                 </label>
