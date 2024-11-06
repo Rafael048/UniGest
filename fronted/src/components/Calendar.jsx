@@ -45,23 +45,33 @@ export default function Calendar() {
                         const date = new Date(item.date)
                         const dateDay = date.getDay()
                         let dateEvent = undefined
+                        let diferencia = item.diaClase - dateDay
+                        let ajusted = false
                         if (dateDay === item.diaClase) {
                             const nuevaFecha = new Date(item.date)
-                            nuevaFecha.setDate(date.getDate() - 1)
+                            nuevaFecha.setDate(date.getDate()-1 )
                             const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
                             dateEvent = nuevaFechaISO;
                         } else {
-                            let diferencia = item.diaClase - dateDay
-                            if (diferencia <= 1) {
-                                diferencia = diferencia + 6;
+                            if (diferencia <= 0) {
+                                diferencia = diferencia + 7;
+                                ajusted = true
                             }
 
                             const nuevaFecha = new Date(item.date);
-                            nuevaFecha.setDate(date.getDate() + diferencia);
+                            if(ajusted){
+                                nuevaFecha.setDate(date.getDate() + diferencia);
+                            }
+                            nuevaFecha.setDate(date.getDate() + (diferencia-1));
                             const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
                             dateEvent = nuevaFechaISO
                         }
-
+                        if(dateEvent<item.date){
+                            const nuevaFecha = new Date(item.date);
+                            nuevaFecha.setDate(date.getDate() + 6);
+                            const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
+                            dateEvent = nuevaFechaISO                        }
+                            console.log(dateDay,item.diaClase,dateEvent,item.title,item.materia)
                         let eventTemp = {
                             title: item.title,
                             date: dateEvent,
