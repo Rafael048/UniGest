@@ -2,9 +2,15 @@ const connection = require('../connection')
 const APMSControllers = require("../controllers/APMSControllers");
 
 class ActivitiesModels{
-  All(offset) {
+  All(offset,creator) {
     return new Promise((resolve,reject)=>{
-      let consult = `SELECT actividades.nombre AS nombre, actividades.descripcion AS descripcion, actividades.semana AS semana,actividades.id AS id, users.userName AS creador FROM actividades JOIN users ON actividades.creador = users.id LIMIT 6 OFFSET ${offset}`
+      let consult = null
+      if(creator){
+        consult = `SELECT actividades.nombre AS nombre, actividades.descripcion AS descripcion, actividades.semana AS semana,actividades.id AS id, users.userName AS creador FROM actividades JOIN users ON actividades.creador = users.id WHERE users.userName = '${creator}' LIMIT 6 OFFSET ${offset}`
+
+      }else{
+        consult = `SELECT actividades.nombre AS nombre, actividades.descripcion AS descripcion, actividades.semana AS semana,actividades.id AS id, users.userName AS creador FROM actividades JOIN users ON actividades.creador = users.id LIMIT 6 OFFSET ${offset}`
+      }
       connection.query(consult,function(error,results,fields){
         if(error){
          reject(error)

@@ -11,7 +11,7 @@ class PMSControllers{
        });
       })
     }
-    
+
     Create(actividad){
       return new Promise((resolve, reject) =>{
         PMSModels.Create(actividad)

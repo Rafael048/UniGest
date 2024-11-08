@@ -28,7 +28,9 @@ class PMSModels {
           JOIN p_m_s ON profesores.id = p_m_s.idProfesor 
           JOIN materias ON p_m_s.idMaterias = materias.id 
           JOIN secciones ON p_m_s.idSecciones = secciones.id
-          WHERE profesores.cedula = ${cedula}`;
+          WHERE profesores.cedula = ${cedula}
+          LIMIT 6 
+          OFFSET ${offset}`;
       }
       connection.query(consulta, function (error, results, fields) {
         if (error) {
@@ -45,6 +47,7 @@ class PMSModels {
       });
     });
   }
+ 
   Create(data) {
     return new Promise((resolve, reject) => {
       let idProfesor = data.idProfesor;

@@ -4,7 +4,7 @@ const ActivitiesControllers = require("../controllers/ActivitiesControllers");
 router.get("/", function (req, res, next) {
   let button = null
 
-    ActivitiesControllers.All(req.query.offset)
+    ActivitiesControllers.All(req.query.offset,req.query.creador)
       .then((result) => {
         if(result[5]){
           button=true

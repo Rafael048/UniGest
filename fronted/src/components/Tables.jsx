@@ -29,6 +29,7 @@ export default function Tables(props) {
   const [offset, setOffset] = useState(0)
   const [nextButton, setNextButton] = useState(false)
   const [userInput, setUserInput] = useState("") //es quien toma los datos del input no es Ai mamaguevo
+  const [loading,setLoading] = useState(true)
 
 
   const debounceValue = useDebounce(userInput,800);
@@ -161,58 +162,82 @@ export default function Tables(props) {
   }, [token])
   useEffect(() => {
     async function getData() {
-      if (props.uri === "pms") {
-        await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}&table=${true}`)
-          .then((result) => {
-            let filter = result.data.body.filter((pms) => {
-              return pms.user === user.cedula
-            })
-            filter.forEach(element => {
-              delete element.user
-            });
-            setData(filter)
-            let muestra = Object.getOwnPropertyNames(filter[0])
-
-            setPropertyName(muestra)
-            setNextButton(result.data.body.button)
-
-          })
-          .catch((err) => {
+      if(user){
+        if (props.uri === "pms") {
+          await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}&cedula=${user.cedula}`)
+            .then((result) => {
+              if(result.data.body.length===0){
+                setLoading(false)
+              }else{
+                result.data.body.forEach(element => {
+                 delete element.id
+                 delete element.Nombre
+                 delete element.Materias_Secciones
+                 delete element.Apellido
+               });
+                console.log(result)
+                setData(result.data.body)
+                let muestra = Object.getOwnPropertyNames(result.data.body[0])
+  
+                setPropertyName(muestra)
+                setNextButton(result.data.button)
+                setLoading(false)
+              }
+           })
+           .catch((err) => {
             console.log(err)
-          })
-
-      } else {
-
-        await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}`)
-          .then((result) => {
-
+            })
+          }else{
             if (props.uri === "actividades" && role === "Profesor") {
+              await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}&creador=${user.userName}`)
+              .then((result) => {
               let filter = result.data.body.filter((creador) => {
                 return creador.creador === user.userName
               })
-              filter.forEach(element => {
-                delete element.creador
-              });
-              setData(filter)
-              let muestra = Object.getOwnPropertyNames(filter[0])
-              let indexID = muestra.findIndex((element => element === "id"))
-              muestra.splice(indexID, 1)
-              setPropertyName(muestra)
-              setNextButton(result.data.button)
-
+              if(filter.length===0){
+                setLoading(false)
+              }else{
+                filter.forEach(element => {
+                  delete element.creador
+                });
+                setData(filter)
+                let muestra = Object.getOwnPropertyNames(filter[0])
+                let indexID = muestra.findIndex((element => element === "id"))
+                muestra.splice(indexID, 1)
+                setPropertyName(muestra)
+                setNextButton(result.data.button)
+                setLoading(false)
+              } 
+            })
+              .catch((err) => {
+                console.log(err)
+              })
             } else {
-              setData(result.data.body)
-              let muestra = Object.getOwnPropertyNames(result.data.body[0])
-              let indexID = muestra.findIndex((element => element === "id"))
-              muestra.splice(indexID, 1)
-              setPropertyName(muestra)
-              setNextButton(result.data.button)
+              await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}`)
+              .then((result) => {
+                if(result.data.body.length===0){
+                  setLoading(false)
+                }else{
+                  setData(result.data.body)
+                let muestra = Object.getOwnPropertyNames(result.data.body[0])
+                let indexID = muestra.findIndex((element => element === "id"))
+                muestra.splice(indexID, 1)
+                setPropertyName(muestra)
+                setNextButton(result.data.button)
+                setLoading(false)
+                }
 
+              }).catch((err) => {
+                console.log(err)
+
+              });
+              
             }
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+          }
+          
+
+        } else {
+        setLoading(true)
       }
     }
 
@@ -220,12 +245,17 @@ export default function Tables(props) {
   }, [props.uri, role, user, offset])
   return (
     <>
+
+    {loading? <div>Cargando...</div>: 
+    <>
       <div className="center">
         <div className="headTable">
           <h1 className="titleTable">
             {props.uri}
           </h1>
           <div className="addSearch">
+          {props.uri==="pms"?null:
+          <>
               <label className="searchButton">Buscar</label>
                 <input type="text" name="element" placeholder="Nombre" className="inputSearch" onChange={handleChange} value={userInput}/>
               <div className="search">
@@ -240,6 +270,8 @@ export default function Tables(props) {
                   </IconContext.Provider>
                 </div>
               </div>
+          </>
+          }
             {(role === "Director" && props.uri !== "actividades") || (role === "Profesor" && props.uri === "actividades") ? <motion.button onClick={() => window.location.replace(`/Agregar${props.uri}`)} className="addButton" whileHover={{ scale: 1.2, backgroundColor: "green" }}>
               Agregar
             </motion.button> : null}
@@ -377,6 +409,9 @@ export default function Tables(props) {
 
       </div>
       <SearchNull searchNull={searchNull} animateAviso={animateAviso} onCancel={handleCancelError} />
+      </>
+    }
     </>
+
   )
 }
