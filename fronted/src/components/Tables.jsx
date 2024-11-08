@@ -184,7 +184,7 @@ export default function Tables(props) {
               let indexID = muestra.findIndex((element => element === "id"))
               muestra.splice(indexID, 1)
               setPropertyName(muestra)
-              setNextButton(result.data.body.button)
+              setNextButton(result.data.button)
 
             } else {
               setData(result.data.body)

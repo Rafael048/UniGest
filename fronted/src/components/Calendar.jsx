@@ -62,6 +62,7 @@ export default function Calendar() {
                             const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
                             dateEvent = nuevaFechaISO;
                         } else {
+                                console.log(diferencia)
                             if (diferencia <= 0) {
                                 diferencia = diferencia + 7;
                                 ajusted = true
@@ -69,9 +70,10 @@ export default function Calendar() {
 
                             const nuevaFecha = new Date(item.date);
                             if(ajusted){
-                                nuevaFecha.setDate(date.getDate() + diferencia);
+                                nuevaFecha.setDate(date.getDate() + diferencia-1);
+                            }else{
+                                nuevaFecha.setDate(date.getDate() + (diferencia-1));
                             }
-                            nuevaFecha.setDate(date.getDate() + (diferencia-1));
                             const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
                             dateEvent = nuevaFechaISO
                         }
@@ -80,7 +82,6 @@ export default function Calendar() {
                             nuevaFecha.setDate(date.getDate() + 6);
                             const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
                             dateEvent = nuevaFechaISO                        }
-                            console.log(dateDay,item.diaClase,dateEvent,item.title,item.materia)
                         let eventTemp = {
                             title: item.title,
                             date: dateEvent,
