@@ -18,7 +18,7 @@ export default function SearchNull({ searchNull, onCancel, animateAviso }) {
                             autoplay={true}
                         />
                     </div>
-                    <p>Id no existe</p>
+                    <p>Elemento no encontrado</p>
                     <motion.button whileHover={{ color: "red", scale:.9, backgroundColor:"white", border:"1px solid red" }} onClick={onCancel} className='buttonAcept'>
                         Aceptar
                     </motion.button>

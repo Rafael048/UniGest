@@ -13,6 +13,17 @@ class SubjectsControllers{
       });
     });
   }
+  One(name){
+    return new Promise((resolve, reject) => {   
+      SubjectsModels.One(name)
+      .then((results) => {
+        resolve(results)
+    })
+    .catch((error) => {
+        reject(error)
+    });
+  });
+}
 
 
     Create(registro){

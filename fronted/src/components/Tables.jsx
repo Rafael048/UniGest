@@ -17,7 +17,6 @@ import { useDebounce } from "../hooks/UseDebounce";
 export default function Tables(props) {
   const [data, setData] = useState([])
   const [propertyName, setPropertyName] = useState([])
-  const [clicked, setClicked] = useState(false)
   const [role, setRole] = useState(null)
   const [showSearch, setShowSearch] = useState('showButton')
   const [showX, setShowX] = useState('notShowButton')
@@ -30,24 +29,34 @@ export default function Tables(props) {
   const [offset, setOffset] = useState(0)
   const [nextButton, setNextButton] = useState(false)
   const [userInput, setUserInput] = useState("") //es quien toma los datos del input no es Ai mamaguevo
-  const [dataName, setDataName] = useState([]) //Resultados
 
 
-  const debounceValue = useDebounce(userInput,300);
+  const debounceValue = useDebounce(userInput,800);
 
 
   
   useEffect(() => {
     const getDataInput = async () => {
-      const dataName = await fetch(`Rafa aqui haces la solicitud al backend ${debounceValue}`)
-      const resultName = await dataName.json() //Donde guarda resultados
-      setDataName(resultName)
+      await axios.get(`http://localhost:3000/${props.uri}/Uno/${debounceValue}`)
+      .then((result) => {
+        setData(result.data.body)
+        setShowSearch('notShowButton')
+        setShowX('showButton')
+        setNextButton(false)
+      }).catch((err) => {
+          console.log(err)
+          if (err) {
+            setSearchNull(true)
+            setAnimateAviso(true) 
+          }
+      });
     }
-    userInput ? getDataInput() : setDataName([]);
-  }, [debounceValue])
+    userInput ? getDataInput() : setData([]);
+  }, [debounceValue,props.uri])
 
   
   const handleChange = ({ target }) =>{
+    console.log(target.value)
     setUserInput(target.value);
   }
 
@@ -73,23 +82,7 @@ export default function Tables(props) {
 
   }
 
-  function getOneElement(e) {
-    e.preventDefault()
-    setClicked(true)
-    let element = e.target.element.value
-    let arrTemp = []
-    arrTemp.push(data.find((elements) => {
-      return Number(elements.id) === Number(element)
-    }))
-    if (arrTemp[0] === undefined) {
-      setSearchNull(true)
-      setAnimateAviso(true)
-    } else {
-      setShowSearch('notShowButton')
-      setData(arrTemp)
-      setShowX('showButton')
-    }
-  }
+
 
   function handleCancelError() {
     setAnimateAviso(false)
@@ -99,17 +92,11 @@ export default function Tables(props) {
   }
 
   function getClicked() {
-    if (clicked) {
-      setData(data.slice(0, 5))
-      setClicked(false)
-    } else {
-      setClicked(true)
-    }
+    window.location.reload()
     setShowSearch('showButton')
     setShowX('notShowButton')
   }
   async function deleteElement(item) {
-    console.log(item.id)
     let id = item.id
     await axios.delete(`http://localhost:3000/${props.uri}/eliminar/${id}`)
       .then(() => {
@@ -239,9 +226,8 @@ export default function Tables(props) {
             {props.uri}
           </h1>
           <div className="addSearch">
-            <form onSubmit={(e) => getOneElement(e)} className="formtable">
               <label className="searchButton">Buscar</label>
-                <input type="number" name="element" placeholder="ID" className="inputSearch" onChange={handleChange} value={userInput}/>
+                <input type="text" name="element" placeholder="Nombre" className="inputSearch" onChange={handleChange} value={userInput}/>
               <div className="search">
                 <button type="submit" className={`tableButton ${showSearch}`}>
                   <IconContext.Provider value={{ className: "searchsvg" }}>
@@ -254,7 +240,6 @@ export default function Tables(props) {
                   </IconContext.Provider>
                 </div>
               </div>
-            </form>
             {(role === "Director" && props.uri !== "actividades") || (role === "Profesor" && props.uri === "actividades") ? <motion.button onClick={() => window.location.replace(`/Agregar${props.uri}`)} className="addButton" whileHover={{ scale: 1.2, backgroundColor: "green" }}>
               Agregar
             </motion.button> : null}

@@ -12,7 +12,17 @@ class SectionsControllers{
       });
     });
   }
-
+  One(name){
+    return new Promise((resolve, reject) => {   
+      SectionsModels.One(name)
+      .then((results) => {
+        resolve(results)
+    })
+    .catch((error) => {
+        reject(error)
+    });
+  });
+}
   
 
   Create(registro){

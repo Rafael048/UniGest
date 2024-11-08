@@ -28,7 +28,36 @@ class ActivitiesModels{
       })
     });
   }
-
+  One(name){
+    return new Promise((resolve, reject) => {
+      let consult = `SELECT * FROM actividades WHERE nombre = '${name}'`
+      connection.query(consult,function(err,results){
+        if(err){
+          reject(err)
+        }else{
+          if(results.length===0){
+            reject(new Error("No se encontro la materia"))
+          }else{
+            APMSControllers.All()
+          .then((apms) => {
+            console.log(apms)
+            for (let i = 0; i < results.length; i++) {
+              results[i].Clase = []
+              for (let j = 0; j < apms.length; j++) {
+                if (results[i].id == apms[j].idAct) {
+                  results[i].Clase.push(apms[j].profesor+ " " +apms[j].materia+ " " +apms[j].seccion,apms[j].id)
+                }
+              }
+            }
+            resolve(results)
+          }).catch((e) => {
+            reject(e)
+          })
+          }
+        }
+      })
+    })
+  }
   Create(actividades){
     return new Promise((resolve, reject) => {
       let nombreAC = actividades.nombre

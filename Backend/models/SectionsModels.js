@@ -25,7 +25,26 @@ class SectionsModels{
     });
   }
   
-
+  One(name){
+    return new Promise((resolve, reject) => {
+      let consult = `SELECT * FROM secciones WHERE nombre = '${name}'`
+      connection.query(consult,function(err,results){
+        if(err){
+          reject(err)
+        }else{
+          if(results.length===0){
+            reject(new Error("No se encontro la materia"))
+          }else{
+            results.forEach(Element => {
+              let dateTemp = new Date(Element.periodoAcademico)
+              Element.periodoAcademico = dateTemp.toISOString().slice(0,10).replace('T','')
+            });
+            resolve(results)
+          }
+        }
+      })
+    })
+  }
   
 
     Create(registro){

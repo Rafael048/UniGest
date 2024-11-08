@@ -144,5 +144,21 @@ class SubjectsModels{
           })
          })
         }
+        One(name){
+          return new Promise((resolve, reject) => {
+            let consult = `SELECT * FROM materias WHERE nombre = '${name}'`
+            connection.query(consult,function(err,results){
+              if(err){
+                reject(err)
+              }else{
+                if(results.length===0){
+                  reject(new Error("No se encontro la materia"))
+                }else{
+                  resolve(results)
+                }
+              }
+            })
+          })
+        }
 }
 module.exports = new SubjectsModels

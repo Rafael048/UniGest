@@ -12,7 +12,17 @@ class ProfessorsControllers{
       });
     });
   }
-
+  One(name){
+    return new Promise((resolve, reject) => {   
+      ProfessorsModels.One(name)
+      .then((results) => {
+        resolve(results)
+    })
+    .catch((error) => {
+        reject(error)
+    });
+  });
+}
   
   Create(usuario){
     return new Promise((resolve, reject) =>{

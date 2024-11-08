@@ -11,7 +11,17 @@ class ActivitiesControllers{
        });
       })
     }
-   
+    One(name){
+      return new Promise((resolve, reject) => {   
+        ActivitiesModels.One(name)
+        .then((results) => {
+          resolve(results)
+      })
+      .catch((error) => {
+          reject(error)
+      });
+    });
+  }
     Create(actividad){
       return new Promise((resolve, reject) =>{
         ActivitiesModels.Create(actividad)

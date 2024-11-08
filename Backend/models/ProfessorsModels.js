@@ -33,7 +33,35 @@ class ProfessorsModels{
       })
     });
   }
-  
+  One(name){
+    return new Promise((resolve, reject) => {
+      let consult = `SELECT * FROM profesores WHERE nombre = '${name}'`
+      connection.query(consult,function(err,results){
+        if(err){
+          reject(err)
+        }else{
+          if(results.length===0){
+            reject(new Error("No se encontro la materia"))
+          }else{
+            PMSControllers.All(undefined)
+          .then((pms) => {
+            for (let i = 0; i < results.length; i++) {
+              results[i].materias_Secciones = []
+              for (let j = 0; j < pms.length; j++) {
+                if (results[i].id == pms[j].idProf) {
+                  results[i].materias_Secciones.push(pms[j].Materias+ " " +pms[j].Secciones+ " ",pms[j].id)
+                }
+              }
+            }
+            resolve(results)
+          }).catch((e) => {
+            reject(e)
+          });
+          }
+        }
+      })
+    })
+  }
   Create(usuario){
     return new Promise((resolve, reject) => {
       let nombreUS = usuario.nombre
