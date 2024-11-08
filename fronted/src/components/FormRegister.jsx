@@ -21,7 +21,7 @@ export default function FormRegister(props) {
                 if(props.uri==="profesor"){
                     window.location.replace('/profesores')
                 }else{
-                    window.location.replace('/')
+                    window.location.replace('/profesores')
                 }
                 })
             .catch((err) => {

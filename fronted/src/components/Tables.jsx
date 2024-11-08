@@ -10,6 +10,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { MdMode } from "react-icons/md";
 import { BiSolidSearchAlt2 } from "react-icons/bi";
 import { LuSearchX } from "react-icons/lu";
+import { useDebounce } from "../hooks/UseDebounce";
 
 
 
@@ -28,6 +29,28 @@ export default function Tables(props) {
   const [user, setUser] = useState(null)
   const [offset, setOffset] = useState(0)
   const [nextButton, setNextButton] = useState(false)
+  const [userInput, setUserInput] = useState("") //es quien toma los datos del input no es Ai mamaguevo
+  const [dataName, setDataName] = useState([]) //Resultados
+
+
+  const debounceValue = useDebounce(userInput,300);
+
+
+  
+  useEffect(() => {
+    const getDataInput = async () => {
+      const dataName = await fetch(`Rafa aqui haces la solicitud al backend ${debounceValue}`)
+      const resultName = await dataName.json() //Donde guarda resultados
+      setDataName(resultName)
+    }
+    userInput ? getDataInput() : setDataName([]);
+  }, [debounceValue])
+
+  
+  const handleChange = ({ target }) =>{
+    setUserInput(target.value);
+  }
+
   function handleShowWarning(item) {
 
     setIdDelete(item)
@@ -98,7 +121,7 @@ export default function Tables(props) {
   async function handleDesAsing(index, arr) {
     let id = arr[index]
     let direcction = null
-    console.log(id,index,arr)
+    console.log(id, index, arr)
     if (props.uri === "profesores") {
       direcction = "pms"
     } else {
@@ -133,7 +156,11 @@ export default function Tables(props) {
 
   }
 
+
+
   useEffect(() => {
+
+
     async function verify() {
       await axios.get(`http://localhost:3000/verify/${token}`)
         .then((result) => {
@@ -151,7 +178,7 @@ export default function Tables(props) {
         await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}&table=${true}`)
           .then((result) => {
             let filter = result.data.body.filter((pms) => {
-              return pms.user=== user.cedula
+              return pms.user === user.cedula
             })
             filter.forEach(element => {
               delete element.user
@@ -214,16 +241,16 @@ export default function Tables(props) {
           <div className="addSearch">
             <form onSubmit={(e) => getOneElement(e)} className="formtable">
               <label className="searchButton">Buscar</label>
+                <input type="number" name="element" placeholder="ID" className="inputSearch" onChange={handleChange} value={userInput}/>
               <div className="search">
-                <input type="number" name="element" placeholder="ID" className="inputSearch" />
                 <button type="submit" className={`tableButton ${showSearch}`}>
                   <IconContext.Provider value={{ className: "searchsvg" }}>
                     <BiSolidSearchAlt2 />
                   </IconContext.Provider>
                 </button>
                 <div className={`tablebutton ${showX}`}>
-                  <IconContext.Provider value={{className:"searchsvg"}}>
-                    <LuSearchX onClick={() => getClicked()}/>
+                  <IconContext.Provider value={{ className: "searchsvg" }}>
+                    <LuSearchX onClick={() => getClicked()} />
                   </IconContext.Provider>
                 </div>
               </div>
@@ -274,11 +301,11 @@ export default function Tables(props) {
                                     </motion.div>
                                     :
                                     role === "Profesor" && props.uri === "actividades" ?
-                                    <motion.div whileHover={{ scale: 1.5 }}>
-                                      <IconContext.Provider value={{ className: "searchsvg" }} >
-                                        <FcDeleteRow onClick={() => handleDesAsing(item.Clase.indexOf(subItem) + 1, item.Clase)} />
-                                      </IconContext.Provider>
-                                    </motion.div>
+                                      <motion.div whileHover={{ scale: 1.5 }}>
+                                        <IconContext.Provider value={{ className: "searchsvg" }} >
+                                          <FcDeleteRow onClick={() => handleDesAsing(item.Clase.indexOf(subItem) + 1, item.Clase)} />
+                                        </IconContext.Provider>
+                                      </motion.div>
                                       :
                                       null
                                   }
@@ -335,7 +362,7 @@ export default function Tables(props) {
                   </td>
                   : undefined
                 }
-                {role === "Profesor" && props.uri === "pms" ? <td><motion.button className="viewPlani" whileHover={{scale:1.2, backgroundColor:"#0947a5"}}> Ver Planificacion</motion.button></td> : null}
+                {role === "Profesor" && props.uri === "pms" ? <td><motion.button className="viewPlani" whileHover={{ scale: 1.2, backgroundColor: "#0947a5" }}> Ver Planificacion</motion.button></td> : null}
               </tr>
             ))}
             <tr>
