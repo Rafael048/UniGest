@@ -15,6 +15,43 @@
     gap: 2vw;
 }
 
+.settingForm{
+    width: 100%;
+    gap: 1vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.passwordSettings{
+    display: flex;
+    padding: 1vw;
+    justify-content: center;
+    width: 100%;
+}
+
+.passwordInput{
+    width: 50%;
+    height: 50px;
+    border-radius: 30px;
+    font-size: 22px;
+    padding: 1vw;
+    outline: none;
+    border: 0;
+}
+
+.buttonsDelete {
+    padding: 1vw .5vw;
+    background-color: white;
+    color: black;
+    width: 40%;
+    font-size: 30px;
+    border-radius: 40px;
+    font-weight: bold;
+    border: 0;
+    cursor: pointer;
+}
+
 .titleSetting {
     display: flex;
     align-items: center;

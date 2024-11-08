@@ -256,8 +256,8 @@ export default function Tables(props) {
           {props.uri==="pms"?null:
           <>
               <label className="searchButton">Buscar</label>
-                <input type="text" name="element" placeholder="Nombre" className="inputSearch" onChange={handleChange} value={userInput}/>
               <div className="search">
+                <input type="text" name="element" placeholder="Nombre" className="inputSearch" onChange={handleChange} value={userInput}/>
                 <button type="submit" className={`tableButton ${showSearch}`}>
                   <IconContext.Provider value={{ className: "searchsvg" }}>
                     <BiSolidSearchAlt2 />
