@@ -11,6 +11,7 @@ import logo from '../assets/logo.png'
 export default function FormActivitiesAdd() {
   const btActive = 'activeMenu'
   const token = Cookies.get('jwt')
+
   useEffect(() => {
     async function getData(token) {
       await axios.get(`http://localhost:3000/verify/${token}`)

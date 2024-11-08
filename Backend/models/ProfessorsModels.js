@@ -35,7 +35,7 @@ class ProfessorsModels{
   }
   One(name){
     return new Promise((resolve, reject) => {
-      let consult = `SELECT * FROM profesores WHERE nombre = '${name}'`
+      let consult = `SELECT * FROM profesores WHERE nombre LIKE '%${name}%'`
       connection.query(consult,function(err,results){
         if(err){
           reject(err)

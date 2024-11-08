@@ -204,6 +204,33 @@ Modify(cedula,values){
        }
     })
 }
+Delete(pass,user){
+    return new Promise((resolve, reject) => {
+        let consultUser = `SELECT * FROM users WHERE userName = '${user}'`
+        connection.query(consultUser,async function(err, results, fields){
+            if(err){
+                reject(err)
+            }else{
+                if(results.length===0){
+                    reject(new Error("No se encontro el usuario"))
+                }else{
+                    let passBD = results[0].password
+                    let comparation = await bcryptjs.compare(pass, passBD)
+                    if(comparation){
+                        let consult = `DELETE FROM users WHERE userName = '${user}'`
+                        connection.query(consult,function(err,result){
+                            if(err){
+                                reject(err)
+                            }else{
+                                resolve(result)
+                            }
+                        })
+                    }
+                }
+            }
+        })
+    })
+}
 
 }
 module.exports = new AutenticationModels()

@@ -31,7 +31,6 @@ export default function Tables(props) {
   const [userInput, setUserInput] = useState("") //es quien toma los datos del input no es Ai mamaguevo
   const [loading,setLoading] = useState(true)
 
-
   const debounceValue = useDebounce(userInput,800);
 
 

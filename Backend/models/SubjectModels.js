@@ -146,7 +146,7 @@ class SubjectsModels{
         }
         One(name){
           return new Promise((resolve, reject) => {
-            let consult = `SELECT * FROM materias WHERE nombre = '${name}'`
+            let consult = `SELECT * FROM materias WHERE nombre LIKE '%${name}%'`
             connection.query(consult,function(err,results){
               if(err){
                 reject(err)
@@ -154,6 +154,26 @@ class SubjectsModels{
                 if(results.length===0){
                   reject(new Error("No se encontro la materia"))
                 }else{
+                  results.forEach(element => {
+              
+                    switch(element.diaClase){
+                      case 0:  element.diaClase = "Domingo"
+                      break;
+                      case 1: element.diaClase = "Lunes"
+                      break;
+                      case 2:  element.diaClase = "Martes"
+                      break;
+                      case 3:  element.diaClase = "Miercoles"
+                      break;
+                      case 4:  element.diaClase = "Jueves"
+                      break;
+                      case 5:  element.diaClase = "Viernes"
+                      break;
+                      case 6:  element.diaClase = "Sabado"
+                      break;
+              
+                    }
+                  });
                   resolve(results)
                 }
               }

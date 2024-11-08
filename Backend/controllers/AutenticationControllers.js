@@ -56,6 +56,16 @@ class AutenticationControllers{
           });
         });
       }
+      Delete(pass,user){
+        return new Promise((resolve, reject) => {
+            AutenticationModels.Delete(pass,user)
+            .then(() => {
+                resolve()
+            }).catch((e) => {
+                reject(e)
+            });
+        })
+      }
     }
     
   

@@ -9,6 +9,26 @@ export default function Settings() {
     const [user, setUser] = useState({})
     const [loading, setLoading] = useState(true)
     const token = Cookies.get('jwt')
+    const [warning, setWarning] = useState(null)
+
+  function handleShowWarning() {
+    setWarning(true)
+  }
+
+  function handleCancel() {
+    setWarning(false)
+  }
+  async function deleteElement(e) {
+    e.preventDefault()
+    let pass = e.target.pass.value
+    await axios.delete(`http://localhost:3000/eliminar?pass=${pass}&user=${user.userName}`)
+      .then(() => {
+        Cookies.remove('jwt')
+        window.location.replace('/')
+      }).catch((err) => {
+        console.log(err)
+      });
+  }
     useEffect(() => {
         async function getUser() {
             await axios.get(`http://localhost:3000/verify/${token}`)
@@ -45,12 +65,28 @@ export default function Settings() {
                         </div>
                         <div className="buttonSettingsContainer">
                             <motion.button onClick={() => window.location.replace('/modificarUsuario')} whileHover={{ backgroundColor: "#0947a5", scale: .9 }} className="buttonSetting">Editar</motion.button>
-                            <motion.button whileHover={{ backgroundColor: "red", scale: .9 }} className="buttonSetting">Eliminar</motion.button>
+                            <motion.button whileHover={{ backgroundColor: "red", scale: .9 }} className="buttonSetting" onClick={handleShowWarning}>Eliminar</motion.button>
                         </div>
 
                     </div>
                 </div>
             }
+            <div className={`warning ${warning ? '' : 'cancel'}`}>
+                        <div className='windonws'>
+                          <div className='textExit'>
+                            <p>¿Seguro que deseas eliminar?</p>
+                          </div>
+                          <div className='buttonsExitWindows'>
+                            <button className='buttonsExit cancelButton' onClick={handleCancel}>
+                              Cancelar
+                            </button>
+                            <form onSubmit={(e)=>deleteElement(e)}>
+                            <input type="password" placeholder="Ingrese su contraseña" required name="pass" />
+                            <button className='buttonsExit aceptButton' type="submit">Aceptar</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
 
         </>
     )

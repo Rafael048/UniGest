@@ -16,6 +16,7 @@ export default function TablesActivities() {
   const token = Cookies.get('jwt')
   const [active, setActive] = useState(null)
   const [loading, setLoading] = useState(true)
+  
   useEffect(() => {
     async function getData(token) {
       await axios.get(`http://localhost:3000/verify/${token}`)
@@ -60,6 +61,7 @@ export default function TablesActivities() {
             <Footer />
           </>
       }
+      
     </div>
   )
 }

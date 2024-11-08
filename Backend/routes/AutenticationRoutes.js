@@ -60,6 +60,17 @@ router.put('/editar',function(req,res){
 router.get("/500", (req, res, next) => {
   res.status(500).json({message:"Algo no ha salido como se esperaba", error:e.message})
 });
+router.delete("/eliminar",function(req,res){
+  AutenticationControllers.Delete(req.query.pass,req.query.user)
+  .then(() => {
+    res.status(200) .json({ result: "Usuario Eliminado"});
+
+  }).catch((e) => {
+    res
+    .status(401)
+    .json({ error: "Error al autenticar", message: e.message });
+});
+})
 
 
 module.exports = router;
