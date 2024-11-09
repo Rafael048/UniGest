@@ -185,6 +185,7 @@ export default function Tables(props) {
            })
            .catch((err) => {
             console.log(err)
+            setLoading(false)
             })
           }else{
             if (props.uri === "actividades" && role === "Profesor") {
@@ -210,6 +211,7 @@ export default function Tables(props) {
             })
               .catch((err) => {
                 console.log(err)
+                setLoading(false)
               })
             } else {
               await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}`)
@@ -228,7 +230,7 @@ export default function Tables(props) {
 
               }).catch((err) => {
                 console.log(err)
-
+                setLoading(false)
               });
               
             }

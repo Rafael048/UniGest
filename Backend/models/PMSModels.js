@@ -1,36 +1,35 @@
 const connection = require("../connection");
 
 class PMSModels {
-  All(cedula,offset,table) {
+  All(cedula,offset) {
     return new Promise((resolve, reject) => {
       let consulta = null
-      console.log(cedula,offset,table)
-      if(table){
-        consulta=
-        `SELECT profesores.cedula AS user, materias.nombre AS Materia, secciones.nombre AS Seccion
+      console.log(cedula,offset)
+      if(offset&&cedula){
+        consulta =
+       `SELECT profesores.nombre AS Nombre,profesores.apellido AS Apellido, materias.nombre AS Materias, secciones.nombre AS Secciones, p_m_s.id AS id
         FROM profesores
-          JOIN p_m_s ON profesores.id = p_m_s.idProfesor 
-          JOIN materias ON p_m_s.idMaterias = materias.id 
-          JOIN secciones ON p_m_s.idSecciones = secciones.id
-          LIMIT 6 
-          OFFSET ${offset}`
-        }else if(cedula===undefined){
+        JOIN p_m_s ON profesores.id = p_m_s.idProfesor 
+        JOIN materias ON p_m_s.idMaterias = materias.id 
+        JOIN secciones ON p_m_s.idSecciones = secciones.id
+        WHERE profesores.cedula = ${cedula}
+        LIMIT 6 
+        OFFSET ${offset}`;
+        }else if(cedula){
+          consulta=
+          `SELECT profesores.nombre AS Nombre,profesores.apellido AS Apellido, materias.nombre AS Materias, secciones.nombre AS Secciones, p_m_s.id AS id
+            FROM profesores
+            JOIN p_m_s ON profesores.id = p_m_s.idProfesor 
+            JOIN materias ON p_m_s.idMaterias = materias.id 
+            JOIN secciones ON p_m_s.idSecciones = secciones.id
+            WHERE profesores.cedula = ${cedula}`
+      }else{
         consulta =
           `SELECT profesores.nombre AS Nombre,profesores.apellido AS Apellido, materias.nombre AS Materias, secciones.nombre AS Secciones, p_m_s.id AS id, profesores.id AS idProf
           FROM profesores
           JOIN p_m_s ON profesores.id = p_m_s.idProfesor 
           JOIN materias ON p_m_s.idMaterias = materias.id 
           JOIN secciones ON p_m_s.idSecciones = secciones.id`;
-      }else{
-        consulta =
-         `SELECT profesores.nombre AS Nombre,profesores.apellido AS Apellido, materias.nombre AS Materias, secciones.nombre AS Secciones, p_m_s.id AS id
-          FROM profesores
-          JOIN p_m_s ON profesores.id = p_m_s.idProfesor 
-          JOIN materias ON p_m_s.idMaterias = materias.id 
-          JOIN secciones ON p_m_s.idSecciones = secciones.id
-          WHERE profesores.cedula = ${cedula}
-          LIMIT 6 
-          OFFSET ${offset}`;
       }
       connection.query(consulta, function (error, results, fields) {
         if (error) {

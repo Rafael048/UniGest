@@ -2,11 +2,10 @@ const express = require("express");
 const PMSControllers = require("../controllers/PMSControllers");
 const router = express.Router();
 router.get("/", function (req, res, next) {
-    const table = req.query.table
     const offset = req.query.offset
     const cedula = req.query.cedula
     let button = null
-    PMSControllers.All(cedula,offset,table)
+    PMSControllers.All(cedula,offset)
     .then((result) => {
       if(result[5]){
         result.pop()

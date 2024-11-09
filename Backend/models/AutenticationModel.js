@@ -17,7 +17,7 @@ class AutenticationModels{
             const rol = userData.rol
             const cedulaUser = userData.cedula
             const registerpass = userData.registerpass
-            if(name==undefined||lastName==undefined||user==undefined||password==undefined||rol==undefined||cedulaUser==undefined||registerpass==undefined||name.trim()===" "||lastName.trim()=== " "||user.trim()=== " "||password.trim()===" "||rol.trim()===" "||cedulaUser.trim()===" "||registerpass.trim()===" "){
+            if(name==undefined||lastName==undefined||user==undefined||password==undefined||rol==undefined||cedulaUser==undefined||registerpass==undefined||name.trim()===" "||lastName.trim()=== " "||user.trim()=== " "||rol.trim()===" "||registerpass.trim()===" "){
                 reject(new Error("No se pueden enviar datos vacios"))
             }
             if(registerpass === process.env.REGISTERPROFESSOR&&rol=="Profesor" || registerpass === process.env.REGISTERDIRECTOR&&rol=="Director"){
