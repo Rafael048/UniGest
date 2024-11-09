@@ -25,6 +25,7 @@ import FormModifySections from './pages/FormModifySections'
 import SettingsPage from './pages/SettingsPage';
 import TestResponsivetemp from './pages/TestResponsivetemp';
 import SubjectsProfessors from './pages/SubjectsProfessors'
+import TablePlanifig from './pages/TablePlanifig'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
@@ -52,6 +53,7 @@ root.render(
       <Route path='Ajustes' element={<SettingsPage/>}/>
       <Route path='test' element={<TestResponsivetemp/>}/>
       <Route path='Asignaturas' element= {<SubjectsProfessors/>} />
+      <Route path='Planificacion' element={<TablePlanifig/>}/>
     </Routes>
   </BrowserRouter>
 );

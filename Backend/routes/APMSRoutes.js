@@ -2,10 +2,18 @@ const express = require("express");
 const router = express.Router();
 const APMSControllers = require("../controllers/APMSControllers");
 router.get("/", function (req, res, next) {
-  
-    APMSControllers.All().then((result) => {
+    APMSControllers.All(req.query.id)
+    .then((result) => {
       res.status(200).json({ message: "Peticion exitosa", body: result });
-    });
+    })
+    .catch((e)=>{
+      res
+        .status(500)
+        .json({
+          message: "Algo no ha salido como se esperaba",
+          error: e.message,
+        });
+    })
   }
 );
 

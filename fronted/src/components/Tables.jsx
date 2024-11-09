@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios'
-import '../css/Tables.css'
-import Cookies from 'js-cookie'
+import axios from "axios";
+import "../css/Tables.css";
+import Cookies from "js-cookie";
 import { motion } from "framer-motion";
 import SearchNull from "./SearchNull";
-import { IconContext } from "react-icons"
+import { IconContext } from "react-icons";
 import { FcDeleteRow } from "react-icons/fc";
 import { MdDeleteForever } from "react-icons/md";
 import { MdMode } from "react-icons/md";
@@ -12,407 +12,642 @@ import { BiSolidSearchAlt2 } from "react-icons/bi";
 import { LuSearchX } from "react-icons/lu";
 import { useDebounce } from "../hooks/UseDebounce";
 
-
-
 export default function Tables(props) {
-  const [data, setData] = useState([])
-  const [propertyName, setPropertyName] = useState([])
-  const [role, setRole] = useState(null)
-  const [showSearch, setShowSearch] = useState('showButton')
-  const [showX, setShowX] = useState('notShowButton')
-  const [warning, setWarning] = useState(null)
-  const [idDelete, setIdDelete] = useState(null)
-  const token = Cookies.get('jwt')
-  const [searchNull, setSearchNull] = useState(false)
-  const [animateAviso, setAnimateAviso] = useState(false)
-  const [user, setUser] = useState(null)
-  const [offset, setOffset] = useState(0)
-  const [nextButton, setNextButton] = useState(false)
-  const [userInput, setUserInput] = useState("") //es quien toma los datos del input no es Ai mamaguevo
-  const [loading,setLoading] = useState(true)
+  const [data, setData] = useState([]);
+  const [propertyName, setPropertyName] = useState([]);
+  const [role, setRole] = useState(null);
+  const [showSearch, setShowSearch] = useState("showButton");
+  const [showX, setShowX] = useState("notShowButton");
+  const [warning, setWarning] = useState(null);
+  const [idDelete, setIdDelete] = useState(null);
+  const token = Cookies.get("jwt");
+  const [searchNull, setSearchNull] = useState(false);
+  const [animateAviso, setAnimateAviso] = useState(false);
+  const [user, setUser] = useState(null);
+  const [offset, setOffset] = useState(0);
+  const [nextButton, setNextButton] = useState(false);
+  const [userInput, setUserInput] = useState(""); //es quien toma los datos del input no es Ai mamaguevo
+  const [loading, setLoading] = useState(true);
+  const [weeks, setWeeks] = useState([]);
+  const debounceValue = useDebounce(userInput, 800);
 
-  const debounceValue = useDebounce(userInput,800);
-
-
-  
   useEffect(() => {
     const getDataInput = async () => {
-      await axios.get(`http://localhost:3000/${props.uri}/Uno/${debounceValue}`)
-      .then((result) => {
-        setData(result.data.body)
-        setShowSearch('notShowButton')
-        setShowX('showButton')
-        setNextButton(false)
-      }).catch((err) => {
-          console.log(err)
+      await axios
+        .get(`http://localhost:3000/${props.uri}/Uno/${debounceValue}`)
+        .then((result) => {
+          setData(result.data.body);
+          setShowSearch("notShowButton");
+          setShowX("showButton");
+          setNextButton(false);
+        })
+        .catch((err) => {
+          console.log(err);
           if (err) {
-            setSearchNull(true)
-            setAnimateAviso(true) 
+            setSearchNull(true);
+            setAnimateAviso(true);
           }
-      });
-    }
+        });
+    };
     userInput ? getDataInput() : setData([]);
-  }, [debounceValue,props.uri])
+  }, [debounceValue, props.uri]);
 
-  
-  const handleChange = ({ target }) =>{
-    console.log(target.value)
+  const handleChange = ({ target }) => {
+    console.log(target.value);
     setUserInput(target.value);
-  }
+  };
 
   function handleShowWarning(item) {
-
-    setIdDelete(item)
-    setWarning(true)
+    setIdDelete(item);
+    setWarning(true);
   }
 
   function handleCancel() {
-    setWarning(false)
+    setWarning(false);
   }
-
-
 
   function getNextData() {
-    setOffset(offset + 5)
-
-
+    setOffset(offset + 5);
   }
   function getPreviusData() {
-    setOffset(offset - 5)
-
+    setOffset(offset - 5);
   }
 
-
-
   function handleCancelError() {
-    setAnimateAviso(false)
+    setAnimateAviso(false);
     setTimeout(() => {
-      setSearchNull(false)
+      setSearchNull(false);
     }, 400);
   }
 
   function getClicked() {
-    window.location.reload()
-    setShowSearch('showButton')
-    setShowX('notShowButton')
+    window.location.reload();
+    setShowSearch("showButton");
+    setShowX("notShowButton");
   }
   async function deleteElement(item) {
-    let id = item.id
-    await axios.delete(`http://localhost:3000/${props.uri}/eliminar/${id}`)
+    let id = item.id;
+    await axios
+      .delete(`http://localhost:3000/${props.uri}/eliminar/${id}`)
       .then(() => {
-        window.location.reload()
-      }).catch((err) => {
-        console.log(err)
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
   async function handleDesAsing(index, arr) {
-    let id = arr[index]
-    let direcction = null
-    console.log(id, index, arr)
+    let id = arr[index];
+    let direcction = null;
+    console.log(id, index, arr);
     if (props.uri === "profesores") {
-      direcction = "pms"
+      direcction = "pms";
     } else {
-      direcction = "apms"
+      direcction = "apms";
     }
-    await axios.delete(`http://localhost:3000/${direcction}/eliminar/${id}`)
+    await axios
+      .delete(`http://localhost:3000/${direcction}/eliminar/${id}`)
       .then(() => {
-        window.location.reload()
-      }).catch((err) => {
-        console.log(err)
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
   async function handleAsing(name) {
-    Cookies.set('name', name[0])
-    Cookies.set('id', name[1])
-    Cookies.set('uri', props.uri)
+    Cookies.set("name", name[0]);
+    Cookies.set("id", name[1]);
+    Cookies.set("uri", props.uri);
     if (role === "Profesor") {
-      window.location.href = `/AsignarActividad`
+      window.location.href = `/AsignarActividad`;
     } else if (role === "Director") {
-      window.location.replace('/AsignarProfesor')
+      window.location.replace("/AsignarProfesor");
     }
   }
   function handleModify(item) {
     if (props.uri === "profesores") {
-      Cookies.set('cedula', item.cedula)
+      Cookies.set("cedula", item.cedula);
     }
-    console.log(item)
-    Cookies.set('id', item.id)
-    Cookies.set('name', item.nombre)
+    console.log(item);
+    Cookies.set("id", item.id);
+    Cookies.set("name", item.nombre);
 
-    window.location.replace(`/Modificar${props.uri}`)
-
+    window.location.replace(`/Modificar${props.uri}`);
+  }
+  function changeView(item) {
+    Cookies.set("id", item.id);
+    window.location.replace("/planificacion");
   }
 
-
-
   useEffect(() => {
-
-
     async function verify() {
-      await axios.get(`http://localhost:3000/verify/${token}`)
+      await axios
+        .get(`http://localhost:3000/verify/${token}`)
         .then((result) => {
-          setRole(result.data.user.rol)
-          setUser(result.data.user)
-        }).catch((err) => {
-          console.log(err)
+          setRole(result.data.user.rol);
+          setUser(result.data.user);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     }
-    verify()
-  }, [token])
+    verify();
+  }, [token]);
   useEffect(() => {
     async function getData() {
-      if(user){
+      if (user) {
         if (props.uri === "pms") {
-          await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}&cedula=${user.cedula}`)
+          await axios
+            .get(
+              `http://localhost:3000/${props.uri}?offset=${offset}&cedula=${user.cedula}`
+            )
             .then((result) => {
-              if(result.data.body.length===0){
-                setLoading(false)
-              }else{
-                result.data.body.forEach(element => {
-                 delete element.id
-                 delete element.Nombre
-                 delete element.Materias_Secciones
-                 delete element.Apellido
-               });
-                console.log(result)
-                setData(result.data.body)
-                let muestra = Object.getOwnPropertyNames(result.data.body[0])
-  
-                setPropertyName(muestra)
-                setNextButton(result.data.button)
-                setLoading(false)
-              }
-           })
-           .catch((err) => {
-            console.log(err)
-            setLoading(false)
-            })
-          }else{
-            if (props.uri === "actividades" && role === "Profesor") {
-              await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}&creador=${user.userName}`)
-              .then((result) => {
-              let filter = result.data.body.filter((creador) => {
-                return creador.creador === user.userName
-              })
-              if(filter.length===0){
-                setLoading(false)
-              }else{
-                filter.forEach(element => {
-                  delete element.creador
+              if (result.data.body.length === 0) {
+                setLoading(false);
+              } else {
+                result.data.body.forEach((element) => {
+                  delete element.Nombre;
+                  delete element.Materias_Secciones;
+                  delete element.Apellido;
                 });
-                setData(filter)
-                let muestra = Object.getOwnPropertyNames(filter[0])
-                let indexID = muestra.findIndex((element => element === "id"))
-                muestra.splice(indexID, 1)
-                setPropertyName(muestra)
-                setNextButton(result.data.button)
-                setLoading(false)
-              } 
+                setData(result.data.body);
+                let muestra = Object.getOwnPropertyNames(result.data.body[0]);
+                let indexID = muestra.findIndex((element) => element === "id");
+                muestra.splice(indexID, 1);
+                setPropertyName(muestra);
+                setNextButton(result.data.button);
+                setLoading(false);
+              }
             })
-              .catch((err) => {
-                console.log(err)
-                setLoading(false)
-              })
-            } else {
-              await axios.get(`http://localhost:3000/${props.uri}?offset=${offset}`)
-              .then((result) => {
-                if(result.data.body.length===0){
-                  setLoading(false)
-                }else{
-                  setData(result.data.body)
-                let muestra = Object.getOwnPropertyNames(result.data.body[0])
-                let indexID = muestra.findIndex((element => element === "id"))
-                muestra.splice(indexID, 1)
-                setPropertyName(muestra)
-                setNextButton(result.data.button)
-                setLoading(false)
-                }
-
-              }).catch((err) => {
-                console.log(err)
-                setLoading(false)
-              });
-              
-            }
-          }
-          
-
+            .catch((err) => {
+              console.log(err);
+              setLoading(false);
+            });
         } else {
-        setLoading(true)
+          if (props.uri === "actividades" && role === "Profesor") {
+            await axios
+              .get(
+                `http://localhost:3000/${props.uri}?offset=${offset}&creador=${user.userName}`
+              )
+              .then((result) => {
+                let filter = result.data.body.filter((creador) => {
+                  return creador.creador === user.userName;
+                });
+                if (filter.length === 0) {
+                  setLoading(false);
+                } else {
+                  filter.forEach((element) => {
+                    delete element.creador;
+                  });
+                  setData(filter);
+                  let muestra = Object.getOwnPropertyNames(filter[0]);
+                  let indexID = muestra.findIndex(
+                    (element) => element === "id"
+                  );
+                  muestra.splice(indexID, 1);
+                  setPropertyName(muestra);
+                  setNextButton(result.data.button);
+                  setLoading(false);
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+                setLoading(false);
+              });
+          } else if (props.uri === "apms") {
+            let id = Cookies.get("id");
+            await axios
+              .get(`http://localhost:3000/${props.uri}?id=${id}`)
+              .then((result) => {
+                if (result.data.body.length === 0) {
+                  setLoading(false);
+                } else {
+                  result.data.body.forEach((element) => {
+                    switch (element.diaClase) {
+                      case 0:
+                        element.diaClase = "Domingo";
+                        break;
+                      case 1:
+                        element.diaClase = "Lunes";
+                        break;
+                      case 2:
+                        element.diaClase = "Martes";
+                        break;
+                      case 3:
+                        element.diaClase = "Miercoles";
+                        break;
+                      case 4:
+                        element.diaClase = "Jueves";
+                        break;
+                      case 5:
+                        element.diaClase = "Viernes";
+                        break;
+                      case 6:
+                        element.diaClase = "Sabado";
+                        break;
+                    }
+                  });
+                  let temp = [];
+                  for (let i = 0; i <= 14; i++) {
+                    temp.push(i);
+                  }
+                  setWeeks(temp);
+                  setData(result.data.body);
+                  setPropertyName([
+                    "Lunes",
+                    "Martes",
+                    "Miercoles",
+                    "Jueves",
+                    "Viernes",
+                    "Sabado",
+                    "Domingo",
+                  ]);
+                  setNextButton(result.data.button);
+                  setLoading(false);
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+                setLoading(false);
+              });
+          } else {
+            await axios
+              .get(`http://localhost:3000/${props.uri}?offset=${offset}`)
+              .then((result) => {
+                if (result.data.body.length === 0) {
+                  setLoading(false);
+                } else {
+                  setData(result.data.body);
+                  let muestra = Object.getOwnPropertyNames(result.data.body[0]);
+                  let indexID = muestra.findIndex(
+                    (element) => element === "id"
+                  );
+                  muestra.splice(indexID, 1);
+                  setPropertyName(muestra);
+                  setNextButton(result.data.button);
+                  setLoading(false);
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+                setLoading(false);
+              });
+          }
+        }
+      } else {
+        setLoading(true);
       }
     }
 
-    getData()
-  }, [props.uri, role, user, offset])
+    getData();
+  }, [props.uri, role, user, offset]);
   return (
     <>
-
-    {loading? <div>Cargando...</div>: 
-    <>
-      <div className="center">
-        <div className="headTable">
-          <h1 className="titleTable">
-            {props.uri}
-          </h1>
-          <div className="addSearch">
-          {props.uri==="pms"?null:
-          <>
-              <label className="searchButton">Buscar</label>
-              <div className="search">
-                <input type="text" name="element" placeholder="Nombre" className="inputSearch" onChange={handleChange} value={userInput}/>
-                <button type="submit" className={`tableButton ${showSearch}`}>
-                  <IconContext.Provider value={{ className: "searchsvg" }}>
-                    <BiSolidSearchAlt2 />
-                  </IconContext.Provider>
-                </button>
-                <div className={`tablebutton ${showX}`}>
-                  <IconContext.Provider value={{ className: "searchsvg" }}>
-                    <LuSearchX onClick={() => getClicked()} />
-                  </IconContext.Provider>
-                </div>
-              </div>
-          </>
-          }
-            {(role === "Director" && props.uri !== "actividades") || (role === "Profesor" && props.uri === "actividades") ? <motion.button onClick={() => window.location.replace(`/Agregar${props.uri}`)} className="addButton" whileHover={{ scale: 1.2, backgroundColor: "green" }}>
-              Agregar
-            </motion.button> : null}
-          </div>
-        </div>
-
-        <table>
-          <thead>
-            <tr>
-              {propertyName.length <= 0 ? <th>No se han ingresado elementos</th> :
-                <>
-                  {propertyName.map((property, index) => (
-
-                    <th key={index}>
-                      {property}
-                    </th>
-
-                  ))}
-                  {(role === "Director" && props.uri !== "actividades") || (role === "Profesor" && props.uri === "actividades") ? <th>Accion</th> : null}
-                  {role === "Profesor" && props.uri === "pms" ? <th>Planificacion</th> : null}
-                </>}
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, rowIndex) => (
-
-              <tr key={rowIndex} id="prueba" className="tableResponsive">
-                {propertyName.map((property, colIndex) => (
-                  <td data-label={property + " "} key={colIndex}>
-                    {Array.isArray(item[property])
-                      ? (
-                        item[property].length > 0 || (props.uri === "actividades" && role === "Profesor") || (role === "Director" && props.uri === "profesores")
-                          ?
-                          <div className="materiasSeccion">
-
-                            {item[property].map((subItem, subIndex) => (
-                              Number.isInteger(subItem) ? null :
-                                <div key={subIndex} className="subItem">{subItem}
-                                  {(role === "Director" && props.uri === "profesores") ?
-                                    <motion.div whileHover={{ scale: 1.5 }}>
-                                      <IconContext.Provider value={{ className: "searchsvg" }} >
-                                        <FcDeleteRow onClick={() => handleDesAsing(item.materias_Secciones.indexOf(subItem) + 1, item.materias_Secciones)} />
-                                      </IconContext.Provider>
-                                    </motion.div>
-                                    :
-                                    role === "Profesor" && props.uri === "actividades" ?
-                                      <motion.div whileHover={{ scale: 1.5 }}>
-                                        <IconContext.Provider value={{ className: "searchsvg" }} >
-                                          <FcDeleteRow onClick={() => handleDesAsing(item.Clase.indexOf(subItem) + 1, item.Clase)} />
-                                        </IconContext.Provider>
-                                      </motion.div>
-                                      :
-                                      null
-                                  }
-
-                                </div>
-                            ))}
-                            {(role === "Director" && props.uri === "profesores") || (role === "Profesor" && props.uri === "actividades") ?
-                              <motion.button className="assignButton" onClick={() => handleAsing([item.nombre, item.id])} whileHover={{ scale: 1.2, backgroundColor: "white", color: "#00255c", border: "1px solid #00255c" }}>
-                                Asignar
-                              </motion.button>
-                              :
-                              null
-                            }
-                          </div>
-                          :
-                          <p>Sin Asignar</p>
-
-                      )
-                      : item[property]
-
-                    }
-                  </td>
-                ))}
-                {(role === "Director" && props.uri !== "actividades") || (role === "Profesor" && props.uri === "actividades") ?
-                  <td data-label="Accion">
-                    <div className="buttonsTable">
-                      <motion.button className="tableButton" onClick={() => handleModify(item)} whileHover={{ scale: 1.2, color: "#00255c" }}>
-                        <IconContext.Provider value={{ className: "searchsvg" }}>
-                          <MdMode />
+      {loading ? (
+        <div>Cargando...</div>
+      ) : (
+        <>
+          <div className="center">
+            <div className="headTable">
+              <h1 className="titleTable">{props.uri}</h1>
+              <div className="addSearch">
+                {props.uri === "pms" ? null : (
+                  <>
+                    <label className="searchButton">Buscar</label>
+                    <div className="search">
+                      <input
+                        type="text"
+                        name="element"
+                        placeholder="Nombre"
+                        className="inputSearch"
+                        onChange={handleChange}
+                        value={userInput}
+                      />
+                      <button
+                        type="submit"
+                        className={`tableButton ${showSearch}`}
+                      >
+                        <IconContext.Provider
+                          value={{ className: "searchsvg" }}
+                        >
+                          <BiSolidSearchAlt2 />
                         </IconContext.Provider>
-                      </motion.button>
-                      <div className={`warning ${warning ? '' : 'cancel'}`}>
-                        <div className='windonws'>
-                          <div className='textExit'>
-                            <p>¿Seguro que deseas eliminar?</p>
-                          </div>
-                          <div className='buttonsExitWindows'>
-                            <button className='buttonsExit cancelButton' onClick={handleCancel}>
-                              Cancelar
-                            </button>
-                            <button className='buttonsExit aceptButton' onClick={() => deleteElement(idDelete)}>
-                              Aceptar
-                            </button>
-                          </div>
-                        </div>
+                      </button>
+                      <div className={`tablebutton ${showX}`}>
+                        <IconContext.Provider
+                          value={{ className: "searchsvg" }}
+                        >
+                          <LuSearchX onClick={() => getClicked()} />
+                        </IconContext.Provider>
                       </div>
-                      <motion.button onClick={() => handleShowWarning(item)} className="tableButton"
-                        whileHover={{ rotate: 20 }}>
-                        <IconContext.Provider value={{ color: "red", className: "searchsvg" }}>
-                          <MdDeleteForever />
-                        </IconContext.Provider>
-                      </motion.button>
                     </div>
-                  </td>
-                  : undefined
-                }
-                {role === "Profesor" && props.uri === "pms" ? <td><motion.button className="viewPlani" whileHover={{ scale: 1.2, backgroundColor: "#0947a5" }}> Ver Planificacion</motion.button></td> : null}
-              </tr>
-            ))}
-            <tr>
-              <td className="nextPrev">
-                {offset > 0 ?
-                  <motion.button onClick={() => getPreviusData()} className="nextPrevButton" whileHover={{ scale: 1.1, color: "#00255c" }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-arrow-left-circle-fill svgNextPrev" viewBox="0 0 16 16">
-                      <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
-                    </svg>
+                  </>
+                )}
+                {(role === "Director" && props.uri !== "actividades") ||
+                (role === "Profesor" && props.uri === "actividades") ? (
+                  <motion.button
+                    onClick={() =>
+                      window.location.replace(`/Agregar${props.uri}`)
+                    }
+                    className="addButton"
+                    whileHover={{ scale: 1.2, backgroundColor: "green" }}
+                  >
+                    Agregar
                   </motion.button>
-                  :
-                  null
-                }
-                {nextButton ?
-                  <motion.button onClick={() => getNextData()} className="nextPrevButton" whileHover={{ scale: 1.1, color: "#00255c" }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-arrow-right-circle-fill svgNextPrev" viewBox="0 0 16 16">
-                      <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
-                    </svg></motion.button>
-                  :
-                  null
-                }
+                ) : null}
+              </div>
+            </div>
 
-              </td>
-            </tr>
-          </tbody>
-        </table>
+            <table>
+              {props.uri === "apms" ? (
+                <>
+                  <thead>
+                    <tr>
+                      <th>Semanas</th>
+                      {propertyName.length <= 0 ? (
+                        <th>No se han ingresado elementos</th>
+                      ) : (
+                        <>
+                          {propertyName.map((property, index) => (
+                            <th key={index}>{property}</th>
+                          ))}
+                          {(role === "Director" &&
+                            props.uri !== "actividades") ||
+                          (role === "Profesor" &&
+                            props.uri === "actividades") ? (
+                            <th>Accion</th>
+                          ) : null}
+                          {role === "Profesor" && props.uri === "pms" ? (
+                            <th>Planificacion</th>
+                          ) : null}
+                        </>
+                      )}
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {weeks.map((week, weekIndex) => {
+  const uniqueDate = data.find((itemDate) => itemDate.semana === week)?.date;
 
-      </div>
-      <SearchNull searchNull={searchNull} animateAviso={animateAviso} onCancel={handleCancelError} />
-      </>
-    }
+  return (
+    <tr key={weekIndex}>
+      <td>
+        Semana {week} {uniqueDate ? uniqueDate : ""}
+      </td>
+      {propertyName.map((property, indexProperty) => {
+        const items = data.filter(
+          (item) => item.diaClase === property && item.semana === week
+        );
+
+        return (
+          <td key={indexProperty}>
+            {items.length > 0
+              ? items.map((item, index) => <div key={index}>{item.title}</div>)
+              : ""}
+          </td>
+        );
+      })}
+    </tr>
+  );
+})}
+
+                  </tbody>
+                </>
+              ) : (
+                <>
+                  <thead>
+                    <tr>
+                      {propertyName.length <= 0 ? (
+                        <th>No se han ingresado elementos</th>
+                      ) : (
+                        <>
+                          {propertyName.map((property, index) => (
+                            <th key={index}>{property}</th>
+                          ))}
+                          {(role === "Director" &&
+                            props.uri !== "actividades") ||
+                          (role === "Profesor" &&
+                            props.uri === "actividades") ? (
+                            <th>Accion</th>
+                          ) : null}
+                          {role === "Profesor" && props.uri === "pms" ? (
+                            <th>Planificacion</th>
+                          ) : null}
+                        </>
+                      )}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map((item, rowIndex) => (
+                      <tr
+                        key={rowIndex}
+                        id="prueba"
+                        className="tableResponsive"
+                      >
+                        {propertyName.map((property, colIndex) => (
+                          <td data-label={property + " "} key={colIndex}>
+                            {Array.isArray(item[property]) ? (
+                              item[property].length > 0 ||
+                              (props.uri === "actividades" &&
+                                role === "Profesor") ||
+                              (role === "Director" &&
+                                props.uri === "profesores") ? (
+                                <div className="materiasSeccion">
+                                  {item[property].map((subItem, subIndex) =>
+                                    Number.isInteger(subItem) ? null : (
+                                      <div key={subIndex} className="subItem">
+                                        {subItem}
+                                        {role === "Director" &&
+                                        props.uri === "profesores" ? (
+                                          <motion.div
+                                            whileHover={{ scale: 1.5 }}
+                                          >
+                                            <IconContext.Provider
+                                              value={{ className: "searchsvg" }}
+                                            >
+                                              <FcDeleteRow
+                                                onClick={() =>
+                                                  handleDesAsing(
+                                                    item.materias_Secciones.indexOf(
+                                                      subItem
+                                                    ) + 1,
+                                                    item.materias_Secciones
+                                                  )
+                                                }
+                                              />
+                                            </IconContext.Provider>
+                                          </motion.div>
+                                        ) : role === "Profesor" &&
+                                          props.uri === "actividades" ? (
+                                          <motion.div
+                                            whileHover={{ scale: 1.5 }}
+                                          >
+                                            <IconContext.Provider
+                                              value={{ className: "searchsvg" }}
+                                            >
+                                              <FcDeleteRow
+                                                onClick={() =>
+                                                  handleDesAsing(
+                                                    item.Clase.indexOf(
+                                                      subItem
+                                                    ) + 1,
+                                                    item.Clase
+                                                  )
+                                                }
+                                              />
+                                            </IconContext.Provider>
+                                          </motion.div>
+                                        ) : null}
+                                      </div>
+                                    )
+                                  )}
+                                  {(role === "Director" &&
+                                    props.uri === "profesores") ||
+                                  (role === "Profesor" &&
+                                    props.uri === "actividades") ? (
+                                    <motion.button
+                                      className="assignButton"
+                                      onClick={() =>
+                                        handleAsing([item.nombre, item.id])
+                                      }
+                                      whileHover={{
+                                        scale: 1.2,
+                                        backgroundColor: "white",
+                                        color: "#00255c",
+                                        border: "1px solid #00255c",
+                                      }}
+                                    >
+                                      Asignar
+                                    </motion.button>
+                                  ) : null}
+                                </div>
+                              ) : (
+                                <p>Sin Asignar</p>
+                              )
+                            ) : (
+                              item[property]
+                            )}
+                          </td>
+                        ))}
+                        {(role === "Director" && props.uri !== "actividades") ||
+                        (role === "Profesor" && props.uri === "actividades") ? (
+                          <td data-label="Accion">
+                            <div className="buttonsTable">
+                              <motion.button
+                                className="tableButton"
+                                onClick={() => handleModify(item)}
+                                whileHover={{ scale: 1.2, color: "#00255c" }}
+                              >
+                                <IconContext.Provider
+                                  value={{ className: "searchsvg" }}
+                                >
+                                  <MdMode />
+                                </IconContext.Provider>
+                              </motion.button>
+                              <div
+                                className={`warning ${warning ? "" : "cancel"}`}
+                              >
+                                <div className="windonws">
+                                  <div className="textExit">
+                                    <p>¿Seguro que deseas eliminar?</p>
+                                  </div>
+                                  <div className="buttonsExitWindows">
+                                    <button
+                                      className="buttonsExit cancelButton"
+                                      onClick={handleCancel}
+                                    >
+                                      Cancelar
+                                    </button>
+                                    <button
+                                      className="buttonsExit aceptButton"
+                                      onClick={() => deleteElement(idDelete)}
+                                    >
+                                      Aceptar
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                              <motion.button
+                                onClick={() => handleShowWarning(item)}
+                                className="tableButton"
+                                whileHover={{ rotate: 20 }}
+                              >
+                                <IconContext.Provider
+                                  value={{
+                                    color: "red",
+                                    className: "searchsvg",
+                                  }}
+                                >
+                                  <MdDeleteForever />
+                                </IconContext.Provider>
+                              </motion.button>
+                            </div>
+                          </td>
+                        ) : undefined}
+                        {role === "Profesor" && props.uri === "pms" ? (
+                          <td>
+                            <motion.button
+                              className="viewPlani"
+                              whileHover={{
+                                scale: 1.2,
+                                backgroundColor: "#0947a5",
+                              }}
+                              onClick={() => changeView(item)}
+                            >
+                              {" "}
+                              Ver Planificacion
+                            </motion.button>
+                          </td>
+                        ) : null}
+                      </tr>
+                    ))}
+                    <tr>
+                      <td className="nextPrev">
+                        {offset > 0 ? (
+                          <motion.button
+                            onClick={() => getPreviusData()}
+                            className="nextPrevButton"
+                            whileHover={{ scale: 1.1, color: "#00255c" }}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              className="bi bi-arrow-left-circle-fill svgNextPrev"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
+                            </svg>
+                          </motion.button>
+                        ) : null}
+                        {nextButton ? (
+                          <motion.button
+                            onClick={() => getNextData()}
+                            className="nextPrevButton"
+                            whileHover={{ scale: 1.1, color: "#00255c" }}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              className="bi bi-arrow-right-circle-fill svgNextPrev"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
+                            </svg>
+                          </motion.button>
+                        ) : null}
+                      </td>
+                    </tr>
+                  </tbody>
+                </>
+              )}
+            </table>
+          </div>
+          <SearchNull
+            searchNull={searchNull}
+            animateAviso={animateAviso}
+            onCancel={handleCancelError}
+          />
+        </>
+      )}
     </>
-
-  )
+  );
 }
