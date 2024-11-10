@@ -1,0 +1,68 @@
+.planiConatiner{
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.26);
+    align-items: center;
+    justify-content: center;
+}
+.descriptionTable{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2vw;   
+    gap: 2vw;
+    border-radius: 30px;
+    width: 30%;
+    background-color: white;
+    color: rgb(0, 0, 0);
+}
+.aceptButtonDescription{
+    font-size: 30px;
+    padding: .5vw 2vw;
+    background-color: #00255C;
+    color: white;
+    border: 0;
+    border-radius: 30px;
+    width: 50%;
+    cursor: pointer;
+}
+.titlePlani{
+    width: 100%;
+    font-size: 40px;
+    text-transform: capitalize;
+}
+
+.textplani{
+    width: 100%;
+    display: flex;
+    gap: 1vw;
+    flex-direction: column;
+    font-size: 30px;
+}
+
+.exitDescription{
+    animation-name: animationFiltrerExit;
+    animation-duration: .5s;
+}
+
+@keyframes animationFiltrerExit {
+    0%{
+        scale: 1;
+        opacity: 1;
+    }
+    25%{
+        scale: 1.2;
+        opacity: .7;
+    }
+    100%{
+        scale: 0;
+        opacity:0;
+    }
+}

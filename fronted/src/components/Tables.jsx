@@ -11,6 +11,7 @@ import { MdMode } from "react-icons/md";
 import { BiSolidSearchAlt2 } from "react-icons/bi";
 import { LuSearchX } from "react-icons/lu";
 import { useDebounce } from "../hooks/UseDebounce";
+import DescriptionPlani from "./DescriptionPlani";
 
 export default function Tables(props) {
   const [data, setData] = useState([]);
@@ -30,6 +31,8 @@ export default function Tables(props) {
   const [loading, setLoading] = useState(true);
   const [weeks, setWeeks] = useState([]);
   const [weeksDate, setWeekDate] = useState([])
+  const [description, setDescription] = useState(false)
+  const [descriptionData, setDescriptionData] = useState({})
   const debounceValue = useDebounce(userInput, 800);
 
   useEffect(() => {
@@ -79,6 +82,16 @@ export default function Tables(props) {
     setTimeout(() => {
       setSearchNull(false);
     }, 400);
+  }
+
+  function handleDescription(datos) {
+    setDescriptionData(datos)
+    console.log(descriptionData)
+    if (description === false) {
+      setDescription(true)
+    } else {
+      setDescription(false)
+    }
   }
 
   function getClicked() {
@@ -255,18 +268,18 @@ export default function Tables(props) {
                   }
                   setWeeks(temp);
                   let fecha = result.data.body[0].trimestre;
-let fechaJS = new Date(fecha);
-let tempFecha = [];
-for (let i = 0; i < 105; i+=7) {
-    let nuevaFecha = new Date(fechaJS); 
-    nuevaFecha.setDate(nuevaFecha.getDate() + i ); 
-    tempFecha.push(nuevaFecha);
-}
-tempFecha.forEach(Element => {
-  Element = Element.toISOString().slice(0,10).replace('T','')
-  
-});
-setWeekDate(tempFecha)
+                  let fechaJS = new Date(fecha);
+                  let tempFecha = [];
+                  for (let i = 0; i < 105; i += 7) {
+                    let nuevaFecha = new Date(fechaJS);
+                    nuevaFecha.setDate(nuevaFecha.getDate() + i);
+                    tempFecha.push(nuevaFecha);
+                  }
+                  tempFecha.forEach(Element => {
+                    Element = Element.toISOString().slice(0, 10).replace('T', '')
+
+                  });
+                  setWeekDate(tempFecha)
                   setData(result.data.body);
                   setPropertyName([
                     "Lunes",
@@ -359,7 +372,7 @@ setWeekDate(tempFecha)
                   </>
                 )}
                 {(role === "Director" && props.uri !== "actividades") ||
-                (role === "Profesor" && props.uri === "actividades") ? (
+                  (role === "Profesor" && props.uri === "actividades") ? (
                   <motion.button
                     onClick={() =>
                       window.location.replace(`/Agregar${props.uri}`)
@@ -372,7 +385,11 @@ setWeekDate(tempFecha)
                 ) : null}
               </div>
             </div>
-
+            {
+              description ?
+                <DescriptionPlani descriptionData={descriptionData} onCancel={handleDescription} />
+                : null
+            }
             <table>
               {props.uri === "apms" ? (
                 <>
@@ -388,8 +405,8 @@ setWeekDate(tempFecha)
                           ))}
                           {(role === "Director" &&
                             props.uri !== "actividades") ||
-                          (role === "Profesor" &&
-                            props.uri === "actividades") ? (
+                            (role === "Profesor" &&
+                              props.uri === "actividades") ? (
                             <th>Accion</th>
                           ) : null}
                           {role === "Profesor" && props.uri === "pms" ? (
@@ -400,30 +417,28 @@ setWeekDate(tempFecha)
                     </tr>
                   </thead>
                   <tbody>
-                  {weeks.map((week, weekIndex) => {
-  return (
-    <tr key={weekIndex}>
-      <td>
-        {`Semana ${week} - ${weeksDate[weekIndex] instanceof Date ? weeksDate[weekIndex].toLocaleDateString() : weeksDate[weekIndex]}`}
-      </td>
-      
-      {propertyName.map((property, indexProperty) => {
-        const items = data.filter(
-          (item) => item.diaClase === property && item.semana === week
-        );
+                    {weeks.map((week, weekIndex) => {
+                      return (
+                        <tr key={weekIndex}>
+                          <td>
+                            {`Semana ${week} - ${weeksDate[weekIndex] instanceof Date ? weeksDate[weekIndex].toLocaleDateString() : weeksDate[weekIndex]}`}
+                          </td>
 
-        return (
-          <td key={indexProperty}>
-            {items.length > 0
-              ? items.map((item, index) => <div key={index}>{item.title}</div>)
-              : ""}
-          </td>
-        );
-      })}
-    </tr>
-  );
-})}
-
+                          {propertyName.map((property, indexProperty) => {
+                            const items = data.filter(
+                              (item) => item.diaClase === property && item.semana === week
+                            );
+                            return (
+                              <td key={indexProperty}>
+                                {items.length > 0
+                                  ? items.map((item, index) => <div onClick={() => handleDescription(item)} key={index} className="act">{item.title}</div>)
+                                  : ""}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </>
               ) : (
@@ -439,8 +454,8 @@ setWeekDate(tempFecha)
                           ))}
                           {(role === "Director" &&
                             props.uri !== "actividades") ||
-                          (role === "Profesor" &&
-                            props.uri === "actividades") ? (
+                            (role === "Profesor" &&
+                              props.uri === "actividades") ? (
                             <th>Accion</th>
                           ) : null}
                           {role === "Profesor" && props.uri === "pms" ? (
@@ -461,17 +476,17 @@ setWeekDate(tempFecha)
                           <td data-label={property + " "} key={colIndex}>
                             {Array.isArray(item[property]) ? (
                               item[property].length > 0 ||
-                              (props.uri === "actividades" &&
-                                role === "Profesor") ||
-                              (role === "Director" &&
-                                props.uri === "profesores") ? (
+                                (props.uri === "actividades" &&
+                                  role === "Profesor") ||
+                                (role === "Director" &&
+                                  props.uri === "profesores") ? (
                                 <div className="materiasSeccion">
                                   {item[property].map((subItem, subIndex) =>
                                     Number.isInteger(subItem) ? null : (
                                       <div key={subIndex} className="subItem">
                                         {subItem}
                                         {role === "Director" &&
-                                        props.uri === "profesores" ? (
+                                          props.uri === "profesores" ? (
                                           <motion.div
                                             whileHover={{ scale: 1.5 }}
                                           >
@@ -516,8 +531,8 @@ setWeekDate(tempFecha)
                                   )}
                                   {(role === "Director" &&
                                     props.uri === "profesores") ||
-                                  (role === "Profesor" &&
-                                    props.uri === "actividades") ? (
+                                    (role === "Profesor" &&
+                                      props.uri === "actividades") ? (
                                     <motion.button
                                       className="assignButton"
                                       onClick={() =>
@@ -543,7 +558,7 @@ setWeekDate(tempFecha)
                           </td>
                         ))}
                         {(role === "Director" && props.uri !== "actividades") ||
-                        (role === "Profesor" && props.uri === "actividades") ? (
+                          (role === "Profesor" && props.uri === "actividades") ? (
                           <td data-label="Accion">
                             <div className="buttonsTable">
                               <motion.button

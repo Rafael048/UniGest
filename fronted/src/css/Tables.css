@@ -172,6 +172,19 @@ td {
     justify-content: space-between;
 }
 
+.act{
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.act:hover{
+    background-color: #0947a5;
+    transition: all .4s ease;
+    scale: 1.1;
+    color: white;
+    font-weight: bolder;
+}
 
 @media screen and (max-width:1300px) {
     .titleTable {
