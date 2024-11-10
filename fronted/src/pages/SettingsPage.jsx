@@ -16,7 +16,7 @@ export default function TablesActivities() {
   const token = Cookies.get('jwt')
   const [active, setActive] = useState(null)
   const [loading, setLoading] = useState(true)
-  
+
   useEffect(() => {
     async function getData(token) {
       await axios.get(`http://localhost:3000/verify/${token}`)
@@ -34,7 +34,6 @@ export default function TablesActivities() {
 
   return (
     <div className='activitiesView'>
-
       {loading ?
         <p>Cargando...</p>
         :
@@ -46,7 +45,7 @@ export default function TablesActivities() {
               </div>
               <Menu btAjustes={btActive} />
               <article className='backgroundSetting'>
-                <Settings/>
+                <Settings />
               </article>
             </section>
             <Footer />
@@ -55,13 +54,13 @@ export default function TablesActivities() {
             <Header active={active} color={color} setting={setting} />
             <section className='tableActivities'>
               <article className='tableShow'>
-                <Settings/>
+                <Settings />
               </article>
             </section>
             <Footer />
           </>
       }
-      
+
     </div>
   )
 }

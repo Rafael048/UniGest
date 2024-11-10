@@ -1,0 +1,11 @@
+.modifyUserMain{
+    background-color: #B5D8EB;
+    padding: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formUserModify{
+    width: 75%;
+}

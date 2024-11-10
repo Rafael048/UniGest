@@ -14,7 +14,7 @@ import { IoIosCloseCircleOutline } from "react-icons/io"; //Cerrar icon
 
 
 
-export default function Header({ asig, active, activities, color, plani, setting }) {
+export default function Header({ asig, active, activities, color, plani, setting, planiAll }) {
   const [exitEmer, setExitEmer] = useState(null)
   const [openHeader, setOpenHeader] = useState(false)
 
@@ -61,7 +61,7 @@ export default function Header({ asig, active, activities, color, plani, setting
                     <FaCalendarAlt />
                   </IconContext.Provider>
                   <a href="/" className={'link'}>
-                    Planificación
+                    Calendario
                   </a>
                 </li>
                 <li className={asig ? 'linksHeaderli active' : 'linksHeaderli'}>
@@ -69,6 +69,12 @@ export default function Header({ asig, active, activities, color, plani, setting
                     <IoListCircleOutline />
                   </IconContext.Provider>
                   <a href="/asignaturas" className={asig ? 'link active' : 'link'}>Asignaturas</a>
+                </li>
+                <li className={planiAll ? 'linksHeaderli active' : 'linksHeaderli'}>
+                  <IconContext.Provider value={{ className: "svgHeader" }}>
+                    <IoListCircleOutline />
+                  </IconContext.Provider>
+                  <a href="/planificacion" className={planiAll ? 'link active' : 'link'}>Planificación</a>
                 </li>
                 <li className={activities ? 'linksHeaderli active' : 'linksHeaderli'}>
                   <IconContext.Provider value={{ className: "svgHeader" }}>
@@ -105,7 +111,7 @@ export default function Header({ asig, active, activities, color, plani, setting
                     <IconContext.Provider value={{ className: "svgHeader" }}>
                       <FaCalendarAlt />
                     </IconContext.Provider>
-                    <a href="/calendario" className={plani ? 'link active' : 'link'}>Planificación</a>
+                    <a href="/calendario" className={plani ? 'link active' : 'link'}>Calendario</a>
                   </li>
                   <li className='linksHeaderli'>
                     <IconContext.Provider value={{ className: "svgHeader" }}>

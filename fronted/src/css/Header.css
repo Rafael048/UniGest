@@ -10,6 +10,7 @@
 .svgLogout {
     width: 40px;
     height: 40px;
+    cursor: pointer;
 }
 
 .blue {
@@ -126,6 +127,7 @@
 
     .logoutDesktop{
         display: block;
+        cursor: pointer;
     }
 
     .active {
