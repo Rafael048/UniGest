@@ -2,7 +2,13 @@ const express = require("express");
 const router = express.Router();
 const APMSControllers = require("../controllers/APMSControllers");
 router.get("/", function (req, res, next) {
-    APMSControllers.All(req.query.id)
+    let id = null
+   if(req.query.id===undefined||req.query.id==="undefined"){
+    id = undefined
+   }else{
+    id = req.query.id
+   }
+    APMSControllers.All(id,req.query.user)
     .then((result) => {
       res.status(200).json({ message: "Peticion exitosa", body: result });
     })

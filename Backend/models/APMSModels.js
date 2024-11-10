@@ -1,13 +1,15 @@
 const connection = require("../connection");
 
 class APMSModels {
-  All(id) {
+  All(id,cedula) {
     return new Promise((resolve, reject) => {
       let consult = null
+      console.log(id)
       if(id){
+        console.log("entre")
         consult = `SELECT actividades.nombre AS title, profesores.nombre AS profesor, materias.nombre AS materia,
                  secciones.nombre AS seccion,actividades.semana AS semana,DATE_ADD(secciones.periodoAcademico, interval actividades.semana week) AS date,
-                 actividades.descripcion AS descripcion,a_p_m_s.id AS id, materias.diaClase AS diaClase
+                 actividades.descripcion AS descripcion,a_p_m_s.id AS id, materias.diaClase AS diaClase, secciones.periodoAcademico AS trimestre
                  FROM actividades
                  JOIN a_p_m_s ON actividades.id = a_p_m_s.idActividades
                  JOIN p_m_s ON p_m_s.id = a_p_m_s.idPMS
@@ -15,19 +17,31 @@ class APMSModels {
                  JOIN materias ON p_m_s.idMaterias = materias.id
                  JOIN secciones ON p_m_s.idSecciones = secciones.id
                  WHERE p_m_s.id = ${id}`
-      }else{
-       consult = `
-                 SELECT actividades.nombre AS title, profesores.nombre AS profesor, materias.nombre AS materia,
-                 secciones.nombre AS seccion,DATE_ADD(secciones.periodoAcademico, interval actividades.semana week) AS date,
-                 actividades.descripcion AS descripcion,a_p_m_s.id AS id, p_m_s.idMaterias AS idMat, p_m_s.idSecciones AS idSec, actividades.id AS idAct, materias.diaClase AS diaClase
-                 FROM actividades
-                 JOIN a_p_m_s ON actividades.id = a_p_m_s.idActividades
-                 JOIN p_m_s ON p_m_s.id = a_p_m_s.idPMS
-                 JOIN profesores ON p_m_s.idProfesor = profesores.id
-                 JOIN materias ON p_m_s.idMaterias = materias.id
-                 JOIN secciones ON p_m_s.idSecciones = secciones.id
-             `;
-      }
+      }else if(cedula){
+        consult=`SELECT actividades.nombre AS title, profesores.nombre AS profesor, materias.nombre AS materia,
+               secciones.nombre AS seccion,actividades.semana AS semana,DATE_ADD(secciones.periodoAcademico, interval actividades.semana week) AS date,
+               actividades.descripcion AS descripcion,a_p_m_s.id AS id, materias.diaClase AS diaClase, secciones.periodoAcademico AS trimestre
+               FROM actividades
+               JOIN a_p_m_s ON actividades.id = a_p_m_s.idActividades
+               JOIN p_m_s ON p_m_s.id = a_p_m_s.idPMS
+               JOIN profesores ON p_m_s.idProfesor = profesores.id
+               JOIN materias ON p_m_s.idMaterias = materias.id
+               JOIN secciones ON p_m_s.idSecciones = secciones.id
+               WHERE profesores.cedula = ${cedula}`
+               }else{
+                 consult = `
+                           SELECT actividades.nombre AS title, profesores.nombre AS profesor, materias.nombre AS materia,
+                           secciones.nombre AS seccion,DATE_ADD(secciones.periodoAcademico, interval actividades.semana week) AS date,
+                           actividades.descripcion AS descripcion,a_p_m_s.id AS id, p_m_s.idMaterias AS idMat, p_m_s.idSecciones AS idSec, actividades.id AS idAct, materias.diaClase AS diaClase
+                           FROM actividades
+                           JOIN a_p_m_s ON actividades.id = a_p_m_s.idActividades
+                           JOIN p_m_s ON p_m_s.id = a_p_m_s.idPMS
+                           JOIN profesores ON p_m_s.idProfesor = profesores.id
+                           JOIN materias ON p_m_s.idMaterias = materias.id
+                           JOIN secciones ON p_m_s.idSecciones = secciones.id
+                       `;
+                }
+      
       connection.query(consult, function (error, results, fields) {
         if (error) {
           reject(error);
@@ -35,7 +49,6 @@ class APMSModels {
           results.forEach(Element => {
             Element.date = Element.date.toISOString().slice(0,10).replace('T','')
           });
-          console.log(results)
           resolve(results);
         }
       });

@@ -1,9 +1,9 @@
 const APMSModels = require("../models/APMSModels");
 
 class APMSControllers{
-    All(id){
+    All(id,cedula){
       return new Promise((resolve, reject) => {   
-        APMSModels.All(id)
+        APMSModels.All(id,cedula)
        .then((result) => {
         resolve(result)
        }).catch((e) => {

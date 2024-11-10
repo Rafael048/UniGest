@@ -29,6 +29,7 @@ export default function Tables(props) {
   const [userInput, setUserInput] = useState(""); //es quien toma los datos del input no es Ai mamaguevo
   const [loading, setLoading] = useState(true);
   const [weeks, setWeeks] = useState([]);
+  const [weeksDate, setWeekDate] = useState([])
   const debounceValue = useDebounce(userInput, 800);
 
   useEffect(() => {
@@ -217,8 +218,9 @@ export default function Tables(props) {
           } else if (props.uri === "apms") {
             let id = Cookies.get("id");
             await axios
-              .get(`http://localhost:3000/${props.uri}?id=${id}`)
+              .get(`http://localhost:3000/${props.uri}?id=${id}&user=${user.cedula}`)
               .then((result) => {
+                Cookies.remove('id')
                 if (result.data.body.length === 0) {
                   setLoading(false);
                 } else {
@@ -252,6 +254,19 @@ export default function Tables(props) {
                     temp.push(i);
                   }
                   setWeeks(temp);
+                  let fecha = result.data.body[0].trimestre;
+let fechaJS = new Date(fecha);
+let tempFecha = [];
+for (let i = 0; i < 105; i+=7) {
+    let nuevaFecha = new Date(fechaJS); 
+    nuevaFecha.setDate(nuevaFecha.getDate() + i ); 
+    tempFecha.push(nuevaFecha);
+}
+tempFecha.forEach(Element => {
+  Element = Element.toISOString().slice(0,10).replace('T','')
+  
+});
+setWeekDate(tempFecha)
                   setData(result.data.body);
                   setPropertyName([
                     "Lunes",
@@ -386,13 +401,12 @@ export default function Tables(props) {
                   </thead>
                   <tbody>
                   {weeks.map((week, weekIndex) => {
-  const uniqueDate = data.find((itemDate) => itemDate.semana === week)?.date;
-
   return (
     <tr key={weekIndex}>
       <td>
-        Semana {week} {uniqueDate ? uniqueDate : ""}
+        {`Semana ${week} - ${weeksDate[weekIndex] instanceof Date ? weeksDate[weekIndex].toLocaleDateString() : weeksDate[weekIndex]}`}
       </td>
+      
       {propertyName.map((property, indexProperty) => {
         const items = data.filter(
           (item) => item.diaClase === property && item.semana === week
