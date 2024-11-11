@@ -12,6 +12,7 @@ import { MdAssignmentTurnedIn } from "react-icons/md"; //Actividades icon
 import { AiOutlineUserAdd } from "react-icons/ai"; // Agregar usuarios Icon
 import { GrUserSettings } from "react-icons/gr"; //Ajustes icon
 import { IoLogOutOutline } from "react-icons/io5"; //Cerrar sesion
+import { FaUsersBetweenLines } from "react-icons/fa6"; //Planificacion profesores
 
 
 
@@ -131,7 +132,7 @@ export default function Menu({ btIni, btMateria, btSeccion, btActividades, btPro
                                 <a href="/actividades" className={`linksMenu ${actividades}`}>
                                     <motion.div whileHover={{ scale: 1.1 }} className='containerLink'>
                                         <IconContext.Provider value={{ className: "svgMenu" }}>
-                                            <MdAssignmentTurnedIn />
+                                            <FaUsersBetweenLines />
                                         </IconContext.Provider>
                                         <motion.p animate={open ? linkClose : linkOpen} transition={{ duration: .5 }} className={classLinks}>
                                             Actividades

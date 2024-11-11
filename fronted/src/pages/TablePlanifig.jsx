@@ -53,7 +53,7 @@ export default function TablesActivities() {
             <Footer />
           </>
           : <>
-            <Header active={active} color={color} activities={activities} />
+            <Header active={active} color={color} planiAll={activities} />
             <section className='tableActivities'>
               <article className='tableShow'>
                 <Tables
