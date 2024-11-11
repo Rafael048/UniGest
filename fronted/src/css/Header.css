@@ -52,7 +52,7 @@
 .links {
     list-style: none;
     display: flex;
-    gap: 3vw;
+    gap: 2vw;
     padding: .9vw;
     font-size: 24px;
     width: 60%;
@@ -91,6 +91,7 @@
     .links {
         font-size: 20px;
         width: 70%;
+        gap: 1vw;
     }
 }
 

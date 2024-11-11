@@ -11,6 +11,8 @@ import { IoListCircleOutline } from "react-icons/io5"; //Materias icon
 import { GrUserSettings } from "react-icons/gr"; //Ajustes icon
 import { FaRegUserCircle } from "react-icons/fa"; //Inicar sesion icon
 import { IoIosCloseCircleOutline } from "react-icons/io"; //Cerrar icon
+import { RiTableView } from "react-icons/ri"; //Planificacion
+
 
 
 
@@ -72,7 +74,7 @@ export default function Header({ asig, active, activities, color, plani, setting
                 </li>
                 <li className={planiAll ? 'linksHeaderli active' : 'linksHeaderli'}>
                   <IconContext.Provider value={{ className: "svgHeader" }}>
-                    <IoListCircleOutline />
+                    <RiTableView />
                   </IconContext.Provider>
                   <a href="/planificacion" className={planiAll ? 'link active' : 'link'}>Planificación</a>
                 </li>
