@@ -6,7 +6,6 @@ class APMSModels {
       let consult = null
       console.log(id)
       if(id){
-        console.log("entre")
         consult = `SELECT actividades.nombre AS title, profesores.nombre AS profesor, materias.nombre AS materia,
                  secciones.nombre AS seccion,actividades.semana AS semana,DATE_ADD(secciones.periodoAcademico, interval actividades.semana week) AS date,
                  actividades.descripcion AS descripcion,a_p_m_s.id AS id, materias.diaClase AS diaClase, secciones.periodoAcademico AS trimestre

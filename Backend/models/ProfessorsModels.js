@@ -6,7 +6,7 @@ class ProfessorsModels{
     return new Promise((resolve,reject)=>{
       let consult = null
       if(offset){
-         consult = `SELECT nombre,apellido,id FROM profesores LIMIT 6 OFFSET ${offset}`
+         consult = `SELECT nombre,apellido,cedula,id FROM profesores LIMIT 6 OFFSET ${offset}`
       }else{
         consult = `SELECT nombre,apellido,id FROM profesores`
       }

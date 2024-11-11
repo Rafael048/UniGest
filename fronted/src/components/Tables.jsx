@@ -149,7 +149,12 @@ export default function Tables(props) {
     window.location.replace(`/Modificar${props.uri}`);
   }
   function changeView(item) {
-    Cookies.set("id", item.id);
+    
+    if(props.uri==="profesores"){
+      Cookies.set("cedula", item.cedula);
+    }else{
+      Cookies.set("id", item.id);
+    }
     window.location.replace("/planificacion");
   }
 
@@ -230,13 +235,54 @@ export default function Tables(props) {
               });
           } else if (props.uri === "apms") {
             let id = Cookies.get("id");
+            let cedulaTest = Cookies.get('cedula')
+            let cedulaConsulta = null
+            if(cedulaTest){
+              cedulaConsulta = cedulaTest
+            }else{
+              cedulaConsulta = user.cedula
+            }
             await axios
-              .get(`http://localhost:3000/${props.uri}?id=${id}&user=${user.cedula}`)
+              .get(`http://localhost:3000/${props.uri}?id=${id}&user=${cedulaConsulta}`)
               .then((result) => {
                 Cookies.remove('id')
                 if (result.data.body.length === 0) {
                   setLoading(false);
                 } else {
+                  result.data.body.forEach((item) => {
+                    const date = new Date(item.date)
+                    const dateDay = date.getDay()
+                    let dateEvent = undefined
+                    let diferencia = item.diaClase - dateDay
+                    let ajusted = false
+                    if (dateDay === item.diaClase) {
+                        const nuevaFecha = new Date(item.date)
+                        nuevaFecha.setDate(date.getDate()-1 )
+                        const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
+                        dateEvent = nuevaFechaISO;
+                    } else {
+                        if (diferencia <= 0) {
+                            diferencia = diferencia + 7;
+                            ajusted = true
+                        }
+
+                        const nuevaFecha = new Date(item.date);
+                        if(ajusted){
+                            nuevaFecha.setDate(date.getDate() + diferencia-1);
+                        }else{
+                            nuevaFecha.setDate(date.getDate() + (diferencia-1));
+                        }
+                        const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
+                        dateEvent = nuevaFechaISO
+                    }
+                    if(dateEvent<item.date){
+                        const nuevaFecha = new Date(item.date);
+                        nuevaFecha.setDate(date.getDate() + 6);
+                        const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
+                        dateEvent = nuevaFechaISO                        }
+                      item.date=dateEvent
+                    
+                })
                   result.data.body.forEach((element) => {
                     switch (element.diaClase) {
                       case 0:
@@ -266,6 +312,7 @@ export default function Tables(props) {
                   for (let i = 0; i <= 14; i++) {
                     temp.push(i);
                   }
+                  
                   setWeeks(temp);
                   let fecha = result.data.body[0].trimestre;
                   let fechaJS = new Date(fecha);
@@ -310,6 +357,7 @@ export default function Tables(props) {
                   let indexID = muestra.findIndex(
                     (element) => element === "id"
                   );
+                  console.log(result.data.body)
                   muestra.splice(indexID, 1);
                   setPropertyName(muestra);
                   setNextButton(result.data.button);
@@ -337,9 +385,35 @@ export default function Tables(props) {
         <>
           <div className="center">
             <div className="headTable">
+              {props.uri==="apms"?
+              <h1>Planificacion de {data[0].profesor} </h1>
+              
+              :props.uri==="pms"?
+              <h1>Asignaturas</h1>
+              :
               <h1 className="titleTable">{props.uri}</h1>
+            }
               <div className="addSearch">
-                {props.uri === "pms" ? null : (
+                {props.uri === "pms" ? null :props.uri==="apms"?
+                data
+                .filter(
+                  (item, index, self) =>
+                    index ===
+                    self.findIndex(
+                      (t) =>
+                        t.materia === item.materia &&
+                        t.seccion === item.seccion &&
+                        t.diaClase === item.diaClase
+                    )
+                )
+                .map((item, index) => (
+                  <div key={index}>
+                    <p>
+                      {item.materia + " " + item.seccion + " " + item.diaClase}
+                    </p>
+                  </div>
+                ))
+                : (
                   <>
                     <label className="searchButton">Buscar</label>
                     <div className="search">
@@ -371,8 +445,8 @@ export default function Tables(props) {
                     </div>
                   </>
                 )}
-                {(role === "Director" && props.uri !== "actividades") ||
-                  (role === "Profesor" && props.uri === "actividades") ? (
+                {(role === "Director" && props.uri !== "actividades"&&props.uri!=="apms"&&props.uri==="pms") ||
+                  (role === "Profesor" && props.uri === "actividades"&&props.uri!=="apms"&&props.uri==="pms") ? (
                   <motion.button
                     onClick={() =>
                       window.location.replace(`/Agregar${props.uri}`)
@@ -421,7 +495,9 @@ export default function Tables(props) {
                       return (
                         <tr key={weekIndex}>
                           <td>
-                            {`Semana ${week} - ${weeksDate[weekIndex] instanceof Date ? weeksDate[weekIndex].toLocaleDateString() : weeksDate[weekIndex]}`}
+                            <p key={weekIndex}>{`Semana ${week}`}</p> 
+                            <p key={weekIndex+1}> {`${weeksDate[weekIndex] instanceof Date ? weeksDate[weekIndex].toLocaleDateString() : weeksDate[weekIndex]}`} </p>
+                            
                           </td>
 
                           {propertyName.map((property, indexProperty) => {
@@ -452,6 +528,9 @@ export default function Tables(props) {
                           {propertyName.map((property, index) => (
                             <th key={index}>{property}</th>
                           ))}
+                          {role==="Director"&&props.uri==="profesores"?
+                          <th>Planificacion</th>:null
+                        }
                           {(role === "Director" &&
                             props.uri !== "actividades") ||
                             (role === "Profesor" &&
@@ -504,6 +583,7 @@ export default function Tables(props) {
                                                 }
                                               />
                                             </IconContext.Provider>
+                                            
                                           </motion.div>
                                         ) : role === "Profesor" &&
                                           props.uri === "actividades" ? (
@@ -524,6 +604,7 @@ export default function Tables(props) {
                                                 }
                                               />
                                             </IconContext.Provider>
+                                            
                                           </motion.div>
                                         ) : null}
                                       </div>
@@ -557,6 +638,21 @@ export default function Tables(props) {
                             )}
                           </td>
                         ))}
+                        {role === "Director"&&props.uri==="profesores"?
+                        <td>
+                          <motion.button
+                              className="viewPlani"
+                              whileHover={{
+                                scale: 1.2,
+                                backgroundColor: "#0947a5",
+                              }}
+                              onClick={() => changeView(item)}
+                            >
+                              {" "}
+                              Ver Planificacion
+                            </motion.button>
+                        </td>  :null
+                      }
                         {(role === "Director" && props.uri !== "actividades") ||
                           (role === "Profesor" && props.uri === "actividades") ? (
                           <td data-label="Accion">
