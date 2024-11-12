@@ -177,6 +177,15 @@ td {
     padding: 10px;
     border-radius: 20px;
 }
+.subject{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.itemSubjects{
+    flex: 1;
+}
 
 .act:hover{
     background-color: #0947a5;

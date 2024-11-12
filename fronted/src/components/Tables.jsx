@@ -149,10 +149,10 @@ export default function Tables(props) {
     window.location.replace(`/Modificar${props.uri}`);
   }
   function changeView(item) {
-    
-    if(props.uri==="profesores"){
+
+    if (props.uri === "profesores") {
       Cookies.set("cedula", item.cedula);
-    }else{
+    } else {
       Cookies.set("id", item.id);
     }
     window.location.replace("/planificacion");
@@ -237,9 +237,9 @@ export default function Tables(props) {
             let id = Cookies.get("id");
             let cedulaTest = Cookies.get('cedula')
             let cedulaConsulta = null
-            if(cedulaTest){
+            if (cedulaTest) {
               cedulaConsulta = cedulaTest
-            }else{
+            } else {
               cedulaConsulta = user.cedula
             }
             await axios
@@ -256,33 +256,34 @@ export default function Tables(props) {
                     let diferencia = item.diaClase - dateDay
                     let ajusted = false
                     if (dateDay === item.diaClase) {
-                        const nuevaFecha = new Date(item.date)
-                        nuevaFecha.setDate(date.getDate()-1 )
-                        const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
-                        dateEvent = nuevaFechaISO;
+                      const nuevaFecha = new Date(item.date)
+                      nuevaFecha.setDate(date.getDate() - 1)
+                      const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
+                      dateEvent = nuevaFechaISO;
                     } else {
-                        if (diferencia <= 0) {
-                            diferencia = diferencia + 7;
-                            ajusted = true
-                        }
+                      if (diferencia <= 0) {
+                        diferencia = diferencia + 7;
+                        ajusted = true
+                      }
 
-                        const nuevaFecha = new Date(item.date);
-                        if(ajusted){
-                            nuevaFecha.setDate(date.getDate() + diferencia-1);
-                        }else{
-                            nuevaFecha.setDate(date.getDate() + (diferencia-1));
-                        }
-                        const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
-                        dateEvent = nuevaFechaISO
+                      const nuevaFecha = new Date(item.date);
+                      if (ajusted) {
+                        nuevaFecha.setDate(date.getDate() + diferencia - 1);
+                      } else {
+                        nuevaFecha.setDate(date.getDate() + (diferencia - 1));
+                      }
+                      const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
+                      dateEvent = nuevaFechaISO
                     }
-                    if(dateEvent<item.date){
-                        const nuevaFecha = new Date(item.date);
-                        nuevaFecha.setDate(date.getDate() + 6);
-                        const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
-                        dateEvent = nuevaFechaISO                        }
-                      item.date=dateEvent
-                    
-                })
+                    if (dateEvent < item.date) {
+                      const nuevaFecha = new Date(item.date);
+                      nuevaFecha.setDate(date.getDate() + 6);
+                      const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
+                      dateEvent = nuevaFechaISO
+                    }
+                    item.date = dateEvent
+
+                  })
                   result.data.body.forEach((element) => {
                     switch (element.diaClase) {
                       case 0:
@@ -312,7 +313,7 @@ export default function Tables(props) {
                   for (let i = 0; i <= 14; i++) {
                     temp.push(i);
                   }
-                  
+
                   setWeeks(temp);
                   let fecha = result.data.body[0].trimestre;
                   let fechaJS = new Date(fecha);
@@ -385,394 +386,397 @@ export default function Tables(props) {
         <>
           <div className="center">
             <div className="headTable">
-              {props.uri==="apms"?
-              <h1>Planificacion de {data[0].profesor} </h1>
-              
-              :props.uri==="pms"?
-              <h1>Asignaturas</h1>
-              :
-              <h1 className="titleTable">{props.uri}</h1>
-            }
+              {console.log(data)}
+              {props.uri === "apms" ?
+                <h1>Planificacion de {data[0].profesor} </h1>
+
+                : props.uri === "pms" ?
+                  <h1>Asignaturas</h1>
+                  :
+                  <h1 className="titleTable">{props.uri}</h1>
+              }
               <div className="addSearch">
-                {props.uri === "pms" ? null :props.uri==="apms"?
-                data
-                .filter(
-                  (item, index, self) =>
-                    index ===
-                    self.findIndex(
-                      (t) =>
-                        t.materia === item.materia &&
-                        t.seccion === item.seccion &&
-                        t.diaClase === item.diaClase
+                <div className="subject">
+
+                  {props.uri === "pms" ? null : props.uri === "apms" ?
+                    data.filter(
+                      (item, index, self) =>
+                        index ===
+                        self.findIndex(
+                          (t) =>
+                            t.materia === item.materia &&
+                            t.seccion === item.seccion &&
+                            t.diaClase === item.diaClase
+                        )
                     )
-                )
-                .map((item, index) => (
-                  <div key={index}>
-                    <p>
-                      {item.materia + " " + item.seccion + " " + item.diaClase}
-                    </p>
+                      .map((item, index) => (
+                        <div className="itemSubjects" key={index}>
+                          <p>
+                            {item.materia + " " + item.seccion + " " + item.diaClase}
+                          </p>
+                        </div>
+                      ))
+                    : (
+                      <>
+                        <label className="searchButton">Buscar</label>
+                        <div className="search">
+                          <input
+                            type="text"
+                            name="element"
+                            placeholder="Nombre"
+                            className="inputSearch"
+                            onChange={handleChange}
+                            value={userInput}
+                          />
+                          <button
+                            type="submit"
+                            className={`tableButton ${showSearch}`}
+                          >
+                            <IconContext.Provider
+                              value={{ className: "searchsvg" }}
+                            >
+                              <BiSolidSearchAlt2 />
+                            </IconContext.Provider>
+                          </button>
+                          <div className={`tablebutton ${showX}`}>
+                            <IconContext.Provider
+                              value={{ className: "searchsvg" }}
+                            >
+                              <LuSearchX onClick={() => getClicked()} />
+                            </IconContext.Provider>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
-                ))
-                : (
+                  {(role === "Director" && props.uri !== "actividades" && props.uri !== "apms" && props.uri !== "pms") ||
+                    (role === "Profesor" && props.uri === "actividades" && props.uri !== "apms" && props.uri !== "pms") ? (
+                    <motion.button
+                      onClick={() =>
+                        window.location.replace(`/Agregar${props.uri}`)
+                      }
+                      className="addButton"
+                      whileHover={{ scale: 1.2, backgroundColor: "green" }}
+                    >
+                      Agregar
+                    </motion.button>
+                  ) : null}
+                </div>
+              </div>
+              {
+                description ?
+                  <DescriptionPlani descriptionData={descriptionData} onCancel={handleDescription} />
+                  : null
+              }
+              <table>
+                {props.uri === "apms" ? (
                   <>
-                    <label className="searchButton">Buscar</label>
-                    <div className="search">
-                      <input
-                        type="text"
-                        name="element"
-                        placeholder="Nombre"
-                        className="inputSearch"
-                        onChange={handleChange}
-                        value={userInput}
-                      />
-                      <button
-                        type="submit"
-                        className={`tableButton ${showSearch}`}
-                      >
-                        <IconContext.Provider
-                          value={{ className: "searchsvg" }}
+                    <thead>
+                      <tr>
+                        <th>Semanas</th>
+                        {propertyName.length <= 0 ? (
+                          <th>No se han ingresado elementos</th>
+                        ) : (
+                          <>
+                            {propertyName.map((property, index) => (
+                              <th key={index}>{property}</th>
+                            ))}
+                            {(role === "Director" &&
+                              props.uri !== "actividades") ||
+                              (role === "Profesor" &&
+                                props.uri === "actividades") ? (
+                              <th>Accion</th>
+                            ) : null}
+                            {role === "Profesor" && props.uri === "pms" ? (
+                              <th>Planificacion</th>
+                            ) : null}
+                          </>
+                        )}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {weeks.map((week, weekIndex) => {
+                        return (
+                          <tr key={weekIndex}>
+                            <td>
+                              <p key={weekIndex}>{`Semana ${week}`}</p>
+                              <p key={weekIndex + 1}> {`${weeksDate[weekIndex] instanceof Date ? weeksDate[weekIndex].toLocaleDateString() : weeksDate[weekIndex]}`} </p>
+
+                            </td>
+
+                            {propertyName.map((property, indexProperty) => {
+                              const items = data.filter(
+                                (item) => item.diaClase === property && item.semana === week
+                              );
+                              return (
+                                <td key={indexProperty}>
+                                  {items.length > 0
+                                    ? items.map((item, index) => <div onClick={() => handleDescription(item)} key={index} className="act">{item.title}</div>)
+                                    : ""}
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </>
+                ) : (
+                  <>
+                    <thead>
+                      <tr>
+                        {propertyName.length <= 0 ? (
+                          <th>No se han ingresado elementos</th>
+                        ) : (
+                          <>
+                            {propertyName.map((property, index) => (
+                              <th key={index}>{property}</th>
+                            ))}
+                            {role === "Director" && props.uri === "profesores" ?
+                              <th>Planificacion</th> : null
+                            }
+                            {(role === "Director" &&
+                              props.uri !== "actividades" && props.uri !== "pms"&&props.uri!=="apms") ||
+                              (role === "Profesor" &&
+                                props.uri === "actividades") ? (
+                              <th>Accion</th>
+                            ) : null}
+                            {role === "Profesor" && props.uri === "pms" ? (
+                              <th>Planificacion</th>
+                            ) : null}
+                          </>
+                        )}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.map((item, rowIndex) => (
+                        <tr
+                          key={rowIndex}
+                          id="prueba"
+                          className="tableResponsive"
                         >
-                          <BiSolidSearchAlt2 />
-                        </IconContext.Provider>
-                      </button>
-                      <div className={`tablebutton ${showX}`}>
-                        <IconContext.Provider
-                          value={{ className: "searchsvg" }}
-                        >
-                          <LuSearchX onClick={() => getClicked()} />
-                        </IconContext.Provider>
-                      </div>
-                    </div>
+                          {propertyName.map((property, colIndex) => (
+                            <td data-label={property + " "} key={colIndex}>
+                              {Array.isArray(item[property]) ? (
+                                item[property].length > 0 ||
+                                  (props.uri === "actividades" &&
+                                    role === "Profesor") ||
+                                  (role === "Director" &&
+                                    props.uri === "profesores") ? (
+                                  <div className="materiasSeccion">
+                                    {item[property].map((subItem, subIndex) =>
+                                      Number.isInteger(subItem) ? null : (
+                                        <div key={subIndex} className="subItem">
+                                          {subItem}
+                                          {role === "Director" &&
+                                            props.uri === "profesores" ? (
+                                            <motion.div
+                                              whileHover={{ scale: 1.5 }}
+                                            >
+                                              <IconContext.Provider
+                                                value={{ className: "searchsvg" }}
+                                              >
+                                                <FcDeleteRow
+                                                  onClick={() =>
+                                                    handleDesAsing(
+                                                      item.materias_Secciones.indexOf(
+                                                        subItem
+                                                      ) + 1,
+                                                      item.materias_Secciones
+                                                    )
+                                                  }
+                                                />
+                                              </IconContext.Provider>
+
+                                            </motion.div>
+                                          ) : role === "Profesor" &&
+                                            props.uri === "actividades" ? (
+                                            <motion.div
+                                              whileHover={{ scale: 1.5 }}
+                                            >
+                                              <IconContext.Provider
+                                                value={{ className: "searchsvg" }}
+                                              >
+                                                <FcDeleteRow
+                                                  onClick={() =>
+                                                    handleDesAsing(
+                                                      item.Clase.indexOf(
+                                                        subItem
+                                                      ) + 1,
+                                                      item.Clase
+                                                    )
+                                                  }
+                                                />
+                                              </IconContext.Provider>
+
+                                            </motion.div>
+                                          ) : null}
+                                        </div>
+                                      )
+                                    )}
+                                    {(role === "Director" &&
+                                      props.uri === "profesores") ||
+                                      (role === "Profesor" &&
+                                        props.uri === "actividades") ? (
+                                      <motion.button
+                                        className="assignButton"
+                                        onClick={() =>
+                                          handleAsing([item.nombre, item.id])
+                                        }
+                                        whileHover={{
+                                          scale: 1.2,
+                                          backgroundColor: "white",
+                                          color: "#00255c",
+                                          border: "1px solid #00255c",
+                                        }}
+                                      >
+                                        Asignar
+                                      </motion.button>
+                                    ) : null}
+                                  </div>
+                                ) : (
+                                  <p>Sin Asignar</p>
+                                )
+                              ) : (
+                                item[property]
+                              )}
+                            </td>
+                          ))}
+                          {role === "Director" && props.uri === "profesores" ?
+                            <td>
+                              <motion.button
+                                className="viewPlani"
+                                whileHover={{
+                                  scale: 1.2,
+                                  backgroundColor: "#0947a5",
+                                }}
+                                onClick={() => changeView(item)}
+                              >
+                                {" "}
+                                Ver Planificacion
+                              </motion.button>
+                            </td> : null
+                          }
+                          {(role === "Director" && props.uri !== "actividades") ||
+                            (role === "Profesor" && props.uri === "actividades") ? (
+                            <td data-label="Accion">
+                              <div className="buttonsTable">
+                                <motion.button
+                                  className="tableButton"
+                                  onClick={() => handleModify(item)}
+                                  whileHover={{ scale: 1.2, color: "#00255c" }}
+                                >
+                                  <IconContext.Provider
+                                    value={{ className: "searchsvg" }}
+                                  >
+                                    <MdMode />
+                                  </IconContext.Provider>
+                                </motion.button>
+                                <div
+                                  className={`warning ${warning ? "" : "cancel"}`}
+                                >
+                                  <div className="windonws">
+                                    <div className="textExit">
+                                      <p>¿Seguro que deseas eliminar?</p>
+                                    </div>
+                                    <div className="buttonsExitWindows">
+                                      <button
+                                        className="buttonsExit cancelButton"
+                                        onClick={handleCancel}
+                                      >
+                                        Cancelar
+                                      </button>
+                                      <button
+                                        className="buttonsExit aceptButton"
+                                        onClick={() => deleteElement(idDelete)}
+                                      >
+                                        Aceptar
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                                <motion.button
+                                  onClick={() => handleShowWarning(item)}
+                                  className="tableButton"
+                                  whileHover={{ rotate: 20 }}
+                                >
+                                  <IconContext.Provider
+                                    value={{
+                                      color: "red",
+                                      className: "searchsvg",
+                                    }}
+                                  >
+                                    <MdDeleteForever />
+                                  </IconContext.Provider>
+                                </motion.button>
+                              </div>
+                            </td>
+                          ) : undefined}
+                          {role === "Profesor" && props.uri === "pms" ? (
+                            <td>
+                              <motion.button
+                                className="viewPlani"
+                                whileHover={{
+                                  scale: 1.2,
+                                  backgroundColor: "#0947a5",
+                                }}
+                                onClick={() => changeView(item)}
+                              >
+                                {" "}
+                                Ver Planificacion
+                              </motion.button>
+                            </td>
+                          ) : null}
+                        </tr>
+                      ))}
+                      <tr>
+                        <td className="nextPrev">
+                          {offset > 0 ? (
+                            <motion.button
+                              onClick={() => getPreviusData()}
+                              className="nextPrevButton"
+                              whileHover={{ scale: 1.1, color: "#00255c" }}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor"
+                                className="bi bi-arrow-left-circle-fill svgNextPrev"
+                                viewBox="0 0 16 16"
+                              >
+                                <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
+                              </svg>
+                            </motion.button>
+                          ) : null}
+                          {nextButton ? (
+                            <motion.button
+                              onClick={() => getNextData()}
+                              className="nextPrevButton"
+                              whileHover={{ scale: 1.1, color: "#00255c" }}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor"
+                                className="bi bi-arrow-right-circle-fill svgNextPrev"
+                                viewBox="0 0 16 16"
+                              >
+                                <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
+                              </svg>
+                            </motion.button>
+                          ) : null}
+                        </td>
+                      </tr>
+                    </tbody>
                   </>
                 )}
-                {(role === "Director" && props.uri !== "actividades"&&props.uri!=="apms"&&props.uri==="pms") ||
-                  (role === "Profesor" && props.uri === "actividades"&&props.uri!=="apms"&&props.uri==="pms") ? (
-                  <motion.button
-                    onClick={() =>
-                      window.location.replace(`/Agregar${props.uri}`)
-                    }
-                    className="addButton"
-                    whileHover={{ scale: 1.2, backgroundColor: "green" }}
-                  >
-                    Agregar
-                  </motion.button>
-                ) : null}
-              </div>
+              </table>
             </div>
-            {
-              description ?
-                <DescriptionPlani descriptionData={descriptionData} onCancel={handleDescription} />
-                : null
-            }
-            <table>
-              {props.uri === "apms" ? (
-                <>
-                  <thead>
-                    <tr>
-                      <th>Semanas</th>
-                      {propertyName.length <= 0 ? (
-                        <th>No se han ingresado elementos</th>
-                      ) : (
-                        <>
-                          {propertyName.map((property, index) => (
-                            <th key={index}>{property}</th>
-                          ))}
-                          {(role === "Director" &&
-                            props.uri !== "actividades") ||
-                            (role === "Profesor" &&
-                              props.uri === "actividades") ? (
-                            <th>Accion</th>
-                          ) : null}
-                          {role === "Profesor" && props.uri === "pms" ? (
-                            <th>Planificacion</th>
-                          ) : null}
-                        </>
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {weeks.map((week, weekIndex) => {
-                      return (
-                        <tr key={weekIndex}>
-                          <td>
-                            <p key={weekIndex}>{`Semana ${week}`}</p> 
-                            <p key={weekIndex+1}> {`${weeksDate[weekIndex] instanceof Date ? weeksDate[weekIndex].toLocaleDateString() : weeksDate[weekIndex]}`} </p>
-                            
-                          </td>
-
-                          {propertyName.map((property, indexProperty) => {
-                            const items = data.filter(
-                              (item) => item.diaClase === property && item.semana === week
-                            );
-                            return (
-                              <td key={indexProperty}>
-                                {items.length > 0
-                                  ? items.map((item, index) => <div onClick={() => handleDescription(item)} key={index} className="act">{item.title}</div>)
-                                  : ""}
-                              </td>
-                            );
-                          })}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </>
-              ) : (
-                <>
-                  <thead>
-                    <tr>
-                      {propertyName.length <= 0 ? (
-                        <th>No se han ingresado elementos</th>
-                      ) : (
-                        <>
-                          {propertyName.map((property, index) => (
-                            <th key={index}>{property}</th>
-                          ))}
-                          {role==="Director"&&props.uri==="profesores"?
-                          <th>Planificacion</th>:null
-                        }
-                          {(role === "Director" &&
-                            props.uri !== "actividades") ||
-                            (role === "Profesor" &&
-                              props.uri === "actividades") ? (
-                            <th>Accion</th>
-                          ) : null}
-                          {role === "Profesor" && props.uri === "pms" ? (
-                            <th>Planificacion</th>
-                          ) : null}
-                        </>
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.map((item, rowIndex) => (
-                      <tr
-                        key={rowIndex}
-                        id="prueba"
-                        className="tableResponsive"
-                      >
-                        {propertyName.map((property, colIndex) => (
-                          <td data-label={property + " "} key={colIndex}>
-                            {Array.isArray(item[property]) ? (
-                              item[property].length > 0 ||
-                                (props.uri === "actividades" &&
-                                  role === "Profesor") ||
-                                (role === "Director" &&
-                                  props.uri === "profesores") ? (
-                                <div className="materiasSeccion">
-                                  {item[property].map((subItem, subIndex) =>
-                                    Number.isInteger(subItem) ? null : (
-                                      <div key={subIndex} className="subItem">
-                                        {subItem}
-                                        {role === "Director" &&
-                                          props.uri === "profesores" ? (
-                                          <motion.div
-                                            whileHover={{ scale: 1.5 }}
-                                          >
-                                            <IconContext.Provider
-                                              value={{ className: "searchsvg" }}
-                                            >
-                                              <FcDeleteRow
-                                                onClick={() =>
-                                                  handleDesAsing(
-                                                    item.materias_Secciones.indexOf(
-                                                      subItem
-                                                    ) + 1,
-                                                    item.materias_Secciones
-                                                  )
-                                                }
-                                              />
-                                            </IconContext.Provider>
-                                            
-                                          </motion.div>
-                                        ) : role === "Profesor" &&
-                                          props.uri === "actividades" ? (
-                                          <motion.div
-                                            whileHover={{ scale: 1.5 }}
-                                          >
-                                            <IconContext.Provider
-                                              value={{ className: "searchsvg" }}
-                                            >
-                                              <FcDeleteRow
-                                                onClick={() =>
-                                                  handleDesAsing(
-                                                    item.Clase.indexOf(
-                                                      subItem
-                                                    ) + 1,
-                                                    item.Clase
-                                                  )
-                                                }
-                                              />
-                                            </IconContext.Provider>
-                                            
-                                          </motion.div>
-                                        ) : null}
-                                      </div>
-                                    )
-                                  )}
-                                  {(role === "Director" &&
-                                    props.uri === "profesores") ||
-                                    (role === "Profesor" &&
-                                      props.uri === "actividades") ? (
-                                    <motion.button
-                                      className="assignButton"
-                                      onClick={() =>
-                                        handleAsing([item.nombre, item.id])
-                                      }
-                                      whileHover={{
-                                        scale: 1.2,
-                                        backgroundColor: "white",
-                                        color: "#00255c",
-                                        border: "1px solid #00255c",
-                                      }}
-                                    >
-                                      Asignar
-                                    </motion.button>
-                                  ) : null}
-                                </div>
-                              ) : (
-                                <p>Sin Asignar</p>
-                              )
-                            ) : (
-                              item[property]
-                            )}
-                          </td>
-                        ))}
-                        {role === "Director"&&props.uri==="profesores"?
-                        <td>
-                          <motion.button
-                              className="viewPlani"
-                              whileHover={{
-                                scale: 1.2,
-                                backgroundColor: "#0947a5",
-                              }}
-                              onClick={() => changeView(item)}
-                            >
-                              {" "}
-                              Ver Planificacion
-                            </motion.button>
-                        </td>  :null
-                      }
-                        {(role === "Director" && props.uri !== "actividades") ||
-                          (role === "Profesor" && props.uri === "actividades") ? (
-                          <td data-label="Accion">
-                            <div className="buttonsTable">
-                              <motion.button
-                                className="tableButton"
-                                onClick={() => handleModify(item)}
-                                whileHover={{ scale: 1.2, color: "#00255c" }}
-                              >
-                                <IconContext.Provider
-                                  value={{ className: "searchsvg" }}
-                                >
-                                  <MdMode />
-                                </IconContext.Provider>
-                              </motion.button>
-                              <div
-                                className={`warning ${warning ? "" : "cancel"}`}
-                              >
-                                <div className="windonws">
-                                  <div className="textExit">
-                                    <p>¿Seguro que deseas eliminar?</p>
-                                  </div>
-                                  <div className="buttonsExitWindows">
-                                    <button
-                                      className="buttonsExit cancelButton"
-                                      onClick={handleCancel}
-                                    >
-                                      Cancelar
-                                    </button>
-                                    <button
-                                      className="buttonsExit aceptButton"
-                                      onClick={() => deleteElement(idDelete)}
-                                    >
-                                      Aceptar
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                              <motion.button
-                                onClick={() => handleShowWarning(item)}
-                                className="tableButton"
-                                whileHover={{ rotate: 20 }}
-                              >
-                                <IconContext.Provider
-                                  value={{
-                                    color: "red",
-                                    className: "searchsvg",
-                                  }}
-                                >
-                                  <MdDeleteForever />
-                                </IconContext.Provider>
-                              </motion.button>
-                            </div>
-                          </td>
-                        ) : undefined}
-                        {role === "Profesor" && props.uri === "pms" ? (
-                          <td>
-                            <motion.button
-                              className="viewPlani"
-                              whileHover={{
-                                scale: 1.2,
-                                backgroundColor: "#0947a5",
-                              }}
-                              onClick={() => changeView(item)}
-                            >
-                              {" "}
-                              Ver Planificacion
-                            </motion.button>
-                          </td>
-                        ) : null}
-                      </tr>
-                    ))}
-                    <tr>
-                      <td className="nextPrev">
-                        {offset > 0 ? (
-                          <motion.button
-                            onClick={() => getPreviusData()}
-                            className="nextPrevButton"
-                            whileHover={{ scale: 1.1, color: "#00255c" }}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="currentColor"
-                              className="bi bi-arrow-left-circle-fill svgNextPrev"
-                              viewBox="0 0 16 16"
-                            >
-                              <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
-                            </svg>
-                          </motion.button>
-                        ) : null}
-                        {nextButton ? (
-                          <motion.button
-                            onClick={() => getNextData()}
-                            className="nextPrevButton"
-                            whileHover={{ scale: 1.1, color: "#00255c" }}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="currentColor"
-                              className="bi bi-arrow-right-circle-fill svgNextPrev"
-                              viewBox="0 0 16 16"
-                            >
-                              <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
-                            </svg>
-                          </motion.button>
-                        ) : null}
-                      </td>
-                    </tr>
-                  </tbody>
-                </>
-              )}
-            </table>
-          </div>
-          <SearchNull
-            searchNull={searchNull}
-            animateAviso={animateAviso}
-            onCancel={handleCancelError}
-          />
-        </>
+            <SearchNull
+              searchNull={searchNull}
+              animateAviso={animateAviso}
+              onCancel={handleCancelError}
+            />
+          </>
       )}
-    </>
-  );
+        </>
+      );
 }
