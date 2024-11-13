@@ -106,7 +106,7 @@ export default function FormAdd(props) {
         })
     }
     getData(token)
-  })
+  },[token])
 
   return (
     <div>

@@ -1,9 +1,10 @@
 import React from 'react'
-import Exit from '../components/Exit'
+import Menu from '../components/Menu'
+
 export default function TestResponsivetemp() {
   return (
     <div>
-      <Exit/>
+      <Menu/>
     </div>
   )
 }
