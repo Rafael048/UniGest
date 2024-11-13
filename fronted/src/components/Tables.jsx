@@ -34,7 +34,209 @@ export default function Tables(props) {
   const [description, setDescription] = useState(false)
   const [descriptionData, setDescriptionData] = useState({})
   const debounceValue = useDebounce(userInput, 800);
+  
+  async function getData() {
+    if (user) {
+      if (props.uri === "pms") {
+        await axios
+          .get(
+            `http://localhost:3000/${props.uri}?offset=${offset}&cedula=${user.cedula}`
+          )
+          .then((result) => {
+            if (result.data.body.length === 0) {
+              setLoading(false);
+            } else {
+              result.data.body.forEach((element) => {
+                delete element.Nombre;
+                delete element.Materias_Secciones;
+                delete element.Apellido;
+              });
+              setData(result.data.body);
+              let muestra = Object.getOwnPropertyNames(result.data.body[0]);
+              let indexID = muestra.findIndex((element) => element === "id");
+              muestra.splice(indexID, 1);
+              setPropertyName(muestra);
+              setNextButton(result.data.button);
+              setLoading(false);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            setLoading(false);
+          });
+      } else {
+        if (props.uri === "actividades" && role === "Profesor") {
+          await axios
+            .get(
+              `http://localhost:3000/${props.uri}?offset=${offset}&creador=${user.userName}`
+            )
+            .then((result) => {
+              let filter = result.data.body.filter((creador) => {
+                return creador.creador === user.userName;
+              });
+              if (filter.length === 0) {
+                setLoading(false);
+              } else {
+                filter.forEach((element) => {
+                  delete element.creador;
+                });
+                setData(filter);
+                let muestra = Object.getOwnPropertyNames(filter[0]);
+                let indexID = muestra.findIndex(
+                  (element) => element === "id"
+                );
+                muestra.splice(indexID, 1);
+                setPropertyName(muestra);
+                setNextButton(result.data.button);
+                setLoading(false);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              setLoading(false);
+            });
+        } else if (props.uri === "apms") {
+          let id = Cookies.get("id");
+          let cedulaTest = Cookies.get('cedula')
+          let cedulaConsulta = null
+          if (cedulaTest) {
+            cedulaConsulta = cedulaTest
+          } else {
+            cedulaConsulta = user.cedula
+          }
+          await axios
+            .get(`http://localhost:3000/${props.uri}?id=${id}&user=${cedulaConsulta}`)
+            .then((result) => {
+              Cookies.remove('id')
+              if (result.data.body.length === 0) {
+                setLoading(false);
+              } else {
+                result.data.body.forEach((item) => {
+                  const date = new Date(item.date)
+                  const dateDay = date.getDay()
+                  let dateEvent = undefined
+                  let diferencia = item.diaClase - dateDay
+                  let ajusted = false
+                  if (dateDay === item.diaClase) {
+                    const nuevaFecha = new Date(item.date)
+                    nuevaFecha.setDate(date.getDate() - 1)
+                    const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
+                    dateEvent = nuevaFechaISO;
+                  } else {
+                    if (diferencia <= 0) {
+                      diferencia = diferencia + 7;
+                      ajusted = true
+                    }
 
+                    const nuevaFecha = new Date(item.date);
+                    if (ajusted) {
+                      nuevaFecha.setDate(date.getDate() + diferencia - 1);
+                    } else {
+                      nuevaFecha.setDate(date.getDate() + (diferencia - 1));
+                    }
+                    const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
+                    dateEvent = nuevaFechaISO
+                  }
+                  if (dateEvent < item.date) {
+                    const nuevaFecha = new Date(item.date);
+                    nuevaFecha.setDate(date.getDate() + 6);
+                    const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
+                    dateEvent = nuevaFechaISO
+                  }
+                  item.date = dateEvent
+
+                })
+                result.data.body.forEach((element) => {
+                  switch (element.diaClase) {
+                    case 0:
+                      element.diaClase = "Domingo";
+                      break;
+                    case 1:
+                      element.diaClase = "Lunes";
+                      break;
+                    case 2:
+                      element.diaClase = "Martes";
+                      break;
+                    case 3:
+                      element.diaClase = "Miercoles";
+                      break;
+                    case 4:
+                      element.diaClase = "Jueves";
+                      break;
+                    case 5:
+                      element.diaClase = "Viernes";
+                      break;
+                    case 6:
+                      element.diaClase = "Sabado";
+                      break;
+                  }
+                });
+                let temp = [];
+                for (let i = 0; i <= 14; i++) {
+                  temp.push(i);
+                }
+
+                setWeeks(temp);
+                let fecha = result.data.body[0].trimestre;
+                let fechaJS = new Date(fecha);
+                let tempFecha = [];
+                for (let i = 0; i < 105; i += 7) {
+                  let nuevaFecha = new Date(fechaJS);
+                  nuevaFecha.setDate(nuevaFecha.getDate() + i);
+                  tempFecha.push(nuevaFecha);
+                }
+                tempFecha.forEach(Element => {
+                  Element = Element.toISOString().slice(0, 10).replace('T', '')
+
+                });
+                setWeekDate(tempFecha)
+                setData(result.data.body);
+                setPropertyName([
+                  "Lunes",
+                  "Martes",
+                  "Miercoles",
+                  "Jueves",
+                  "Viernes",
+                  "Sabado",
+                  "Domingo",
+                ]);
+                setNextButton(result.data.button);
+                setLoading(false);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              setLoading(false);
+            });
+        } else {
+          await axios
+            .get(`http://localhost:3000/${props.uri}?offset=${offset}`)
+            .then((result) => {
+              if (result.data.body.length === 0) {
+                setLoading(false);
+              } else {
+                setData(result.data.body);
+                let muestra = Object.getOwnPropertyNames(result.data.body[0]);
+                let indexID = muestra.findIndex(
+                  (element) => element === "id"
+                );
+                console.log(result.data.body)
+                muestra.splice(indexID, 1);
+                setPropertyName(muestra);
+                setNextButton(result.data.button);
+                setLoading(false);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              setLoading(false);
+            });
+        }
+      }
+    } else {
+      setLoading(true);
+    }
+  }
   useEffect(() => {
     const getDataInput = async () => {
       await axios
@@ -53,12 +255,14 @@ export default function Tables(props) {
           }
         });
     };
-    userInput ? getDataInput() : setData([]);
+    userInput ? getDataInput() : resetData();
   }, [debounceValue, props.uri]);
 
   const handleChange = ({ target }) => {
-    console.log(target.value);
     setUserInput(target.value);
+    if(target.value===""){
+      resetData()
+    }
   };
 
   function handleShowWarning(item) {
@@ -95,9 +299,7 @@ export default function Tables(props) {
   }
 
   function getClicked() {
-    window.location.reload();
-    setShowSearch("showButton");
-    setShowX("notShowButton");
+    resetData(true)
   }
   async function deleteElement(item) {
     let id = item.id;
@@ -157,7 +359,14 @@ export default function Tables(props) {
     }
     window.location.replace("/planificacion");
   }
-
+  function resetData(button){
+    if(button){
+      setUserInput("");        
+    }
+    getData();                
+    setShowSearch("showButton");
+    setShowX("notShowButton");
+  }
   useEffect(() => {
     async function verify() {
       await axios
@@ -173,208 +382,6 @@ export default function Tables(props) {
     verify();
   }, [token]);
   useEffect(() => {
-    async function getData() {
-      if (user) {
-        if (props.uri === "pms") {
-          await axios
-            .get(
-              `http://localhost:3000/${props.uri}?offset=${offset}&cedula=${user.cedula}`
-            )
-            .then((result) => {
-              if (result.data.body.length === 0) {
-                setLoading(false);
-              } else {
-                result.data.body.forEach((element) => {
-                  delete element.Nombre;
-                  delete element.Materias_Secciones;
-                  delete element.Apellido;
-                });
-                setData(result.data.body);
-                let muestra = Object.getOwnPropertyNames(result.data.body[0]);
-                let indexID = muestra.findIndex((element) => element === "id");
-                muestra.splice(indexID, 1);
-                setPropertyName(muestra);
-                setNextButton(result.data.button);
-                setLoading(false);
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-              setLoading(false);
-            });
-        } else {
-          if (props.uri === "actividades" && role === "Profesor") {
-            await axios
-              .get(
-                `http://localhost:3000/${props.uri}?offset=${offset}&creador=${user.userName}`
-              )
-              .then((result) => {
-                let filter = result.data.body.filter((creador) => {
-                  return creador.creador === user.userName;
-                });
-                if (filter.length === 0) {
-                  setLoading(false);
-                } else {
-                  filter.forEach((element) => {
-                    delete element.creador;
-                  });
-                  setData(filter);
-                  let muestra = Object.getOwnPropertyNames(filter[0]);
-                  let indexID = muestra.findIndex(
-                    (element) => element === "id"
-                  );
-                  muestra.splice(indexID, 1);
-                  setPropertyName(muestra);
-                  setNextButton(result.data.button);
-                  setLoading(false);
-                }
-              })
-              .catch((err) => {
-                console.log(err);
-                setLoading(false);
-              });
-          } else if (props.uri === "apms") {
-            let id = Cookies.get("id");
-            let cedulaTest = Cookies.get('cedula')
-            let cedulaConsulta = null
-            if (cedulaTest) {
-              cedulaConsulta = cedulaTest
-            } else {
-              cedulaConsulta = user.cedula
-            }
-            await axios
-              .get(`http://localhost:3000/${props.uri}?id=${id}&user=${cedulaConsulta}`)
-              .then((result) => {
-                Cookies.remove('id')
-                if (result.data.body.length === 0) {
-                  setLoading(false);
-                } else {
-                  result.data.body.forEach((item) => {
-                    const date = new Date(item.date)
-                    const dateDay = date.getDay()
-                    let dateEvent = undefined
-                    let diferencia = item.diaClase - dateDay
-                    let ajusted = false
-                    if (dateDay === item.diaClase) {
-                      const nuevaFecha = new Date(item.date)
-                      nuevaFecha.setDate(date.getDate() - 1)
-                      const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
-                      dateEvent = nuevaFechaISO;
-                    } else {
-                      if (diferencia <= 0) {
-                        diferencia = diferencia + 7;
-                        ajusted = true
-                      }
-
-                      const nuevaFecha = new Date(item.date);
-                      if (ajusted) {
-                        nuevaFecha.setDate(date.getDate() + diferencia - 1);
-                      } else {
-                        nuevaFecha.setDate(date.getDate() + (diferencia - 1));
-                      }
-                      const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
-                      dateEvent = nuevaFechaISO
-                    }
-                    if (dateEvent < item.date) {
-                      const nuevaFecha = new Date(item.date);
-                      nuevaFecha.setDate(date.getDate() + 6);
-                      const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
-                      dateEvent = nuevaFechaISO
-                    }
-                    item.date = dateEvent
-
-                  })
-                  result.data.body.forEach((element) => {
-                    switch (element.diaClase) {
-                      case 0:
-                        element.diaClase = "Domingo";
-                        break;
-                      case 1:
-                        element.diaClase = "Lunes";
-                        break;
-                      case 2:
-                        element.diaClase = "Martes";
-                        break;
-                      case 3:
-                        element.diaClase = "Miercoles";
-                        break;
-                      case 4:
-                        element.diaClase = "Jueves";
-                        break;
-                      case 5:
-                        element.diaClase = "Viernes";
-                        break;
-                      case 6:
-                        element.diaClase = "Sabado";
-                        break;
-                    }
-                  });
-                  let temp = [];
-                  for (let i = 0; i <= 14; i++) {
-                    temp.push(i);
-                  }
-
-                  setWeeks(temp);
-                  let fecha = result.data.body[0].trimestre;
-                  let fechaJS = new Date(fecha);
-                  let tempFecha = [];
-                  for (let i = 0; i < 105; i += 7) {
-                    let nuevaFecha = new Date(fechaJS);
-                    nuevaFecha.setDate(nuevaFecha.getDate() + i);
-                    tempFecha.push(nuevaFecha);
-                  }
-                  tempFecha.forEach(Element => {
-                    Element = Element.toISOString().slice(0, 10).replace('T', '')
-
-                  });
-                  setWeekDate(tempFecha)
-                  setData(result.data.body);
-                  setPropertyName([
-                    "Lunes",
-                    "Martes",
-                    "Miercoles",
-                    "Jueves",
-                    "Viernes",
-                    "Sabado",
-                    "Domingo",
-                  ]);
-                  setNextButton(result.data.button);
-                  setLoading(false);
-                }
-              })
-              .catch((err) => {
-                console.log(err);
-                setLoading(false);
-              });
-          } else {
-            await axios
-              .get(`http://localhost:3000/${props.uri}?offset=${offset}`)
-              .then((result) => {
-                if (result.data.body.length === 0) {
-                  setLoading(false);
-                } else {
-                  setData(result.data.body);
-                  let muestra = Object.getOwnPropertyNames(result.data.body[0]);
-                  let indexID = muestra.findIndex(
-                    (element) => element === "id"
-                  );
-                  console.log(result.data.body)
-                  muestra.splice(indexID, 1);
-                  setPropertyName(muestra);
-                  setNextButton(result.data.button);
-                  setLoading(false);
-                }
-              })
-              .catch((err) => {
-                console.log(err);
-                setLoading(false);
-              });
-          }
-        }
-      } else {
-        setLoading(true);
-      }
-    }
 
     getData();
   }, [props.uri, role, user, offset]);
@@ -481,12 +488,6 @@ export default function Tables(props) {
                             {propertyName.map((property, index) => (
                               <th key={index}>{property}</th>
                             ))}
-                            {(role === "Director" &&
-                              props.uri !== "actividades") ||
-                              (role === "Profesor" &&
-                                props.uri === "actividades") ? (
-                              <th>Accion</th>
-                            ) : null}
                             {role === "Profesor" && props.uri === "pms" ? (
                               <th>Planificacion</th>
                             ) : null}
@@ -536,9 +537,10 @@ export default function Tables(props) {
                               <th>Planificacion</th> : null
                             }
                             {(role === "Director" &&
-                              props.uri !== "actividades" && props.uri !== "pms"&&props.uri!=="apms") ||
+                              props.uri !== "actividades" ) ||
                               (role === "Profesor" &&
-                                props.uri === "actividades") ? (
+                                props.uri === "actividades")   ? (
+                                console.log(props.uri),
                               <th>Accion</th>
                             ) : null}
                             {role === "Profesor" && props.uri === "pms" ? (

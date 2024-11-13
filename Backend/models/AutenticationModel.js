@@ -20,32 +20,40 @@ class AutenticationModels{
             if(name==undefined||lastName==undefined||user==undefined||password==undefined||rol==undefined||cedulaUser==undefined||registerpass==undefined||name.trim()===" "||lastName.trim()=== " "||user.trim()=== " "||rol.trim()===" "||registerpass.trim()===" "){
                 reject(new Error("No se pueden enviar datos vacios"))
             }
-            if(registerpass === process.env.REGISTERPROFESSOR&&rol=="Profesor" || registerpass === process.env.REGISTERDIRECTOR&&rol=="Director"){
-                let passwordHash = await bcryptjs.hash(password,8)
-                let consult = `INSERT INTO users (nombre,apellido,userName,password,rol,cedula) VALUES (' ${name}', '${lastName}','${user}','${passwordHash}', '${rol}','${cedulaUser}  ')`
-                connection.query(consult,function(error,results,fields){
-                    if(error){
-                        reject(error)
-                    }else{
-                        if(rol === "Profesor"){
-                            const data = {
-                                nombre:name,
-                                apellido:lastName,
-                                cedula: cedulaUser
+            let consultPass = `SELECT directorPass FROM accespass`
+            connection.query(consultPass,async function(err,result){
+                if(err){
+                    reject(err)
+                }else{
+                    if(result[0].directorPass==registerpass){
+                        let passwordHash = await bcryptjs.hash(password,8)
+                        let consult = `INSERT INTO users (nombre,apellido,userName,password,rol,cedula) VALUES (' ${name}', '${lastName}','${user}','${passwordHash}', '${rol}','${cedulaUser}  ')`
+                        connection.query(consult,function(error,results,fields){
+                            if(error){
+                                reject(error)
+                            }else{
+                                if(rol === "Profesor"){
+                                    const data = {
+                                        nombre:name,
+                                        apellido:lastName,
+                                        cedula: cedulaUser
+                                    }
+                                    ProfessorsControllers.Create(data)
+                                    .then((result) => {
+                                        console.log(result)
+                                    }).catch((err) => {
+                                        console.log(err)
+                                    });
+                                }
+                                resolve(results)
                             }
-                            ProfessorsControllers.Create(data)
-                            .then((result) => {
-                                console.log(result)
-                            }).catch((err) => {
-                                console.log(err)
-                            });
-                        }
-                        resolve(results)
+                        })
+                    }else{
+                        reject(new Error("No tiene permisos para registrarse"))
                     }
-                })
-            }else{
-                reject(new Error("No tiene permisos para registrarse"))
-            }
+                }
+            })
+          
         })
      
     }
