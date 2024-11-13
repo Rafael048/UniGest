@@ -1,14 +1,26 @@
-import React, {useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import logoSolo from '../assets/logoSolo.png'
 import '../css/FormAdd.css'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import ErrorEmpty from "./ErrorEmpty";
 
 export default function FormAdd(props) {
 
   let id = Cookies.get('id')
   const token = Cookies.get('jwt')
   const [active, setActive] = useState({})
+  const [errorEmpty, setErrorEmpty] = useState(false)
+
+  function handlecancel() {
+    if (errorEmpty === false) {
+      setErrorEmpty(true)
+      console.log(errorEmpty)
+    } else {
+      setErrorEmpty(false)
+      console.log(errorEmpty)
+    }
+  }
   async function handleSubmit(e) {
     e.preventDefault()
     let obj = {}
@@ -16,35 +28,91 @@ export default function FormAdd(props) {
       const key = element.split(" ")[1]
       obj[key] = e.target[key].value
     })
-    if(props.uri === "profesores"){
+    console.log(obj)
+    if (props.uri === "profesores") {
       let cedula = Cookies.get('cedula')
       Cookies.remove('cedula')
       obj.warning = true
       await axios.put(`http://localhost:3000/editar?cedula=${cedula}`, obj)
-      .then((result) => {
-        console.log(result)
-      }).catch((err) => {
-        console.log(err)
-      });
-    }
-    if(props.uri === "usuario"){
-      obj.rol = active.rol
-      await axios.put(`http://localhost:3000/editar?cedula=${active.cedula}`, obj)
-      .then((result) => {
-        console.log(result)
-        window.location.replace("/")
-      }).catch((err) => {
-        console.log(err)
-      });
-    }else{
-      await axios.put(`http://localhost:3000/${props.uri}/editar/${id}`, obj)
         .then((result) => {
           console.log(result)
-          window.location.replace(`/${props.uri}`)
         }).catch((err) => {
           console.log(err)
         });
-        Cookies.remove('id')
+
+    }
+    if (props.uri === "usuario") {
+      obj.rol = active.rol
+      console.log(obj)
+      if (obj.nombre.trim() === '' || obj.apellido.trim() === '' || obj.usuario.trim() === '' || obj.contraseña.trim() === '' || obj.nueva.trim() === '') {
+        handlecancel()
+      } else {
+        await axios.put(`http://localhost:3000/editar?cedula=${active.cedula}`, obj)
+          .then((result) => {
+            console.log(result)
+            window.location.replace("/")
+          }).catch((err) => {
+            console.log(err)
+          });
+      }
+
+    } else {
+      if (props.uri === 'profesores') {
+        if (obj.nombre.trim() === '' || obj.apellido.trim() === '') {
+          handlecancel()
+        } else {
+          await axios.put(`http://localhost:3000/${props.uri}/editar/${id}`, obj)
+            .then((result) => {
+              console.log(result)
+              window.location.replace(`/${props.uri}`)
+            }).catch((err) => {
+              console.log(err)
+            });
+          Cookies.remove('id')
+        }
+      }
+      if (props.uri === 'secciones') {
+        if (obj.nombre.trim() === '') {
+          handlecancel()
+        } else {
+          await axios.put(`http://localhost:3000/${props.uri}/editar/${id}`, obj)
+            .then((result) => {
+              console.log(result)
+              window.location.replace(`/${props.uri}`)
+            }).catch((err) => {
+              console.log(err)
+            });
+          Cookies.remove('id')
+        }
+      }
+      if (props.uri === 'materias') {
+        if (obj.nombre.trim() === '' || obj.dia.trim() === '') {
+          handlecancel()
+        } else {
+          await axios.put(`http://localhost:3000/${props.uri}/editar/${id}`, obj)
+            .then((result) => {
+              console.log(result)
+              window.location.replace(`/${props.uri}`)
+            }).catch((err) => {
+              console.log(err)
+            });
+          Cookies.remove('id')
+        }
+      }
+      if (props.uri === 'actividades') {
+        if (obj.nombre.trim() === '' || obj.descripcion.trim() === '' || obj.semana.trim() === '') {
+          handlecancel()
+        } else {
+          await axios.put(`http://localhost:3000/${props.uri}/editar/${id}`, obj)
+            .then((result) => {
+              console.log(result)
+              window.location.replace(`/${props.uri}`)
+            }).catch((err) => {
+              console.log(err)
+            });
+          Cookies.remove('id')
+        }
+      }
     }
   }
 
@@ -62,28 +130,28 @@ export default function FormAdd(props) {
         })
     }
     getData(token)
-  },[token])
+  }, [token])
 
   return (
     <div>
       {
-        active.rol === 'Director' ? 
-        <div className="allForm">
-          <form onSubmit={(e) => handleSubmit(e)} className='formDirectorAdd'>
+        active.rol === 'Director' ?
+          <div className="allForm">
+            <form onSubmit={(e) => handleSubmit(e)} className='formDirectorAdd'>
               <label className='activities'> {props.uri.charAt(0).toUpperCase() + props.uri.slice(1)} </label>
               {props.propiedades.map((element, index) => (
                 <div className='divAdd' key={index}>
-                {
-                  element.split(" ")[1]==="periodo"?
-                  <input autoComplete="off" required type="date" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
-                    :
-                  <input autoComplete="off" required type="text" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
-                }
+                  {
+                    element.split(" ")[1] === "periodo" ?
+                      <input autoComplete="off" required type="date" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
+                      :
+                      <input autoComplete="off" required type="text" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
+                  }
                 </div>
               ))}
               <input autoComplete="off" required type="submit" value={'Agregar'} className="submitAdd" name="" />
             </form>
-        </div> :
+          </div> :
           <div className='formAll'>
             <div className='logoAdd'>
               <img src={logoSolo} alt="" width="100%" />
@@ -100,6 +168,11 @@ export default function FormAdd(props) {
             </form>
           </div>
 
+      }
+      {
+        errorEmpty ?
+          <ErrorEmpty onCancel={handlecancel} />
+          : null
       }
     </div>
 

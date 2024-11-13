@@ -424,7 +424,7 @@ export default function Tables(props) {
                         </div>
                       ))
                     : (
-                      <>
+                      <div className="buttonSearch">
                         <label className="searchButton">Buscar</label>
                         <div className="search">
                           <input
@@ -453,7 +453,7 @@ export default function Tables(props) {
                             </IconContext.Provider>
                           </div>
                         </div>
-                      </>
+                      </div>
                     )}
                   </div>
                   {(role === "Director" && props.uri !== "actividades" && props.uri !== "apms" && props.uri !== "pms") ||
@@ -463,7 +463,7 @@ export default function Tables(props) {
                         window.location.replace(`/Agregar${props.uri}`)
                       }
                       className="addButton"
-                      whileHover={{ scale: 1.2, backgroundColor: "green" }}
+                      whileHover={{ scale: 1.2, backgroundColor: "#008000" }}
                     >
                       Agregar
                     </motion.button>
@@ -627,7 +627,7 @@ export default function Tables(props) {
                                         }
                                         whileHover={{
                                           scale: 1.2,
-                                          backgroundColor: "white",
+                                          backgroundColor: "#ffff",
                                           color: "#00255c",
                                           border: "1px solid #00255c",
                                         }}

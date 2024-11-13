@@ -182,7 +182,11 @@ td {
     flex-direction: column;
     flex-wrap: wrap;
 }
-
+.buttonSearch{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 .itemSubjects{
     flex: 1;
 }
@@ -191,7 +195,7 @@ td {
     background-color: #0947a5;
     transition: all .4s ease;
     scale: 1.1;
-    color: white;
+    color: #ffff;
     font-weight: bolder;
 }
 

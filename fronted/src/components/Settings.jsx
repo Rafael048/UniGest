@@ -65,7 +65,7 @@ export default function Settings() {
             </div>
             <div className="buttonSettingsContainer">
               <motion.button onClick={() => window.location.replace('/modificarUsuario')} whileHover={{ backgroundColor: "#0947a5", scale: .9 }} className="buttonSetting">Editar</motion.button>
-              <motion.button whileHover={{ backgroundColor: "red", scale: .9 }} className="buttonSetting" onClick={handleShowWarning}>Eliminar</motion.button>
+              <motion.button whileHover={{ backgroundColor: "#ff0000", scale: .9 }} className="buttonSetting" onClick={handleShowWarning}>Eliminar</motion.button>
             </div>
 
           </div>
