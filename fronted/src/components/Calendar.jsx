@@ -7,7 +7,6 @@ import axios from "axios";
 import '../css/Calendar.css'
 import { motion, AnimatePresence } from 'framer-motion'
 
-
 export default function Calendar() {
     const [events, setEvents] = useState([]);
     const [isBlur, SetIsBlur] = useState(false)
@@ -24,7 +23,6 @@ export default function Calendar() {
 
 
     useEffect(() => {
-
         async function getEvents() {
             await axios.get('http://localhost:3000/apms')
                 .then(async (result) => {
@@ -35,17 +33,17 @@ export default function Calendar() {
                     let arrTemp = []
                     let arrSubjectsFilter = []
 
-                    if(filter.length!==0&&filterProfessor.length!==0){
+                    if (filter.length !== 0 && filterProfessor.length !== 0) {
                         arrSubjectsFilter = result.data.body.filter(evento =>
                             filter.includes(evento.materia) && filterProfessor.includes(evento.profesor)
                         )
-                    }else if (filter.length !== 0) {
+                    } else if (filter.length !== 0) {
                         arrSubjectsFilter = result.data.body.filter(evento =>
-                            filter.includes(evento.materia) 
+                            filter.includes(evento.materia)
                         );
-                    }else if (filterProfessor.length !== 0) {
+                    } else if (filterProfessor.length !== 0) {
                         arrSubjectsFilter = result.data.body.filter(evento =>
-                             filterProfessor.includes(evento.profesor)
+                            filterProfessor.includes(evento.profesor)
                         );
                     } else {
                         arrSubjectsFilter = result.data.body;
@@ -58,30 +56,31 @@ export default function Calendar() {
                         let ajusted = false
                         if (dateDay === item.diaClase) {
                             const nuevaFecha = new Date(item.date)
-                            nuevaFecha.setDate(date.getDate()-1 )
+                            nuevaFecha.setDate(date.getDate() - 1)
                             const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
                             dateEvent = nuevaFechaISO;
                         } else {
-                                console.log(diferencia)
+                            console.log(diferencia)
                             if (diferencia <= 0) {
                                 diferencia = diferencia + 7;
                                 ajusted = true
                             }
 
                             const nuevaFecha = new Date(item.date);
-                            if(ajusted){
-                                nuevaFecha.setDate(date.getDate() + diferencia-1);
-                            }else{
-                                nuevaFecha.setDate(date.getDate() + (diferencia-1));
+                            if (ajusted) {
+                                nuevaFecha.setDate(date.getDate() + diferencia - 1);
+                            } else {
+                                nuevaFecha.setDate(date.getDate() + (diferencia - 1));
                             }
                             const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
                             dateEvent = nuevaFechaISO
                         }
-                        if(dateEvent<item.date){
+                        if (dateEvent < item.date) {
                             const nuevaFecha = new Date(item.date);
                             nuevaFecha.setDate(date.getDate() + 6);
                             const nuevaFechaISO = nuevaFecha.toISOString().slice(0, 10).replace('T', '')
-                            dateEvent = nuevaFechaISO                        }
+                            dateEvent = nuevaFechaISO
+                        }
                         let eventTemp = {
                             title: item.title,
                             date: dateEvent,
@@ -100,7 +99,7 @@ export default function Calendar() {
                 });
         }
         getEvents()
-    }, [filter,filterProfessor])
+    }, [filter, filterProfessor])
 
     function openFiltrerForm() {
         if (openFiltrer === true) {
@@ -133,7 +132,7 @@ export default function Calendar() {
     }
     function handleFilterChange(e) {
         const { value, checked, name } = e.target
-        if(name === "materias"){
+        if (name === "materias") {
             setFilter(prevState => {
                 if (checked) {
                     return [...prevState, value]
@@ -141,14 +140,14 @@ export default function Calendar() {
                     return prevState.filter(materia => materia !== value)
                 }
             });
-        }else{
+        } else {
             setFilterProfessor(prevState => {
                 if (checked) {
                     return [...prevState, value]
                 } else {
                     return prevState.filter(profesor => profesor !== value)
-                 }
-                })
+                }
+            })
         }
     }
 
@@ -162,10 +161,9 @@ export default function Calendar() {
                             initial={{ scale: 1 }}
                             whileHover={{ scale: 1.2 }}
                         />
-
                     </div>
                     <FullCalendar
-                        aspectRatio={2.1}
+                        
                         plugins={[dayGridPlugin, interactionPlugin]}
                         initialView="dayGridMonth"
                         eventClick={handleEventClick}
@@ -200,7 +198,7 @@ export default function Calendar() {
                                         </p>
                                     </div>
                                     <div className='buttonCancelDescription'>
-                                        <motion.button whileHover={{ scale: .9, backgroundColor: "white", border: "2px solid #00255c", color: "#00255c" }} onClick={() => handleDivClick()} className='buttonClose'>Cerrar</motion.button>
+                                        <motion.button whileHover={{ scale: .9, backgroundColor: "#ffff", border: "2px solid #00255c", color: "#00255c" }} onClick={() => handleDivClick()} className='buttonClose'>Cerrar</motion.button>
                                     </div>
                                 </motion.div>
                             )}
@@ -254,13 +252,12 @@ export default function Calendar() {
                                             ))}
                                         </div>
                                     </div>
-                                    <motion.input whileHover={{ scale: .9, backgroundColor: "white", border: "2px solid #00255c", color: "#00255c" }} type='button' className='aceptButtonFiltrer' onClick={openFiltrerForm} value={'Aceptar'} />
+                                    <motion.input whileHover={{ scale: .9, backgroundColor: "#ffff", border: "2px solid #00255c", color: "#00255c" }} type='button' className='aceptButtonFiltrer' onClick={openFiltrerForm} value={'Aceptar'} />
                                 </form>
                             </motion.div>
                         </div>
                     )}
             </AnimatePresence>
-
         </section>
     )
 }

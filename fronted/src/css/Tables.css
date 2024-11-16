@@ -52,6 +52,7 @@
     justify-content: space-around;
     align-items: center;
     gap: 1vw;
+    width: 40%;
 }
 
 .search {
@@ -126,6 +127,13 @@
     gap: 1vw;
 }
 
+.fechaText{
+    font-size: 18px;
+}
+.itemSubjects{
+    padding: 5px;
+    width: 50%;
+}
 table {
     width: 100%;
     border-collapse: collapse;
@@ -179,16 +187,18 @@ td {
 }
 .subject{
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-}
+    flex-wrap: wrap; 
+    width: 100%;}
 .buttonSearch{
     display: flex;
     align-items: center;
     gap: 10px;
 }
-.itemSubjects{
-    flex: 1;
+
+.textSubjects{
+    font-size: 18px;
+    padding-left: 10px;
+    border-left: 3px solid #00255C;
 }
 
 .act:hover{
@@ -280,7 +290,7 @@ td {
         height: 20px;
     }
 
-    thead {
+   thead {
         display: none;
     }
 
@@ -313,6 +323,7 @@ td {
     td::before {
         content: attr(data-label);
         width: 50%;
+        color: black;
     }
 
     .nextPrev::before {

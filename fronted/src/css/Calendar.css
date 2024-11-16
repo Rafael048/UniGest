@@ -47,7 +47,7 @@
     flex-direction: column;
     padding: 3vh;
     gap: 1vw;
-    border-radius: 10px; 
+    border-radius: 10px;
 }
 
 
@@ -63,6 +63,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .calendarProfesor {
@@ -97,7 +98,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height:120vh;
+    height: 120vh;
     background-color: rgba(0, 0, 0, 0.40);
     position: absolute;
     z-index: 6;
@@ -109,45 +110,47 @@
 
 
 @keyframes animationFiltrerExit {
-    0%{
+    0% {
         scale: 1;
         opacity: 1;
     }
-    25%{
+
+    25% {
         scale: 1.2;
         opacity: .7;
     }
-    100%{
+
+    100% {
         scale: 0;
-        opacity:0;
+        opacity: 0;
     }
 }
 
-.containFiltrer{
+.containFiltrer {
     padding: 1vw;
     background-color: white;
     width: 35%;
     border-radius: 30px;
 }
 
-.listChecked{
+.listChecked {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.animation{
+.animation {
     animation: animationFiltrerExit;
     animation-duration: .6s;
 }
 
-.notFiltrerForm{
+.notFiltrerForm {
     display: none;
 }
 
 
-.viewAllCalendar{
+.viewAllCalendar {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -199,7 +202,7 @@
     background-color: #A096A3;
 }
 
-.aceptButtonFiltrer{
+.aceptButtonFiltrer {
     font-size: 30px;
     padding: .5vw 2vw;
     background-color: #00255C;
@@ -210,10 +213,10 @@
 }
 
 
-.buttonFiltrer{
+.buttonFiltrer {
     font-size: 28px;
     padding: .5vw 1vw;
-    width: 100%;
+    width: 20%;
     background-color: #00255C;
     color: white;
     border: 0;
@@ -227,16 +230,75 @@
 }
 
 
-input[type="checkbox"]{
+input[type="checkbox"] {
     width: 20px;
     height: 20px;
 }
 
-.divFiltrerButton{
-    width: 15%;
+.divFiltrerButton {
     display: flex;
-    position: relative;
-    padding: .5vw;
-    top: 6vh;
-    left: 25%;
+    justify-content: start;
+    padding: 1vw;
+}
+
+
+@media screen and (max-width:1248px) {
+
+    .fc .fc-toolbar-title,
+    .buttonFiltrer {
+        font-size: 1.5em;
+    }
+
+    .fc-col-header-cell-cushion,
+    .fc-daygrid-day-number {
+        font-size: .8em;
+    }
+
+    .fc-day .fc-day-mon .fc-day-past .fc-day-other .fc-daygrid-day {
+        background-color: #00255C;
+    }
+}
+
+@media screen and (max-width:1024px) {
+
+    .fc .fc-toolbar-title,
+    .buttonFiltrer {
+        font-size: 1.5em;
+    }
+
+ .fc-button:not(:disabled){
+    font-size: .8em;
+ }
+ .fc-button:disabled{
+    font-size: .8em;
+ }
+
+}
+
+
+@media screen and (max-width:768px) {
+    .fc-day {
+       font-size: 16px;
+    }
+    .viewAllCalendar{
+        height: 100vh;
+    }
+}
+
+@media screen and (max-width:650px) {
+
+    .fc .fc-toolbar-title,
+    .buttonFiltrer {
+        font-size: 1em;
+    }
+
+ .fc-button:not(:disabled){
+    font-size: .6em;
+ }
+ .fc-button:disabled{
+    font-size: .6em;
+ }
+ .fc-day {
+    font-size: 12px;
+ }
 }
