@@ -1,26 +1,46 @@
-.formAdd{
+.formAdd {
     display: flex;
     flex-direction: column;
-    padding: 2vw;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 2vw;
     background-color: rgb(255, 255, 255);
     width: 100%;
     align-items: center;
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
+    min-height: 80%;
 }
 
-.formGeneral{
+.titleFormAdd {
+    text-align: center;
+}
+
+.schemaForm {
+    display: flex;
+    flex-direction: column;
+    padding: 2vw;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    background-color: white;
+    width: 80%;
+    justify-content: center;
+}
+
+.formGeneral {
     width: 100%;
 }
 
-.allForm{
+.formMain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.allForm {
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-.formDirectorAdd{
+.formDirectorAdd {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -30,10 +50,10 @@
     gap: 2vw;
     align-items: center;
     justify-content: center;
-    box-shadow:  0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
 }
 
-.formAsigProfesor{
+.formAsigProfesor {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -46,7 +66,7 @@
 
 }
 
-.inputAsig{
+.inputAsig {
     display: flex;
     width: 50%;
     justify-content: flex-start;
@@ -54,18 +74,18 @@
     align-items: center;
 }
 
-.activities{
-    font-size: 3vw;
+.activities {
+    font-size: 2rem;
     font-weight: bolder;
     text-align: center;
 }
 
-.divAdd{
+.divAdd {
     width: 100%;
     text-align: center;
 }
 
-.divAsing{
+.divAsing {
     display: flex;
     width: 100%;
     height: 10vw;
@@ -74,21 +94,22 @@
     justify-content: space-around;
 }
 
-.materiaAsing, .sectionAsing{
+.materiaAsing,
+.sectionAsing {
     font-size: 30px;
     padding: .5vw;
     border-radius: 10px;
 }
 
-.nameAsing{
+.nameAsing {
     font-size: 30px;
 }
 
-.notClas{
+.notClas {
     font-size: 24px;
 }
 
-.inputAdd{
+.inputAdd {
     width: 90%;
     height: 3.6vw;
     background-color: #E4F1F8;
@@ -101,32 +122,32 @@
     border-radius: 20px;
 }
 
-.inputAdd::placeholder{
+.inputAdd::placeholder {
     color: rgba(0, 0, 0, 0.781);
 }
 
-.formAll{
-    width: 100%;
+.formAll {
+    width: 80%;
     border-radius: 30px;
     height: 70vh;
     display: flex;
     justify-content: center;
 }
 
-.logoAdd{
+.logoAdd {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px ;
+    border-bottom-left-radius: 30px;
     background-color: #E4F1F8;
     width: 30%;
     padding: 2vw;
     font-size: 1vw;
 }
 
-.submitAdd{
+.submitAdd {
     background-color: #00255C;
     color: white;
     padding: 1vw .3vw;
@@ -138,18 +159,42 @@
 }
 
 @media screen and (max-width:1440px) {
-    .inputAdd{
+    .inputAdd {
         font-size: 24px;
     }
 }
 
 @media screen and (max-width:1024px) {
-    .formDirectorAdd{
+    .formDirectorAdd {
         width: 60%;
     }
-    .inputAdd{
+
+    .inputAdd {
         font-size: 20px;
         height: 40px;
         border-radius: 10px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .formAll{
+        flex-direction: column-reverse;
+    }
+    .logoAdd{
+        width: 100%;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+    
+
+    }
+    .logoAdd > img{
+        width: 20%;
+    }
+
+    .schemaForm{
+        width: 100%;
+        border-radius: 30px 30px 0 0 ;
+        gap: 20px;
     }
 }

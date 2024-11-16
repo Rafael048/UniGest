@@ -393,19 +393,19 @@ export default function Tables(props) {
         <>
           <div className="center">
             <div className="headTable">
-              
-              {props.uri === "apms" ? 
-              data.length > 0 ?
 
-                <h1>Planificacion de {data[0].profesor} </h1>:null
+              {props.uri === "apms" ?
+                data.length > 0 ?
+
+                  <h1 className="titleAsig">Planificacion de {data[0].profesor} </h1> : null
 
                 : props.uri === "pms" ?
                   <h1>Asignaturas</h1>
                   :
-                  
-      
+
+
                   <h1 className="titleTable">{props.uri}</h1>
-                }
+              }
               <div className="addSearch">
                 <div className="subject">
 
@@ -479,21 +479,21 @@ export default function Tables(props) {
                 <DescriptionPlani descriptionData={descriptionData} onCancel={handleDescription} />
                 : null
             }
-            <table>
+            <table className="table">
               {props.uri === "apms" ? (
                 <>
-                  <thead>
-                    <tr>
-                      <th>Semanas</th>
+                  <thead className="theadTable">
+                    <tr className="tabletr tableresponsive">
+                      <th className="tableth">Semanas</th>
                       {propertyName.length <= 0 ? (
-                        <th>No se han ingresado elementos</th>
+                        <th className="tableth">No se han ingresado elementos</th>
                       ) : (
                         <>
                           {propertyName.map((property, index) => (
-                            <th key={index}>{property}</th>
+                            <th className="tableth"key={index}>{property}</th>
                           ))}
                           {role === "Profesor" && props.uri === "pms" ? (
-                            <th>Planificacion</th>
+                            <th className="tableth">Planificacion</th>
                           ) : null}
                         </>
                       )}
@@ -502,13 +502,13 @@ export default function Tables(props) {
                   <tbody>
                     {weeks.map((week, weekIndex) => {
                       return (
-                        <tr key={weekIndex}>
-                          <td>
+                        <tr className="tableResponsivePlani tabletr" key={weekIndex}>
+                          <td className="tabletd" data-label="Semana">
                             <p key={weekIndex}>{`Semana ${week}`}</p>
-                            <p  className='fechaText' key={weekIndex + 1}> {`${weeksDate[weekIndex] instanceof Date ? weeksDate[weekIndex].toLocaleDateString() : weeksDate[weekIndex]}`} </p>
+                            <p className='fechaText' key={weekIndex + 1}> {`${weeksDate[weekIndex] instanceof Date ? weeksDate[weekIndex].toLocaleDateString() : weeksDate[weekIndex]}`} </p>
                           </td>
                           {propertyName.length <= 0 ? (
-                            <th>No se han ingresado elementos</th>
+                            <th className="tableth">No se han ingresado elementos</th>
                           ) : (
                             <>
                               {propertyName.map((property, indexProperty) => {
@@ -516,7 +516,7 @@ export default function Tables(props) {
                                   (item) => item.diaClase === property && item.semana === week
                                 );
                                 return (
-                                  <td data-label={property} key={indexProperty}>
+                                  <td className="tabletd" data-label={property} key={indexProperty}>
                                     {items.length > 0
                                       ? items.map((item, index) => <div onClick={() => handleDescription(item)} key={index} className="act">{item.title}</div>)
                                       : ""}
@@ -533,41 +533,37 @@ export default function Tables(props) {
                 </>
               ) : (
                 <>
-                  <thead>
-                    <tr>
+                  <thead className="theadTable">
+                    <tr className="tabletr">
                       {propertyName.length <= 0 ? (
-                        <th>No se han ingresado elementos</th>
+                        <th className="tableth">No se han ingresado elementos</th>
                       ) : (
                         <>
                           {propertyName.map((property, index) => (
-                            <th key={index}>{property}</th>
+                            <th className="tableth" key={index}>{property}</th>
                           ))}
                           {role === "Director" && props.uri === "profesores" ?
-                            <th>Planificacion</th> : null
+                            <th className="tableth">Planificacion</th> : null
                           }
                           {(role === "Director" &&
                             props.uri !== "actividades") ||
                             (role === "Profesor" &&
                               props.uri === "actividades") ? (
                             console.log(props.uri),
-                            <th>Accion</th>
+                            <th className="tableth">Accion</th>
                           ) : null}
                           {role === "Profesor" && props.uri === "pms" ? (
-                            <th>Planificacion</th>
+                            <th className="tableth">Planificacion</th>
                           ) : null}
                         </>
                       )}
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="mainTbody">
                     {data.map((item, rowIndex) => (
-                      <tr
-                        key={rowIndex}
-                        id="prueba"
-                        className="tableResponsive"
-                      >
+                      <tr key={rowIndex} id="prueba" className="tableResponsive tabletr">
                         {propertyName.map((property, colIndex) => (
-                          <td data-label={property + " "} key={colIndex}>
+                          <td className="tabletd" data-label={property + " "} key={colIndex}>
                             {Array.isArray(item[property]) ? (
                               item[property].length > 0 ||
                                 (props.uri === "actividades" &&
@@ -654,7 +650,7 @@ export default function Tables(props) {
                           </td>
                         ))}
                         {role === "Director" && props.uri === "profesores" ?
-                          <td>
+                          <td className="tabletd">
                             <motion.button
                               className="viewPlani"
                               whileHover={{
@@ -670,7 +666,7 @@ export default function Tables(props) {
                         }
                         {(role === "Director" && props.uri !== "actividades") ||
                           (role === "Profesor" && props.uri === "actividades") ? (
-                          <td data-label="Accion">
+                          <td className="tabletd" data-label="Accion">
                             <div className="buttonsTable">
                               <motion.button
                                 className="tableButton"
@@ -724,7 +720,7 @@ export default function Tables(props) {
                           </td>
                         ) : undefined}
                         {role === "Profesor" && props.uri === "pms" ? (
-                          <td>
+                          <td className="tabletd">
                             <motion.button
                               className="viewPlani"
                               whileHover={{
@@ -740,7 +736,7 @@ export default function Tables(props) {
                         ) : null}
                       </tr>
                     ))}
-                    <tr>
+                    <tr className="tabletr">
                       <td className="nextPrev">
                         {offset > 0 ? (
                           <motion.button

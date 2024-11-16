@@ -52,21 +52,21 @@ export default function FormAdd(props) {
             console.log(err)
           });
       }
-    } 
+    }
     if (props.uri === 'actividades') {
       if ((obj.nombre.trim() === '' || obj.descripcion.trim() === '' || obj.semana.trim() === '')) {
         handlecancel()
       } else {
         if (props.uri === "actividades") {
-        obj.creador = user.id
-      }
-      await axios.post(`http://localhost:3000/${props.uri}/agregar`, obj)
-        .then((result) => {
-          console.log(result)
-          window.location.replace(`/${props.uri}`)
-        }).catch((err) => {
-          console.log(err)
-        });
+          obj.creador = user.id
+        }
+        await axios.post(`http://localhost:3000/${props.uri}/agregar`, obj)
+          .then((result) => {
+            console.log(result)
+            window.location.replace(`/${props.uri}`)
+          }).catch((err) => {
+            console.log(err)
+          });
       }
     }
 
@@ -106,27 +106,30 @@ export default function FormAdd(props) {
         })
     }
     getData(token)
-  },[token])
+  }, [token])
 
   return (
-    <div>
+    <div className="formMain">
       {
         active === 'Director' ?
           <div className="allForm">
-            <form onSubmit={(e) => handleSubmit(e)} className='formDirectorAdd'>
-              <label className='activities'> {props.uri.charAt(0).toUpperCase() + props.uri.slice(1)} </label>
-              {props.propiedades.map((element, index) => (
-                <div className='divAdd' key={index}>
-                  {
-                    element.split(" ")[1] === "periodo" ?
-                      <input autoComplete="off" required type="date" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
-                      :
-                      <input autoComplete="off" required type="text" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
-                  }
-                </div>
-              ))}
-              <motion.input whileHover={{ scale: .9, backgroundColor: "#008000" }} required type="submit" value={'Agregar'} className="submitAdd" name="" />
-            </form>
+            <div>
+              <form onSubmit={(e) => handleSubmit(e)} className='formDirectorAdd'>
+                <label className='activities'> {props.uri.charAt(0).toUpperCase() + props.uri.slice(1)} </label>
+                {props.propiedades.map((element, index) => (
+                  <div className='divAdd' key={index}>
+                    {
+                      element.split(" ")[1] === "periodo" ?
+                        <input autoComplete="off" required type="date" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
+                        :
+                        <input autoComplete="off" required type="text" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
+                    }
+                  </div>
+                ))}
+                <motion.input whileHover={{ scale: .9, backgroundColor: "#008000" }} required type="submit" value={'Agregar'} className="submitAdd" name="" />
+              </form>
+
+            </div>
             {
               errorEmpty ?
                 <ErrorEmpty onCancel={handlecancel} />
@@ -138,20 +141,24 @@ export default function FormAdd(props) {
               <img src={logoSolo} alt="" width="100%" />
               <h1>UniGest</h1>
             </div>
-            <form onSubmit={(e) => handleSubmit(e)} className='formAdd'>
-              <label className='activities'> {props.uri.charAt(0).toUpperCase() + props.uri.slice(1)} </label>
-              {props.propiedades.map((element, index) => (
-                <div className='divAdd' key={index}>
-                  {
-                    element.split(" ")[1] === "periodo" ?
-                      <input autoComplete="off" required type="date" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
-                      :
-                      <input autoComplete="off" required type="text" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
-                  }
-                </div>
-              ))}
-              <motion.input whileHover={{ scale: .9, backgroundColor: "#008000" }} required type="submit" value={'Agregar'} className="submitAdd" name="" />
-            </form>
+            <div className="schemaForm">
+              <div className="titleFormAdd">
+                <label className='activities'> {props.uri.charAt(0).toUpperCase() + props.uri.slice(1)} </label>
+              </div>
+              <form onSubmit={(e) => handleSubmit(e)} className='formAdd'>
+                {props.propiedades.map((element, index) => (
+                  <div className='divAdd' key={index}>
+                    {
+                      element.split(" ")[1] === "periodo" ?
+                        <input autoComplete="off" required type="date" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
+                        :
+                        <input autoComplete="off" required type="text" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
+                    }
+                  </div>
+                ))}
+                <motion.input whileHover={{ scale: .9, backgroundColor: "#008000" }} required type="submit" value={'Agregar'} className="submitAdd" name="" />
+              </form>
+            </div>
             {
               errorEmpty ?
                 <ErrorEmpty onCancel={handlecancel} />

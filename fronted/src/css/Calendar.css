@@ -7,6 +7,10 @@
 
 }
 
+.fc-toolbar-title {
+    text-transform: capitalize;
+}
+
 .hide {
     display: none;
 }
@@ -54,7 +58,7 @@
 .calendarView {
     width: 70vw;
     background-color: rgb(255, 255, 255);
-    padding: 1vw;
+    padding: 1rem;
     box-shadow: 0px 0px 9px 1px rgba(0, 0, 0, 0.363);
     border-radius: 30px;
 }
@@ -108,6 +112,12 @@
     align-items: center;
 }
 
+.listAll{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 
 @keyframes animationFiltrerExit {
     0% {
@@ -127,7 +137,7 @@
 }
 
 .containFiltrer {
-    padding: 1vw;
+    padding: 20px;
     background-color: white;
     width: 35%;
     border-radius: 30px;
@@ -164,7 +174,6 @@
     height: 60vh;
     font-size: 30px;
     padding: 1vw;
-    border-radius: 30px;
     overflow: scroll;
     overflow-x: hidden;
     gap: 1vw;
@@ -241,8 +250,18 @@ input[type="checkbox"] {
     padding: 1vw;
 }
 
+.fc-daygrid-day-events {
+    text-align: center;
+}
 
 @media screen and (max-width:1248px) {
+    .bg-event {
+        width: 35%;
+    }
+
+    .containFiltrer {
+        width: 50%;
+    }
 
     .fc .fc-toolbar-title,
     .buttonFiltrer {
@@ -254,9 +273,6 @@ input[type="checkbox"] {
         font-size: .8em;
     }
 
-    .fc-day .fc-day-mon .fc-day-past .fc-day-other .fc-daygrid-day {
-        background-color: #00255C;
-    }
 }
 
 @media screen and (max-width:1024px) {
@@ -266,39 +282,111 @@ input[type="checkbox"] {
         font-size: 1.5em;
     }
 
- .fc-button:not(:disabled){
-    font-size: .8em;
- }
- .fc-button:disabled{
-    font-size: .8em;
- }
+    .fc-button:not(:disabled) {
+        font-size: .8em;
+    }
+
+    .fc-button:disabled {
+        font-size: .8em;
+    }
+
+    .calendarView {
+        width: 90%;
+    }
 
 }
 
 
+
 @media screen and (max-width:768px) {
-    .fc-day {
-       font-size: 16px;
+    .aceptButtonFiltrer{
+        font-size: 1.5rem;
     }
-    .viewAllCalendar{
-        height: 100vh;
+    .filtrerForm {
+        justify-content: flex-start;
+        padding-top: 50px;
+    }
+
+    .containFiltrer {
+        width: 60%;
+    }
+
+    .titleFiltrer {
+        font-size: 1.7rem;
+    }
+
+    .inputCheckbox {
+        font-size: 1.5rem;
+    }
+
+    .fc-day {
+        font-size: 16px;
+    }
+
+    .viewAllCalendar {
+        height: 80vh;
     }
 }
 
 @media screen and (max-width:650px) {
+
+    .containFiltrer {
+        width: 80%;
+    }
+
+    .titleFiltrer {
+        font-size: 1.5rem;
+    }
+
+    .inputCheckbox {
+        font-size: 1.2rem;
+    }
 
     .fc .fc-toolbar-title,
     .buttonFiltrer {
         font-size: 1em;
     }
 
- .fc-button:not(:disabled){
-    font-size: .6em;
- }
- .fc-button:disabled{
-    font-size: .6em;
- }
- .fc-day {
-    font-size: 12px;
- }
+    .fc-button:not(:disabled) {
+        font-size: .6em;
+    }
+
+    .fc-button:disabled {
+        font-size: .6em;
+    }
+
+    .fc-day {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width:375px) {
+
+    .fc .fc-toolbar-title {
+        font-size: .9em;
+    }
+    .buttonFiltrer {
+        font-size: .7em;
+    }
+
+    .fc-button:not(:disabled) {
+        font-size: .5em;
+    }
+
+    .fc-button:disabled {
+        font-size: .5em;
+    }
+
+    .fc-media-screen {
+        height: 40vh;
+    }
+
+    .containFiltrer {
+        width: 90%;
+    }
+
+    .titleFiltrer {
+        font-size: 1.2rem;
+    }
+
 }

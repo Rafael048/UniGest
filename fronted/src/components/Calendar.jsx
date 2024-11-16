@@ -218,9 +218,9 @@ export default function Calendar() {
                             >
                                 <form className='listChecked'>
                                     <div className='listFiltrer'>
-                                        <div>
+                                        <div className='listAll'>
 
-                                            <h3>Filtrar por materias</h3>
+                                            <h3 className='titleFiltrer'>Filtrar por materias</h3>
                                             {materias.map((materia) => (
                                                 <label key={materia.id} className='inputCheckbox'>
                                                     <input
@@ -235,8 +235,8 @@ export default function Calendar() {
                                                 </label>
                                             ))}
                                         </div>
-                                        <div>
-                                            <h3>Filtrar por Profesor</h3>
+                                        <div className='listAll'>
+                                            <h3 className='titleFiltrer'>Filtrar por Profesor</h3>
                                             {profesores.map((profesor) => (
                                                 <label key={profesor.id} className='inputCheckbox'>
                                                     <input

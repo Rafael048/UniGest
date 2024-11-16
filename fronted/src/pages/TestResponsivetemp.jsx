@@ -1,10 +1,10 @@
 import React from 'react'
-import Menu from '../components/Menu'
+import ErrorEmpty from '../components/ErrorEmpty'
 
 export default function TestResponsivetemp() {
   return (
     <div>
-      <Menu/>
+      <ErrorEmpty/>
     </div>
   )
 }

@@ -20,7 +20,7 @@
     gap: 1vw;
 }
 
-.viewPlani{
+.viewPlani {
     font-size: 24px;
     padding: .5vw 1.4vw;
     background-color: #00255C;
@@ -64,7 +64,7 @@
     font-size: 24px;
     justify-content: center;
     gap: 2vw;
-    width: 50%;
+    width: 100%;
 }
 
 .searchButton {
@@ -106,7 +106,8 @@
     gap: 1vw;
     justify-content: center;
 }
-.materiasSeccion{
+
+.materiasSeccion {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -127,26 +128,28 @@
     gap: 1vw;
 }
 
-.fechaText{
+.fechaText {
     font-size: 18px;
 }
-.itemSubjects{
+
+.itemSubjects {
     padding: 5px;
     width: 50%;
 }
-table {
+
+.table {
     width: 100%;
     border-collapse: collapse;
 }
 
-th {
+.tableth {
     background-color: #E4F1F8;
     text-transform: capitalize;
     padding: .5vw;
     font-size: 24px;
 }
 
-td {
+.tabletd {
     text-align: center;
     text-transform: capitalize;
     font-size: 20px;
@@ -180,28 +183,31 @@ td {
     justify-content: space-between;
 }
 
-.act{
+.act {
     cursor: pointer;
     padding: 10px;
     border-radius: 20px;
 }
-.subject{
+
+.subject {
     display: flex;
-    flex-wrap: wrap; 
-    width: 100%;}
-.buttonSearch{
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.buttonSearch {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.textSubjects{
+.textSubjects {
     font-size: 18px;
     padding-left: 10px;
     border-left: 3px solid #00255C;
 }
 
-.act:hover{
+.act:hover {
     background-color: #0947a5;
     transition: all .4s ease;
     scale: 1.1;
@@ -210,27 +216,29 @@ td {
 }
 
 @media screen and (max-width:1300px) {
+    .titleAsig,
     .titleTable {
         font-size: 30px;
     }
-
     .searchButton,
-    .inputSearch,
     .addButton,
     .assignButton,
     .viewPlani {
         font-size: 24px;
+    }
+    .inputSearch{
+        font-size: 18px;
     }
 
     .inputSearch {
         height: 20px;
     }
 
-    th {
+    .tableth {
         font-size: 20px;
     }
 
-    td {
+    .tabletd {
         font-size: 18px;
     }
 }
@@ -239,7 +247,12 @@ td {
     .titleTable {
         font-size: 28px;
     }
-
+.addSearch{
+    width: 55%;
+}
+.textSubjects{
+    font-size: 16px;
+}
     .searchButton,
     .inputSearch,
     .addButton,
@@ -249,11 +262,11 @@ td {
     }
 
     .inputSearch,
-    th {
+    .tableth {
         height: 18px;
     }
 
-    td {
+    .tabletd {
         font-size: 16px;
     }
 }
@@ -261,7 +274,16 @@ td {
 @media screen and (max-width:768px) {
     .subItem {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+    }
+
+    .addSearch{
+        width: 80%;
+        justify-content: center;
+        align-items: center;
+    }
+    .textSubjects{
+        font-size: 16px;
     }
 
     .materiasSeccion {
@@ -282,7 +304,7 @@ td {
         font-size: 18px;
     }
 
-    .viewPlani{
+    .viewPlani {
         font-size: 16px;
     }
 
@@ -290,21 +312,21 @@ td {
         height: 20px;
     }
 
-   thead {
+    .theadTable {
         display: none;
     }
 
-    tr {
+    .tabletr {
         margin-bottom: 8px;
         display: block;
     }
 
-    th,
-    td {
+    .tableth,
+    .tabletd {
         font-size: 18px;
     }
 
-    td {
+    .tabletd {
         display: flex;
         gap: 1vw;
         border: 0;
@@ -315,12 +337,15 @@ td {
     .tableResponsive {
         border-bottom: 2px solid #00255C;
     }
+    .tableResponsivePlani{
+        border-top: 2px solid #00255C;
+    }
 
-    td:last-child {
+    .tabletd:last-child {
         border-bottom: 0;
     }
 
-    td::before {
+    .tabletd::before {
         content: attr(data-label);
         width: 50%;
         color: black;
@@ -346,8 +371,8 @@ td {
         font-size: 14px;
     }
 
-    th,
-    td {
+    .tableth,
+    .tabletd {
         font-size: 14px;
     }
 }

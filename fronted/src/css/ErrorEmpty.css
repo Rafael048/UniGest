@@ -1,6 +1,6 @@
 .errorEmpty{
     background-color: rgb(44, 133, 250);
-    padding: 2vw;
+    padding: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,7 +25,7 @@
 }
 
 .errorButton{
-    font-size: 30px;
+    font-size: 1.5em;
     padding: .5vw 2vw;
     background-color: #00255C;
     color: white;
@@ -36,11 +36,50 @@
 }
 
 .textError{
-    font-size: 30px;
+    font-size: 1.5rem;
     color: white;
     font-weight: bold;
+    text-align: center;
 }
 
 .noneError{
     display: none;
+}
+
+@media screen and (max-width:1024px) {
+    .errorEmpty{
+        width: 40%;
+        gap: 3vw;
+    }
+
+    .textError{
+        font-size: 1.3rem;
+    }
+    .errorButton{
+        font-size: 1.3rem;
+    }
+}
+@media screen and (max-width:768px) {
+    .errorEmpty{
+        width: 50%;
+    }
+
+    .textError{
+        font-size: 1.2rem;
+    }
+    .errorButton{
+        font-size: 1.1rem;
+    }
+}
+@media screen and (max-width:425px) {
+    .errorEmpty{
+        width: 60%;
+    }
+
+    .textError{
+        font-size: 1rem;
+    }
+    .errorButton{
+        font-size: 1rem;
+    }
 }

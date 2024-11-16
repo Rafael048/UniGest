@@ -1,7 +1,7 @@
 .addActivities {
     background: url('../assets/loginFondo.png');
     background-repeat: no-repeat;
-    background-size: 100vw;
+    background-size: cover;
     background-position: center;
     height: 100vh;
     display: flex;
@@ -11,7 +11,8 @@
 
 .addAct{
     display: flex;
-    justify-content: center ;
+    justify-content: center;
+    align-items: center;
 }
 
 .addActSection {
@@ -47,9 +48,4 @@
     padding: .5vw;
 }
 
-@media screen and (max-width:768px) {
-    .directorView{
-        height: 100vh;
-    }
-}
 

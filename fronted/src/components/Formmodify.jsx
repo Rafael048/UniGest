@@ -133,7 +133,7 @@ export default function FormAdd(props) {
   }, [token])
 
   return (
-    <div>
+    <div className="formMain">
       {
         active.rol === 'Director' ?
           <div className="allForm">
@@ -157,15 +157,19 @@ export default function FormAdd(props) {
               <img src={logoSolo} alt="" width="100%" />
               <h1>UniGest</h1>
             </div>
-            <form onSubmit={(e) => handleSubmit(e)} className='formAdd'>
-              <label className='activities'> {props.uri.charAt(0).toUpperCase() + props.uri.slice(1)} </label>
-              {props.propiedades.map((element, index) => (
-                <div className='divAdd' key={index}>
-                  <input autoComplete="off" required type="text" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
-                </div>
-              ))}
-              <input autoComplete="off" required type="submit" value={'Agregar'} className="submitAdd" name="" />
-            </form>
+            <div className="schemaForm">
+              <div className="titleFormAdd">
+                <label className='activities'> {props.uri.charAt(0).toUpperCase() + props.uri.slice(1)} </label>
+              </div>
+              <form onSubmit={(e) => handleSubmit(e)} className='formAdd'>
+                {props.propiedades.map((element, index) => (
+                  <div className='divAdd' key={index}>
+                    <input autoComplete="off" required type="text" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
+                  </div>
+                ))}
+                <input autoComplete="off" required type="submit" value={'Agregar'} className="submitAdd" name="" />
+              </form>
+            </div>
           </div>
 
       }
