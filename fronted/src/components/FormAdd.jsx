@@ -112,24 +112,21 @@ export default function FormAdd(props) {
     <div className="formMain">
       {
         active === 'Director' ?
-          <div className="allForm">
-            <div>
-              <form onSubmit={(e) => handleSubmit(e)} className='formDirectorAdd'>
-                <label className='activities'> {props.uri.charAt(0).toUpperCase() + props.uri.slice(1)} </label>
-                {props.propiedades.map((element, index) => (
-                  <div className='divAdd' key={index}>
-                    {
-                      element.split(" ")[1] === "periodo" ?
-                        <input autoComplete="off" required type="date" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
-                        :
-                        <input autoComplete="off" required type="text" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
-                    }
-                  </div>
-                ))}
-                <motion.input whileHover={{ scale: .9, backgroundColor: "#008000" }} required type="submit" value={'Agregar'} className="submitAdd" name="" />
-              </form>
-
-            </div>
+          <div className="mainDirector">
+            <form onSubmit={(e) => handleSubmit(e)} className='formDirectorAdd'>
+              <label className='activities'> {props.uri.charAt(0).toUpperCase() + props.uri.slice(1)} </label>
+              {props.propiedades.map((element, index) => (
+                <div className='divAdd' key={index}>
+                  {
+                    element.split(" ")[1] === "periodo" ?
+                      <input autoComplete="off" required type="date" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
+                      :
+                      <input autoComplete="off" required type="text" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
+                  }
+                </div>
+              ))}
+              <motion.input whileHover={{ scale: .9, backgroundColor: "#008000" }} required type="submit" value={'Agregar'} className="submitAdd" name="" />
+            </form>
             {
               errorEmpty ?
                 <ErrorEmpty onCancel={handlecancel} />

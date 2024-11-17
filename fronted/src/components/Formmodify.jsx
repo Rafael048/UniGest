@@ -136,7 +136,7 @@ export default function FormAdd(props) {
     <div className="formMain">
       {
         active.rol === 'Director' ?
-          <div className="allForm">
+          <div className="directorModify">
             <form onSubmit={(e) => handleSubmit(e)} className='formDirectorAdd'>
               <label className='activities'> {props.uri.charAt(0).toUpperCase() + props.uri.slice(1)} </label>
               {props.propiedades.map((element, index) => (
