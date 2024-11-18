@@ -198,7 +198,7 @@ export default function Calendar() {
                                         </p>
                                     </div>
                                     <div className='buttonCancelDescription'>
-                                        <motion.button whileHover={{ scale: .9, backgroundColor: "#ffff", border: "2px solid #00255c", color: "#00255c" }} onClick={() => handleDivClick()} className='buttonClose'>Cerrar</motion.button>
+                                        <motion.button whileHover={{ scale: .9, backgroundColor: "#ffff", border: "2px solid #00255c", color: "#00255c" }} onClick={() => handleDivClick()} className='buttonClose' id="testButtonClose">Cerrar</motion.button>
                                     </div>
                                 </motion.div>
                             )}

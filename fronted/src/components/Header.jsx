@@ -42,7 +42,7 @@ export default function Header({ asig, active, activities, color, plani, setting
         <div className='logoHeader'>
           <img src={img} alt="logoImg" width={"90%"} />
         </div>
-        <button className='buttonHeaderOpen' onClick={openMenuHeader}>
+        <button className='buttonHeaderOpen' onClick={openMenuHeader} name='openMenu'>
           <IconContext.Provider value={{ className: "svgHeader" }}>
             <HiMenu />
           </IconContext.Provider>
