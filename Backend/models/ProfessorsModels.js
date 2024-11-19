@@ -16,6 +16,7 @@ class ProfessorsModels{
         }else{
           PMSControllers.All(undefined)
           .then((pms) => {
+            console.log(pms)
             for (let i = 0; i < results.length; i++) {
               results[i].materias_Secciones = []
               for (let j = 0; j < pms.length; j++) {
@@ -24,7 +25,6 @@ class ProfessorsModels{
                 }
               }
             }
-            console.log(results)
             resolve(results)
           }).catch((e) => {
             reject(e)

@@ -88,7 +88,9 @@ export default function Calendar() {
                                 descripcion: item.descripcion,
                                 profesor: item.profesor,
                                 materia: item.materia,
-                                seccion: item.seccion
+                                seccion: item.seccion,
+                                unidad: item.unidad,
+                                tema : item.tema
                             }
                         }
                         arrTemp.push(eventTemp)
@@ -194,7 +196,10 @@ export default function Calendar() {
                                             Seccion: {eventClicked.extendedProps.seccion}
                                         </p>
                                         <p className='descriptionActivities'>
-                                            Descripcion {eventClicked.extendedProps.descripcion}
+                                            Descripcion: {eventClicked.extendedProps.descripcion}
+                                        </p>
+                                        <p className='descriptionActivities'>
+                                            {eventClicked.extendedProps.unidad}: {eventClicked.extendedProps.tema}
                                         </p>
                                     </div>
                                     <div className='buttonCancelDescription'>
@@ -247,7 +252,7 @@ export default function Calendar() {
                                                         className='inputChecked'
                                                         name='profesores'
                                                     />
-                                                    {profesor.nombre}
+                                                    {profesor.nombre+ " " + profesor.apellido}
                                                 </label>
                                             ))}
                                         </div>

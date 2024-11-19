@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-11-2024 a las 01:56:48
+-- Tiempo de generación: 19-11-2024 a las 20:30:15
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -32,13 +32,6 @@ CREATE TABLE `accespass` (
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `accespass`
---
-
-INSERT INTO `accespass` (`directorPass`, `id`) VALUES
-('UnigestPass', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -62,6 +55,7 @@ CREATE TABLE `actividades` (
 CREATE TABLE `a_p_m_s` (
   `idActividades` int(11) NOT NULL,
   `idPMS` int(11) NOT NULL,
+  `idUnidad` int(11) NOT NULL,
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -118,6 +112,19 @@ CREATE TABLE `secciones` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `unidades`
+--
+
+CREATE TABLE `unidades` (
+  `unidad` varchar(25) NOT NULL,
+  `tema` longtext NOT NULL,
+  `idClase` int(11) NOT NULL,
+  `id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `users`
 --
 
@@ -161,7 +168,8 @@ ALTER TABLE `actividades`
 ALTER TABLE `a_p_m_s`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idActividades` (`idActividades`),
-  ADD KEY `idPMS` (`idPMS`);
+  ADD KEY `idPMS` (`idPMS`),
+  ADD KEY `idUnidad` (`idUnidad`);
 
 --
 -- Indices de la tabla `materias`
@@ -192,6 +200,14 @@ ALTER TABLE `secciones`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `unidades`
+--
+ALTER TABLE `unidades`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idMateria` (`idClase`),
+  ADD KEY `idClase` (`idClase`);
+
+--
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
@@ -207,7 +223,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `accespass`
 --
 ALTER TABLE `accespass`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `actividades`
@@ -246,10 +262,16 @@ ALTER TABLE `secciones`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `unidades`
+--
+ALTER TABLE `unidades`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
@@ -275,6 +297,12 @@ ALTER TABLE `p_m_s`
   ADD CONSTRAINT `p_m_s_ibfk_1` FOREIGN KEY (`idProfesor`) REFERENCES `profesores` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `p_m_s_ibfk_2` FOREIGN KEY (`idSecciones`) REFERENCES `secciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `p_m_s_ibfk_3` FOREIGN KEY (`idMaterias`) REFERENCES `materias` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `unidades`
+--
+ALTER TABLE `unidades`
+  ADD CONSTRAINT `unidades_ibfk_1` FOREIGN KEY (`idClase`) REFERENCES `p_m_s` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

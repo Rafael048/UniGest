@@ -12,6 +12,7 @@ let seccionesRouter = require('./routes/SectionsRoutes')
 let actividadesRouter = require('./routes/ActivitiesRoutes')
 let PMSRouter = require('./routes/PMSRoutes')
 let APMSRouter = require('./routes/APMSRoutes')
+let UnitsRouter = require('./routes/UnitsRoutes')
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use('/secciones', seccionesRouter)
 app.use('/actividades', actividadesRouter)
 app.use('/pms', PMSRouter)
 app.use('/apms', APMSRouter)
+app.use('/unidades', UnitsRouter)
 
 
 // catch 404 and forward to error handler

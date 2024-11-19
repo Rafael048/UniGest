@@ -25,8 +25,24 @@ export default function FormAdd(props) {
       const key = element.split(" ")[1]
       obj[key] = e.target[key].value
     })
-    console.log(obj)
+    console.log(props.uri)
 
+    if(props.uri==="unidades"){
+      if(obj.unidad.trim()===" "||obj.tema.trim()===" "){
+        handlecancel()
+      }else{
+        obj.idClase = Cookies.get('id')
+        await axios.post(`http://localhost:3000/unidades/agregar`,obj)
+        .then((result) => {
+          console.log(result)
+          window.location.replace(`/asignaturas`)
+
+        }).catch((err) => {
+          console.log(err)
+
+        });
+      }
+    }
     if (props.uri === 'materias') {
       if ((obj.nombre.trim() === '' || obj.dia.trim() === '')) {
         handlecancel()

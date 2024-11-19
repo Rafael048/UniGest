@@ -7,6 +7,10 @@ export default function FormAsing() {
     const [subjects, setSubjects] = useState([])
     const [user, setUser] = useState({})
     const [PMS, setPMS] = useState([])
+    const [units, setUnits] = useState([])
+    const [filterUnits, setFilterUnits] = useState([])
+    const [loading, setLoading] = useState(true)
+
     const name = Cookies.get('name')
     const id = Cookies.get('id')
     const token = Cookies.get('jwt')
@@ -19,7 +23,8 @@ export default function FormAsing() {
             } else {
                 const data = {
                     idActividades: id,
-                    idPMS: mat_sec.value
+                    idPMS: mat_sec.value,
+                    idUnidad: e.target.unidad.value
                 }
                 await axios.post('http://localhost:3000/apms/agregar', data)
                     .then((result) => {
@@ -49,6 +54,24 @@ export default function FormAsing() {
         Cookies.remove('id')
 
     }
+    function changeUnits(e,firts){
+        let idPMS = null
+        if(firts){
+            console.log(e.id)
+            idPMS = e.id 
+        }else{
+            idPMS = e.target.value
+        }
+        let filter = []
+     units.forEach((element)=>{
+            if(Number(element.idClase)===Number(idPMS)){
+                filter.push(element)
+            }
+        })
+        setFilterUnits(filter)
+        console.log(filterUnits)
+
+    }
     useEffect(() => {
         async function getUser(token) {
             await axios.get(`http://localhost:3000/verify/${token}`)
@@ -65,7 +88,6 @@ export default function FormAsing() {
         async function getDataDirector() {
             await axios.get('http://localhost:3000/materias')
                 .then((materias) => {
-                    console.log(materias.data.body);
                     setSubjects(materias.data.body);
                 }).catch((err) => {
                     console.log(err);
@@ -77,15 +99,31 @@ export default function FormAsing() {
                 }).catch((err) => {
                     console.log(err);
                 });
+                setLoading(false)
         }
 
         async function getDataProfessor() {
             await axios.get(`http://localhost:3000/pms?cedula=${user.cedula}`)
-                .then((result) => {
-                    console.log(result)
+                .then(async(result) => {
                     setPMS(result.data.body);
+                    await axios.get(`http://localhost:3000/unidades`)
+                    .then((result2) => {
+                        setUnits(result2.data.body)
+                        let filter = result2.data.body.filter((element)=>(
+                            element.idClase===result.data.body[0].id
+                        ))
+                        setFilterUnits(filter)
+                        setLoading(false)
+
+                    }).catch((err) => {
+                        console.log(err)
+                        setLoading(false)
+
+                    });
                 }).catch((err) => {
                     console.log(err);
+                    setLoading(false)
+
                 });
         }
 
@@ -100,6 +138,11 @@ export default function FormAsing() {
 
     }, [user]);
     return (
+        <>
+        {loading?
+            <div>Cargando...</div>
+            :
+
         <div className='allForm'>
             <form onSubmit={(e) => handleSubmit(e)} className='formAsigProfesor'>
                 <label className='activities'> Asignar a {name} </label>
@@ -150,7 +193,7 @@ export default function FormAsing() {
                                     <p className='notClas'>No hay clases disponibles</p>
                                 </div>
                                 :
-                                <select name="materia_seccion" className='sectionAsing'>
+                                <select name="materia_seccion" className='sectionAsing' onChange={(e)=>changeUnits(e)}>
                                     {
                                         PMS.map((element, index) => (
                                             <option key={index} value={element.id}>{element.Materias_Secciones}</option>
@@ -158,10 +201,28 @@ export default function FormAsing() {
                                     }
                                 </select>
                             }
+                             <label className='nameAsing'>Unidad</label>
+                             {
+                                filterUnits.length <= 0 ?
+                                <div>
+                                    <p className='notClas'>No hay clases disponibles</p>
+                                </div>
+                                :
+                                <select name="unidad" className='sectionAsing'>
+                                    {
+                                        filterUnits.map((element, index) => (
+                                            <option key={index} value={element.id}>{element.unidad + " " + element.tematica}</option>
+                                        ))
+                                    }
+                                </select>
+                             }
                         </div>}
                 </div>
                 <input type="submit" value={'Agregar'} className="submitAdd" name="" />
             </form>
         </div>
+        }
+        
+        </>
     )
 }

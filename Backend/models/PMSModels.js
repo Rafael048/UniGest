@@ -1,4 +1,5 @@
 const connection = require("../connection");
+const UnitsControllers = require('../controllers/UnitsControllers')
 
 class PMSModels {
   All(cedula,offset) {
@@ -35,13 +36,32 @@ class PMSModels {
         if (error) {
           reject(error);
         } else {
+          console.log(results)
           if(cedula!=null){
             results.forEach(element => {
               element.Materias_Secciones  = element.Materias + " - " + element.Secciones;
             });
+            UnitsControllers.All(undefined)
+            .then((unit) => {
+              console.log(unit)
+              if(unit.length>0){
+                for (let i = 0; i < results.length; i++) {
+                  results[i].unidades = []
+                  for (let j = 0; j < unit.length; j++) {
+                    if (results[i].id == unit[j].idClase) {
+                      results[i].unidades.push(unit[j].unidad + " " + unit[j].tematica)
+                    }
+                  }
+                }
+              }
+              resolve(results)
+            }).catch((e) => {
+              reject(e)
+            });
           }
-          console.log(results)
-          resolve(results);
+          else{
+            resolve(results)
+          }
         }
       });
     });

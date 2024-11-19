@@ -43,6 +43,9 @@ export default function DescriptionPlani({ descriptionData, onCancel }) {
                             descriptionData.date
                         }
                     </p>
+                    <p>
+                        {descriptionData.unidad} : {descriptionData.tema}
+                    </p>
                 </div>
                 <motion.button whileHover={{backgroundColor: "#0947a5", scale: .9 }} onClick={handleAcept} className='aceptButtonDescription'>Aceptar</motion.button>
             </motion.div>

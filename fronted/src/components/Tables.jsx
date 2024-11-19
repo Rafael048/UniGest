@@ -108,6 +108,8 @@ export default function Tables(props) {
             .get(`http://localhost:3000/${props.uri}?id=${id}&user=${cedulaConsulta}`)
             .then((result) => {
               Cookies.remove('id')
+              Cookies.remove('cedula')
+
               if (result.data.body.length === 0) {
                 setLoading(false);
               } else {
@@ -331,13 +333,19 @@ export default function Tables(props) {
       });
   }
   async function handleAsing(name) {
-    Cookies.set("name", name[0]);
-    Cookies.set("id", name[1]);
-    Cookies.set("uri", props.uri);
-    if (role === "Profesor") {
-      window.location.href = `/AsignarActividad`;
-    } else if (role === "Director") {
-      window.location.replace("/AsignarProfesor");
+    if(props.uri==="pms"){
+      Cookies.set('uri',props.uri)
+      Cookies.set("id", name[1]);
+      window.location.replace("/agregarUnidad");
+    }else{
+      Cookies.set("name", name[0]);
+      Cookies.set("id", name[1]);
+      Cookies.set("uri", props.uri);
+      if (role === "Profesor") {
+        window.location.href = `/AsignarActividad`;
+      } else if (role === "Director") {
+        window.location.replace("/AsignarProfesor");
+      }
     }
   }
   function handleModify(item) {
@@ -566,7 +574,7 @@ export default function Tables(props) {
                           <td className="tabletd" data-label={property + " "} key={colIndex}>
                             {Array.isArray(item[property]) ? (
                               item[property].length > 0 ||
-                                (props.uri === "actividades" &&
+                                ((props.uri === "actividades" || props.uri==="pms") &&
                                   role === "Profesor") ||
                                 (role === "Director" &&
                                   props.uri === "profesores") ? (
@@ -624,7 +632,7 @@ export default function Tables(props) {
                                   {(role === "Director" &&
                                     props.uri === "profesores") ||
                                     (role === "Profesor" &&
-                                      props.uri === "actividades") ? (
+                                      (props.uri === "actividades"||props.uri==="pms")) ? (
                                     <motion.button
                                       className="assignButton"
                                       onClick={() =>
