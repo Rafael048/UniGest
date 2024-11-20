@@ -34,7 +34,7 @@ export default function Tables(props) {
   const [description, setDescription] = useState(false)
   const [descriptionData, setDescriptionData] = useState({})
   const debounceValue = useDebounce(userInput, 800);
-
+  const idCookie = Cookies.get('id')
   async function getData() {
     if (user) {
       if (props.uri === "pms") {
@@ -107,7 +107,6 @@ export default function Tables(props) {
           await axios
             .get(`http://localhost:3000/${props.uri}?id=${id}&user=${cedulaConsulta}`)
             .then((result) => {
-              Cookies.remove('id')
               Cookies.remove('cedula')
 
               if (result.data.body.length === 0) {
@@ -469,10 +468,16 @@ export default function Tables(props) {
                     )}
                 </div>
                 {(role === "Director" && props.uri !== "actividades" && props.uri !== "apms" && props.uri !== "pms") ||
-                  (role === "Profesor" && props.uri === "actividades" && props.uri !== "apms" && props.uri !== "pms") ? (
+                  (role === "Profesor" && (props.uri === "actividades" || (props.uri === "apms"&&idCookie)) && props.uri !== "pms") ? (
                   <motion.button
-                    onClick={() =>
-                      window.location.replace(`/Agregar${props.uri}`)
+                    onClick={() =>{
+                      if(props.uri==="apms"){
+                        window.location.replace(`/AgregarActividades&Unidad`)
+
+                      }else{
+                        window.location.replace(`/Agregar${props.uri}`)
+                      }
+                    }
                     }
                     className="addButton"
                     whileHover={{ scale: 1.2, backgroundColor: "#008000" }}
@@ -668,7 +673,7 @@ export default function Tables(props) {
                               onClick={() => changeView(item)}
                             >
                               {" "}
-                              Ver Planificacion
+                              Ver Planificacion 
                             </motion.button>
                           </td> : null
                         }
@@ -738,7 +743,7 @@ export default function Tables(props) {
                               onClick={() => changeView(item)}
                             >
                               {" "}
-                              Ver Planificacion
+                              Ver Planificacion Semanal
                             </motion.button>
                           </td>
                         ) : null}

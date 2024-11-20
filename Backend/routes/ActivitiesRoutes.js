@@ -38,10 +38,9 @@ router.get("/Uno/:nombre",function(req,res){
   });
 })
 router.post("/agregar", function (req, res, next) {
-  console.log(req.body)
   ActivitiesControllers.Create(req.body)
-    .then(() => {
-      res.status(200).json({message:"Agregado Correctamente"})
+    .then((result) => {
+      res.status(200).json({message:"Agregado Correctamente",create: result})
       })
       .catch((e) => {
         res

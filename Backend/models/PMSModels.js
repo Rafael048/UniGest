@@ -43,8 +43,6 @@ class PMSModels {
             });
             UnitsControllers.All(undefined)
             .then((unit) => {
-              console.log(unit)
-              if(unit.length>0){
                 for (let i = 0; i < results.length; i++) {
                   results[i].unidades = []
                   for (let j = 0; j < unit.length; j++) {
@@ -53,9 +51,9 @@ class PMSModels {
                     }
                   }
                 }
-              }
               resolve(results)
-            }).catch((e) => {
+            })
+            .catch((e) => {
               reject(e)
             });
           }

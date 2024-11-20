@@ -78,7 +78,7 @@ class ActivitiesModels{
           if(error){
             reject(error)
           }else{
-            resolve(results)
+            resolve(results.insertId)
 
           }
         })

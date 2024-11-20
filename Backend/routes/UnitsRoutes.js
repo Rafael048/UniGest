@@ -29,6 +29,7 @@ router.get("/", function (req, res, next) {
         res.status(200).json({ message: "Peticion exitosa", body: result , button:button });
       })
       .catch((e) => {
+        console.log("Error")
         res
           .status(500)
           .json({

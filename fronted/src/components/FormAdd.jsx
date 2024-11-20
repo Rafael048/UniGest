@@ -5,9 +5,10 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import { motion } from 'framer-motion'
 import ErrorEmpty from "./ErrorEmpty";
+const idCookie = Cookies.get('id')
 export default function FormAdd(props) {
   const [errorEmpty, setErrorEmpty] = useState(false)
-
+  const [units, setUnits] = useState([])
   function handlecancel() {
     if (errorEmpty === false) {
       setErrorEmpty(true)
@@ -33,8 +34,8 @@ export default function FormAdd(props) {
       }else{
         obj.idClase = Cookies.get('id')
         await axios.post(`http://localhost:3000/unidades/agregar`,obj)
-        .then((result) => {
-          console.log(result)
+        .then(() => {
+          Cookies.remove('id')
           window.location.replace(`/asignaturas`)
 
         }).catch((err) => {
@@ -77,32 +78,49 @@ export default function FormAdd(props) {
           obj.creador = user.id
         }
         await axios.post(`http://localhost:3000/${props.uri}/agregar`, obj)
+          .then(() => {
+              window.location.replace(`/${props.uri}`)
+          }).catch((err) => {
+            console.log(err)
+          });
+      }
+    }
+    if (props.uri === 'actividades&units') {
+      if ((obj.nombre.trim() === '' || obj.descripcion.trim() === '' || obj.semana.trim() === '')) {
+        handlecancel()
+      } else {
+        if (props.uri === "actividades&units") {
+          obj.creador = user.id
+        }
+        await axios.post(`http://localhost:3000/actividades/agregar`, obj)
           .then((result) => {
-            console.log(result)
-            window.location.replace(`/${props.uri}`)
+            if(idCookie){
+              async function asingActivitie() {
+                let objAPMS = {
+                  idActividades : result.data.create,
+                  idPMS : Number(idCookie),
+                  idUnidad : Number(e.target.unidad.value)
+                }
+                await axios.post(`http://localhost:3000/apms/agregar`,objAPMS)
+                .then(() => {
+                  Cookies.remove('id')
+                  window.location.replace(`/planificacion`)
+
+                }).catch((e) => {
+                  console.log(e)
+                });
+              }
+              asingActivitie()
+            }else{ 
+              window.location.replace(`/${props.uri}`)
+                }
           }).catch((err) => {
             console.log(err)
           });
       }
     }
 
-    {/**
-      if ((obj.nombre.trim() === '' || obj.descripcion.trim() === '' || obj.semana.trim() === '')) {
-        handlecancel()
-      } else {
-        if (props.uri === "actividades") {
-        obj.creador = user.id
-      }
-      await axios.post(`http://localhost:3000/${props.uri}/agregar`, obj)
-        .then((result) => {
-          console.log(result)
-          window.location.replace(`/${props.uri}`)
-        }).catch((err) => {
-          console.log(err)
-        });
-        
-      }
-      */}
+ 
   }
   const token = Cookies.get('jwt')
   const [active, setActive] = useState(null)
@@ -114,6 +132,17 @@ export default function FormAdd(props) {
         .then((result) => {
           setUser(result.data.user)
           setActive(result.data.user.rol)
+          if(idCookie){
+            async function getUnits() {
+              await axios.get(`http://localhost:3000/unidades/Uno/${idCookie}`)
+              .then((result) => {
+                setUnits(result.data.body)
+              }).catch((e) => {
+                console.log(e)
+              });
+            }
+            getUnits()
+            }
         })
         .catch((err) => {
           console.log(err)
@@ -130,7 +159,11 @@ export default function FormAdd(props) {
         active === 'Director' ?
           <div className="mainDirector">
             <form onSubmit={(e) => handleSubmit(e)} className='formDirectorAdd'>
+              {props.uri==="actividades&units"?
+              <label className='activities'> Actividades </label>
+                :
               <label className='activities'> {props.uri.charAt(0).toUpperCase() + props.uri.slice(1)} </label>
+            }
               {props.propiedades.map((element, index) => (
                 <div className='divAdd' key={index}>
                   {
@@ -156,7 +189,11 @@ export default function FormAdd(props) {
             </div>
             <div className="schemaForm">
               <div className="titleFormAdd">
-                <label className='activities'> {props.uri.charAt(0).toUpperCase() + props.uri.slice(1)} </label>
+              {props.uri==="actividades&units"?
+              <label className='activities'> Actividades </label>
+                :
+              <label className='activities'> {props.uri.charAt(0).toUpperCase() + props.uri.slice(1)} </label>
+            }
               </div>
               <form onSubmit={(e) => handleSubmit(e)} className='formAdd'>
                 {props.propiedades.map((element, index) => (
@@ -169,6 +206,28 @@ export default function FormAdd(props) {
                     }
                   </div>
                 ))}
+                {idCookie&&props.uri==="actividades&units"?
+                <>
+                  <label className='nameAsing'>Unidad</label>
+                {
+                  units.length>0?
+                   <select name="unidad" className='sectionAsing'>
+                       {
+                           units.map((element, index) => (
+                               <option key={index} value={element.id}>{element.unidad + " " + element.tema}</option>
+                           ))
+                       }
+                   </select>
+                    :
+                   <div>
+                       <p className='notClas'>No hay unidades para esta clase</p>
+                   </div>
+                
+                }  
+                </>
+                :
+                null
+              }
                 <motion.input whileHover={{ scale: .9, backgroundColor: "#008000" }} required type="submit" value={'Agregar'} className="submitAdd" name="" />
               </form>
             </div>

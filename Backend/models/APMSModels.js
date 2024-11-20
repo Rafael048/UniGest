@@ -64,7 +64,7 @@ class APMSModels {
       let idPMS = data.idPMS;
       let idActividades = data.idActividades;
       let idUnidad = data.idUnidad
-      if(idPMS==undefined||idActividades==undefined||idPMS.trim()==""||idActividades.trim()===""||idUnidad==undefined||idUnidad.trim()===""){
+      if(idPMS==undefined||idActividades==undefined||idUnidad==undefined){
         reject(new Error("No se pueden pasar datos vacios"))
       }
       let consulta = `INSERT INTO a_p_m_s (idPMS,idActividades, idUnidad) VALUES (${idPMS},${idActividades}, ${idUnidad})`;
