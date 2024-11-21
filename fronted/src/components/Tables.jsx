@@ -12,6 +12,7 @@ import { BiSolidSearchAlt2 } from "react-icons/bi";
 import { LuSearchX } from "react-icons/lu";
 import { useDebounce } from "../hooks/UseDebounce";
 import DescriptionPlani from "./DescriptionPlani";
+import { Units } from "./Units";
 
 export default function Tables(props) {
   const [data, setData] = useState([]);
@@ -33,6 +34,7 @@ export default function Tables(props) {
   const [weeksDate, setWeekDate] = useState([])
   const [description, setDescription] = useState(false)
   const [descriptionData, setDescriptionData] = useState({})
+  const [viewUnits, setViewUnits] = useState(false)
   const debounceValue = useDebounce(userInput, 800);
   const idCookie = Cookies.get('id')
   async function getData() {
@@ -374,6 +376,12 @@ export default function Tables(props) {
     setShowSearch("showButton");
     setShowX("notShowButton");
   }
+  function changeViewUnitsTable(){
+      setViewUnits(true)
+  }
+  function changeViewUnits(){
+      setViewUnits(false)
+  }
   useEffect(() => {
     async function verify() {
       await axios
@@ -397,6 +405,14 @@ export default function Tables(props) {
       {loading ? (
         <div>Cargando...</div>
       ) : (
+        viewUnits?
+          <Units
+          onChange = {changeViewUnits}
+          Data = {data}
+          weeks = {weeks}
+          weeksDate = {weeksDate}
+          />
+          :
         <>
           <div className="center">
             <div className="headTable">
@@ -484,7 +500,21 @@ export default function Tables(props) {
                   >
                     Agregar
                   </motion.button>
-                ) : null}
+                  
+                )
+                 : null}
+                 {role === "Profesor" && (props.uri === "apms"&&idCookie)?
+                                   <motion.button
+                                   onClick={() => changeViewUnitsTable()
+                                   }
+                                   className="addButton"
+                                   whileHover={{ scale: 1.2, backgroundColor: "#008000" }}
+                                 >
+                                   Planificacion unidades
+                                 </motion.button>
+                                 :
+                                 null
+                }
               </div>
             </div>
             {

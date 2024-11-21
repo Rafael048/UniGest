@@ -12,6 +12,7 @@ import { GrUserSettings } from "react-icons/gr"; //Ajustes icon
 import { FaRegUserCircle } from "react-icons/fa"; //Inicar sesion icon
 import { IoIosCloseCircleOutline } from "react-icons/io"; //Cerrar icon
 import { RiTableView } from "react-icons/ri"; //Planificacion
+import Cookies from 'js-cookie'
 
 
 
@@ -76,7 +77,7 @@ export default function Header({ asig, active, activities, color, plani, setting
                   <IconContext.Provider value={{ className: "svgHeader" }}>
                     <RiTableView />
                   </IconContext.Provider>
-                  <a href="/planificacion" className={planiAll ? 'link active' : 'link'}>Planificación</a>
+                  <a href="/planificacion" onClick={()=>Cookies.remove('id')} className={planiAll ? 'link active' : 'link'}>Planificación</a>
                 </li>
                 <li className={activities ? 'linksHeaderli active' : 'linksHeaderli'}>
                   <IconContext.Provider value={{ className: "svgHeader" }}>
