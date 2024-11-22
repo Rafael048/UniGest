@@ -26,8 +26,6 @@ export default function FormAdd(props) {
       const key = element.split(" ")[1]
       obj[key] = e.target[key].value
     })
-    console.log(props.uri)
-
     if(props.uri==="unidades"){
       if(obj.unidad.trim()===" "||obj.tema.trim()===" "){
         handlecancel()
@@ -170,6 +168,9 @@ export default function FormAdd(props) {
                     element.split(" ")[1] === "periodo" ?
                       <input autoComplete="off" required type="date" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
                       :
+                    element.split(" ")[1] === "hora" ?
+                    <input autoComplete="off" required type="time" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd'/>
+                    :
                       <input autoComplete="off" required type="text" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
                   }
                 </div>
@@ -202,7 +203,13 @@ export default function FormAdd(props) {
                       element.split(" ")[1] === "periodo" ?
                         <input autoComplete="off" required type="date" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
                         :
-                        <input autoComplete="off" required type="text" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
+                        element.split(" ")[1] === "hora" ?
+                    <input autoComplete="off" required type="time" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd'/>
+                    :
+                    element.split(" ")[1] === "porcentaje" ? 
+                    <input autoComplete="off" required type="number" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd'/>
+                    :
+                      <input autoComplete="off" required type="text" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
                     }
                   </div>
                 ))}

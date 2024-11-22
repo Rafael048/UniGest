@@ -6,10 +6,10 @@ class ActivitiesModels{
     return new Promise((resolve,reject)=>{
       let consult = null
       if(creator){
-        consult = `SELECT actividades.nombre AS nombre, actividades.descripcion AS descripcion, actividades.semana AS semana,actividades.id AS id, users.userName AS creador FROM actividades JOIN users ON actividades.creador = users.id WHERE users.userName = '${creator}' LIMIT 6 OFFSET ${offset}`
+        consult = `SELECT actividades.nombre AS nombre, actividades.descripcion AS descripcion, actividades.semana AS semana,actividades.id AS id, users.userName AS creador, actividades.horaFinal AS Hora, actividades.porcentaje AS porcentaje FROM actividades JOIN users ON actividades.creador = users.id WHERE users.userName = '${creator}' LIMIT 6 OFFSET ${offset}`
 
       }else{
-        consult = `SELECT actividades.nombre AS nombre, actividades.descripcion AS descripcion, actividades.semana AS semana,actividades.id AS id, users.userName AS creador FROM actividades JOIN users ON actividades.creador = users.id LIMIT 6 OFFSET ${offset}`
+        consult = `SELECT actividades.nombre AS nombre, actividades.descripcion AS descripcion, actividades.semana AS semana,actividades.id AS id, users.userName AS creador, actividades.horaFinal AS Hora, actividades.porcentaje AS porcentaje FROM actividades JOIN users ON actividades.creador = users.id LIMIT 6 OFFSET ${offset}`
       }
       connection.query(consult,function(error,results,fields){
         if(error){
@@ -70,10 +70,12 @@ class ActivitiesModels{
       let descripcionAC = actividades.descripcion
       let semanaAC = actividades.semana
       let creador = actividades.creador
-      if(!nombreAC||!descripcionAC||!semanaAC||nombreAC.trim()===" "||descripcionAC.trim()===""||semanaAC.trim()===""||!creador){
+      let hora = actividades.hora
+      let porcentaje = Number(actividades.porcentaje)
+      if(!nombreAC||!descripcionAC||!semanaAC||nombreAC.trim()===" "||descripcionAC.trim()===""||semanaAC.trim()===""||!creador||!hora||!porcentaje){
         reject(new Error("No se pueden enviar datos vacios"))
       }
-      let consult = `INSERT INTO actividades (nombre, descripcion, semana, creador) VALUES ('${nombreAC}','${descripcionAC}',${semanaAC}, ${creador})`
+      let consult = `INSERT INTO actividades (nombre, descripcion, semana, creador, horaFinal, porcentaje) VALUES ('${nombreAC}','${descripcionAC}',${semanaAC}, ${creador}, '${hora}', ${porcentaje})`
         connection.query(consult,function(error,results,fields){
           if(error){
             reject(error)
@@ -90,10 +92,12 @@ class ActivitiesModels{
       let nombreAC = nuevosValores.nombre
       let descripcionAC = nuevosValores.descripcion
       let semanaAC = nuevosValores.semana
-      if(!nombreAC||!descripcionAC||!semanaAC||nombreAC.trim()===" "||descripcionAC.trim()===""||semanaAC.trim()===""){
+      let hora = nuevosValores.hora
+      let porcentaje = Number(nuevosValores.porcentaje)
+      if(!nombreAC||!descripcionAC||!semanaAC||nombreAC.trim()===" "||descripcionAC.trim()===""||semanaAC.trim()===""||!hora||!porcentaje){
         reject(new Error("No se pueden enviar datos vacios"))
       }
-      let consult = `UPDATE actividades SET nombre = '${nombreAC}', descripcion = '${descripcionAC}', semana = '${semanaAC}' WHERE id = ${idReq}`
+      let consult = `UPDATE actividades SET nombre = '${nombreAC}', descripcion = '${descripcionAC}', semana = '${semanaAC}', horaFinal = '${hora}', porcentaje = ${porcentaje} WHERE id = ${idReq}`
       connection.query(consult,function(error,results,fields){
         if(error){
           reject(error)

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-11-2024 a las 20:30:15
+-- Tiempo de generación: 22-11-2024 a las 01:59:59
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -32,6 +32,13 @@ CREATE TABLE `accespass` (
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `accespass`
+--
+
+INSERT INTO `accespass` (`directorPass`, `id`) VALUES
+('UnigestPass', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -43,6 +50,8 @@ CREATE TABLE `actividades` (
   `descripcion` longtext NOT NULL,
   `semana` int(11) NOT NULL,
   `creador` int(25) DEFAULT NULL,
+  `horaFinal` varchar(18) NOT NULL DEFAULT '00:00',
+  `porcentaje` int(11) NOT NULL,
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -143,7 +152,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`nombre`, `apellido`, `userName`, `password`, `rol`, `cedula`, `id`) VALUES
-(' Root', 'Root', 'Root', '$2a$08$C/6gRyhYFZbuYOyxS641iux6LIsHi2Bq71TEy7MdVMSZscazvurpy', 'Director', 123456, 1);
+(' Root', 'Root', 'Root', '$2a$08$C/6gRyhYFZbuYOyxS641iux6LIsHi2Bq71TEy7MdVMSZscazvurpy', 'Director', 123456, 1),
 
 --
 -- Índices para tablas volcadas
@@ -223,7 +232,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `accespass`
 --
 ALTER TABLE `accespass`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `actividades`
@@ -271,7 +280,7 @@ ALTER TABLE `unidades`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas

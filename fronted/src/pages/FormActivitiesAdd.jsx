@@ -43,7 +43,7 @@ export default function FormActivitiesAdd() {
               <div className='formGeneral'>
                 <FormAdd
                   uri="actividades"
-                  propiedades={["el nombre", "la descripcion", "la semana"]}
+                  propiedades={["el nombre", "la descripcion", "la semana", "la hora", "el porcentaje"]}
                 />
               </div>
             </div>
@@ -55,8 +55,8 @@ export default function FormActivitiesAdd() {
             <div className='addAct'>
               <FormAdd
                 uri="actividades"
-                propiedades={["el nombre", "la descripcion", "la semana"]}
-              />
+                propiedades={["el nombre", "la descripcion", "la semana", "la hora", "el porcentaje"]}
+                />
             </div>
           </div>
 

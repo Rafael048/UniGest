@@ -90,7 +90,9 @@ export default function Calendar() {
                                 materia: item.materia,
                                 seccion: item.seccion,
                                 unidad: item.unidad,
-                                tema : item.tema
+                                tema : item.tema,
+                                hora : item.Hora,
+                                porcentaje : item.porcentaje
                             }
                         }
                         arrTemp.push(eventTemp)
@@ -200,6 +202,12 @@ export default function Calendar() {
                                         </p>
                                         <p className='descriptionActivities'>
                                             {eventClicked.extendedProps.unidad}: {eventClicked.extendedProps.tema}
+                                        </p>
+                                        <p className='descriptionActivities'>
+                                            Hora de Entrega : {eventClicked.extendedProps.hora}
+                                        </p>
+                                        <p className='descriptionActivities'>
+                                            Porcentaje de Evaluacion : {eventClicked.extendedProps.porcentaje}%
                                         </p>
                                     </div>
                                     <div className='buttonCancelDescription'>
