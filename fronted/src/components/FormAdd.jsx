@@ -26,6 +26,7 @@ export default function FormAdd(props) {
       const key = element.split(" ")[1]
       obj[key] = e.target[key].value
     })
+    console.log("Entre")
     if(props.uri==="unidades"){
       if(obj.unidad.trim()===" "||obj.tema.trim()===" "){
         handlecancel()
@@ -117,6 +118,18 @@ export default function FormAdd(props) {
           });
       }
     }
+    if(props.uri==="eventos"){
+      if ((obj.nombre.trim() === '' || obj.lugar.trim() === '' || obj.fecha.trim() == '')){
+        handlecancel()
+      }else{
+        await axios.post(`http://localhost:3000/${props.uri}/agregar`, obj)
+        .then(() => {
+            window.location.replace(`/${props.uri}`)
+        }).catch((err) => {
+          console.log(err)
+        });
+      }
+    }
 
  
   }
@@ -165,7 +178,7 @@ export default function FormAdd(props) {
               {props.propiedades.map((element, index) => (
                 <div className='divAdd' key={index}>
                   {
-                    element.split(" ")[1] === "periodo" ?
+                    element.split(" ")[1] === "periodo" || element.split(" ")[1] === "fecha"  ?
                       <input autoComplete="off" required type="date" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
                       :
                     element.split(" ")[1] === "hora" ?
@@ -200,8 +213,8 @@ export default function FormAdd(props) {
                 {props.propiedades.map((element, index) => (
                   <div className='divAdd' key={index}>
                     {
-                      element.split(" ")[1] === "periodo" ?
-                        <input autoComplete="off" required type="date" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
+                    element.split(" ")[1] === "periodo" || element.split(" ")[1] === "fecha"  ?
+                    <input autoComplete="off" required type="date" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd' />
                         :
                         element.split(" ")[1] === "hora" ?
                     <input autoComplete="off" required type="time" placeholder={`Ingresa ${element}`} name={element.split(" ")[1]} className='inputAdd'/>

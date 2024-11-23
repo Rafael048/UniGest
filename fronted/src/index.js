@@ -28,6 +28,9 @@ import SubjectsProfessors from './pages/SubjectsProfessors'
 import TablePlanifig from './pages/TablePlanifig'
 import FormUnitsAdd from './pages/FormUnitsAdd'
 import FormActivitiesAddA from './pages/FormAddActivitesAndUnits';
+import TablesEvents from './pages/TablesEvents';
+import FormEventsAdd from './pages/FormAddEvents';
+import FormModifyEvents from './pages/FormModifyEvents';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
@@ -58,6 +61,9 @@ root.render(
       <Route path='Planificacion' element={<TablePlanifig/>}/>
       <Route path='agregarUnidad' element= {<FormUnitsAdd/>}/>
       <Route path='AgregarActividades&Unidad' element={<FormActivitiesAddA/>}/>
+      <Route path='Eventos' element= {<TablesEvents/>}/>
+      <Route path='AgregarEventos' element={<FormEventsAdd/>}/>
+      <Route path='ModificarEventos' element={<FormModifyEvents/>}/>
       </Routes>
   </BrowserRouter>
 );

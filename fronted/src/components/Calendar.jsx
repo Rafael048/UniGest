@@ -20,6 +20,8 @@ export default function Calendar() {
     const [animation, setAnimation] = useState('')
     const [animationDescription, setAnimationDescription] = useState('')
     const [openDescription, setOpenDescription] = useState(true)
+    const [eventDirector, setEventDirector] = useState([])
+    const [fullEvents, setFullEvents] = useState([])
 
 
     useEffect(() => {
@@ -102,9 +104,35 @@ export default function Calendar() {
                     console.log(err)
                 });
         }
+    async function getEventsDirectors() {
+        await axios.get('http://localhost:3000/eventos')
+        .then((result) => {
+            let arrTemp = []
+            console.log(result.data.body)
+            result.data.body.forEach((result)=>{
+                let eventDate = new Date(result.fecha) 
+                let eventDirectorFormat = {
+                    title: result.nombre,
+                    date: eventDate.toISOString().slice(0, 10).replace('T', ''),
+                    extendedProps: {
+                        lugar : result.lugar,
+                        descripcion: result.descripcion,
+                        type : "event"
+                    }
+                }
+                arrTemp.push(eventDirectorFormat)
+            })
+            setEventDirector(arrTemp)
+        }).catch((e) => {
+            console.log(e)
+        });
+    }
+        getEventsDirectors()
         getEvents()
     }, [filter, filterProfessor])
-
+    useEffect(()=>{
+        setFullEvents([...eventDirector,...events])
+    },[eventDirector,events])
     function openFiltrerForm() {
         if (openFiltrer === true) {
             setAnimation('animation')
@@ -171,7 +199,7 @@ export default function Calendar() {
                         plugins={[dayGridPlugin, interactionPlugin]}
                         initialView="dayGridMonth"
                         eventClick={handleEventClick}
-                        events={events}
+                        events={fullEvents}
                         locale={esLocale}
                     />
                 </div>
@@ -183,6 +211,20 @@ export default function Calendar() {
                         {
                             openDescription && (
                                 <motion.div className={`bg-event ${animationDescription}`} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}>
+                                    {
+                                        eventClicked.extendedProps.type==="event"?
+                                        <div className='cardDescription'>
+                                        <h2 className='titleDescription'>
+                                            {eventClicked.title}
+                                        </h2>
+                                        <p className='descriptionActivities'>
+                                            Lugar: {eventClicked.extendedProps.lugar}
+                                        </p>
+                                        <p className='descriptionActivities'>
+                                            Descripcion: {eventClicked.extendedProps.descripcion}
+                                        </p>
+                                        </div>
+                                        :
 
                                     <div className='cardDescription'>
                                         <h2 className='titleDescription'>
@@ -210,6 +252,7 @@ export default function Calendar() {
                                             Porcentaje de Evaluacion : {eventClicked.extendedProps.porcentaje}%
                                         </p>
                                     </div>
+                                    }
                                     <div className='buttonCancelDescription'>
                                         <motion.button whileHover={{ scale: .9, backgroundColor: "#ffff", border: "2px solid #00255c", color: "#00255c" }} onClick={() => handleDivClick()} className='buttonClose' id="testButtonClose">Cerrar</motion.button>
                                     </div>

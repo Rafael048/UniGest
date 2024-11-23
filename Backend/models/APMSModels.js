@@ -55,7 +55,7 @@ class APMSModels {
           results.forEach(Element => {
             Element.date = Element.date.toISOString().slice(0,10).replace('T','')
           });
-          console.log(results.length)
+          console.log(results)
           resolve(results);
         }
       });

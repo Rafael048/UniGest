@@ -13,7 +13,7 @@ let actividadesRouter = require('./routes/ActivitiesRoutes')
 let PMSRouter = require('./routes/PMSRoutes')
 let APMSRouter = require('./routes/APMSRoutes')
 let UnitsRouter = require('./routes/UnitsRoutes')
-
+let eventsRouter = require('./routes/EventsRoutes')
 var app = express();
 
 app.use(cors());
@@ -33,7 +33,7 @@ app.use('/actividades', actividadesRouter)
 app.use('/pms', PMSRouter)
 app.use('/apms', APMSRouter)
 app.use('/unidades', UnitsRouter)
-
+app.use('/eventos',eventsRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

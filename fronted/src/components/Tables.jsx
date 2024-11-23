@@ -700,7 +700,10 @@ export default function Tables(props) {
                                 scale: 1.2,
                                 backgroundColor: "#0947a5",
                               }}
-                              onClick={() => changeView(item)}
+                              onClick={() =>{
+                                Cookies.remove('id')
+                                changeView(item)
+                              } }
                             >
                               {" "}
                               Ver Planificacion 
