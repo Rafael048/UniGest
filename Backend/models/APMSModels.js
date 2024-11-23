@@ -16,7 +16,7 @@ class APMSModels {
                  JOIN profesores ON p_m_s.idProfesor = profesores.id
                  JOIN materias ON p_m_s.idMaterias = materias.id
                  JOIN secciones ON p_m_s.idSecciones = secciones.id
-                 JOIN unidades ON p_m_s.id = unidades.idClase
+                 JOIN unidades ON a_p_m_s.idUnidad = unidades.id
                  WHERE p_m_s.id = ${id}`
       }else if(cedula){
         consult=`SELECT actividades.nombre AS title, profesores.nombre AS profesor, materias.nombre AS materia,
@@ -29,7 +29,7 @@ class APMSModels {
                JOIN profesores ON p_m_s.idProfesor = profesores.id
                JOIN materias ON p_m_s.idMaterias = materias.id
                JOIN secciones ON p_m_s.idSecciones = secciones.id
-               JOIN unidades ON p_m_s.id = unidades.idClase
+                 JOIN unidades ON a_p_m_s.idUnidad = unidades.id
                WHERE profesores.cedula = ${cedula}`
                }else{
                  consult = `
@@ -43,7 +43,7 @@ class APMSModels {
                            JOIN profesores ON p_m_s.idProfesor = profesores.id
                            JOIN materias ON p_m_s.idMaterias = materias.id
                            JOIN secciones ON p_m_s.idSecciones = secciones.id
-                           JOIN unidades ON p_m_s.id = unidades.idClase
+                 JOIN unidades ON a_p_m_s.idUnidad = unidades.id
 
                        `;
                 }
@@ -55,7 +55,7 @@ class APMSModels {
           results.forEach(Element => {
             Element.date = Element.date.toISOString().slice(0,10).replace('T','')
           });
-          console.log(results)
+          console.log(results.length)
           resolve(results);
         }
       });

@@ -21,7 +21,7 @@ class UnitsModels{
     
     Create(registro){
       return new Promise((resolve, reject) => {
-        let unidad = registro.unidad
+        let unidad = `Unidad ${registro.unidad}`
         let tema = registro.tema
         let idClase = registro.idClase
         if(unidad==undefined||tema==undefined||unidad.trim()===""||tema.trim()===""){
