@@ -12,11 +12,12 @@ import { AiOutlineUserAdd } from "react-icons/ai"; // Agregar usuarios Icon
 import { GrUserSettings } from "react-icons/gr"; //Ajustes icon
 import { IoLogOutOutline } from "react-icons/io5"; //Cerrar sesion
 import { FaUsersBetweenLines } from "react-icons/fa6"; //Planificacion profesores
+import { MdEventAvailable } from "react-icons/md"; // Eventos ico 
 
 
 
 
-export default function Menu({ btIni, btMateria, btSeccion, btActividades, btProfesores, btAjustes }) {
+export default function Menu({ btIni, btMateria, btSeccion, btActividades, btProfesores, btAjustes, btEventos }) {
 
     const [open, setOpen] = useState(false)
     const [classLinks, setClassLinks] = useState('closeLinks')
@@ -29,6 +30,7 @@ export default function Menu({ btIni, btMateria, btSeccion, btActividades, btPro
     const actividades = btActividades
     const profesores = btProfesores
     const ajustes = btAjustes
+    const eventos = btEventos
 
     async function openMenu() {
         if (open === false) {
@@ -154,6 +156,18 @@ export default function Menu({ btIni, btMateria, btSeccion, btActividades, btPro
                                         </IconContext.Provider>
                                         <motion.p animate={open ? linkClose : linkOpen} transition={{ duration: .5 }} className={classLinks}>
                                             Ajustes
+                                        </motion.p>
+                                    </a>
+                                </motion.div>
+                            </div>
+                            <div className='buttons'>
+                                <motion.div whileHover={{ scale: 1.1 }} className='containerLink'>
+                                    <a href="/ajustes" className={`linksMenu ${ajustes}`}>
+                                        <IconContext.Provider value={{ className: "svgMenu" }}>
+                                           <MdEventAvailable/>
+                                        </IconContext.Provider>
+                                        <motion.p animate={open ? linkClose : linkOpen} transition={{ duration: .5 }} className={classLinks}>
+                                            Eventos
                                         </motion.p>
                                     </a>
                                 </motion.div>
