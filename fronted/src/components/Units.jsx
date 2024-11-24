@@ -12,6 +12,7 @@ export function Units(props) {
   const [offset, setOffset] = useState(1);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [nextButton, setNextButton] = useState(false)
   function addOffset() {
     setOffset(offset + 1);
   }
@@ -24,6 +25,10 @@ export function Units(props) {
     dataTotal.forEach((element) => {
       if (element.unidad === `Unidad ${offset}`) {
         temp.push(element);
+      }else if(element.unidad=== `Unidad ${offset+1}`){
+        setNextButton(true)
+      }else{
+        setNextButton(false)
       }
     });
     setData(temp);
@@ -107,7 +112,7 @@ export function Units(props) {
                     </IconContext.Provider>
                   </button>
                 )}
-                {dataTotal.length - 1 <= offset ? null : (
+                {!nextButton ? null : (
                   <button className="buttonUnit" onClick={() => addOffset()}>
                     <IconContext.Provider value={{ className: "svgButton" }}>
                       <FaArrowAltCircleRight />

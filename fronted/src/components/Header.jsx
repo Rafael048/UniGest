@@ -79,7 +79,7 @@ export default function Header({ asig, active, activities, color, plani, setting
                   </IconContext.Provider>
                   <a href="/planificacion" onClick={()=>Cookies.remove('id')} className={planiAll ? 'link active' : 'link'}>Planificación</a>
                 </li>
-                <li className={activities ? 'linksHeaderli active' : 'linksHeaderli'}>
+                <li className={activities ? 'linksHeaderli active' : 'linksHeaderli'} onClick={()=>Cookies.remove('id')}>
                   <IconContext.Provider value={{ className: "svgHeader" }}>
                     <MdAssignmentTurnedIn />
                   </IconContext.Provider>
