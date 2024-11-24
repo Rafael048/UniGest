@@ -79,7 +79,7 @@ export function Units(props) {
                   :
                   <p>No hay datos</p>
               }
-              {data.length < offset ? null : (
+              {dataTotal.length-1 <= offset ? null : (
                 <button onClick={() => addOffset()}>click</button>
               )}
             </div>
