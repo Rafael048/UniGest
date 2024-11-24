@@ -26,7 +26,6 @@ export default function FormAdd(props) {
       const key = element.split(" ")[1]
       obj[key] = e.target[key].value
     })
-    console.log("Entre")
     if(props.uri==="unidades"){
       if(obj.unidad.trim()===" "||obj.tema.trim()===" "){
         handlecancel()
@@ -102,7 +101,6 @@ export default function FormAdd(props) {
                 }
                 await axios.post(`http://localhost:3000/apms/agregar`,objAPMS)
                 .then(() => {
-                  Cookies.remove('id')
                   window.location.replace(`/planificacion`)
 
                 }).catch((e) => {

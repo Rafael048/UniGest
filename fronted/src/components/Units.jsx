@@ -12,25 +12,26 @@ export function Units(props) {
   const [offset, setOffset] = useState(1);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [nextButton, setNextButton] = useState(false)
+  const [nextButton, setNextButton] = useState(true)
   function addOffset() {
     setOffset(offset + 1);
   }
   function restOffset() {
     setOffset(offset - 1);
   }
-
+  
   useEffect(() => {
     let temp = [];
+    let hasNext = false
     dataTotal.forEach((element) => {
       if (element.unidad === `Unidad ${offset}`) {
         temp.push(element);
-      }else if(element.unidad=== `Unidad ${offset+1}`){
-        setNextButton(true)
-      }else{
-        setNextButton(false)
+      }
+       if(element.unidad === `Unidad ${offset+1}`){
+        hasNext = true
       }
     });
+    setNextButton(hasNext)
     setData(temp);
     setLoading(false);
   }, [offset]);
@@ -112,13 +113,14 @@ export function Units(props) {
                     </IconContext.Provider>
                   </button>
                 )}
-                {!nextButton ? null : (
+                {nextButton ?  (
                   <button className="buttonUnit" onClick={() => addOffset()}>
                     <IconContext.Provider value={{ className: "svgButton" }}>
                       <FaArrowAltCircleRight />
                     </IconContext.Provider>
                   </button>
-                )}
+                  
+                ): null}
               </div>
             </div>
 
