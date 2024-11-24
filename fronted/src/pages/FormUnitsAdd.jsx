@@ -1,30 +1,27 @@
 import { React } from 'react'
 import FormAdd from '../components/FormAdd'
-import Menu from '../components/Menu'
+import Header from '../components/Header'
 import Footer from '../components/Footer'
 import '../css/FormActivitiesAdd.css'
 import logo from '../assets/logo.png'
 
 
 export default function FormActivitiesAdd() {
-  const btActive = 'activeMenu'
+  const activities = true
+  const color = 'blue'
 
   return (
     <>
-      <div className='directorView'>
-        <div className='logoUnigest'>
-          <img src={logo} alt="" width={"80%"} />
-        </div>
-        <Menu btMateria={btActive} />
-
-        <div className='formGeneral'>
-          <FormAdd
+     <Header active={"Profesor"} color={color} activities={activities} />
+            <section className='tableActivities'>
+              <article className='tableShow'>
+              <FormAdd
             uri="unidades"
             propiedades={["la unidad", "el tema"]}
           />
-        </div>
-      </div>
-      <Footer />
+              </article>
+            </section>
+            <Footer />
     </>
   )
 }

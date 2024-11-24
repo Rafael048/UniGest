@@ -11,7 +11,6 @@
 
 .headTable {
     display: flex;
-    justify-content: space-between;
     flex-direction: row;
     padding: 2vw;
     font-size: 30px;

@@ -14,6 +14,9 @@ export default function FormAsing() {
     const name = Cookies.get('name')
     const id = Cookies.get('id')
     const token = Cookies.get('jwt')
+
+
+
     async function handleSubmit(e) {
         e.preventDefault()
         if (user.rol === "Profesor") {
@@ -156,8 +159,8 @@ export default function FormAsing() {
                                         <p>No hay materias disponibles</p>
                                     </div>
                                     :
-                                    <select name="materia" className='materiaAsing'>
-                                        {
+                                    <select  name="materia" className='materiaAsing'>
+                                            {
                                             subjects.map((subject, index) => (
                                                 <option key={index} value={subject.id}>{subject.nombre}</option>
                                             ))
@@ -173,8 +176,8 @@ export default function FormAsing() {
                                         <p className='notClas'>No hay secciones disponibles</p>
                                     </div>
                                     :
-                                    <select name="seccion" className='sectionAsing'>
-                                        {
+                                    <select  name="seccion" className='sectionAsing'>
+                                            {
                                             sections.map((section, index) => (
                                                 <option key={index} value={section.id}>{section.nombre}</option>
                                             ))
@@ -193,7 +196,7 @@ export default function FormAsing() {
                                     <p className='notClas'>No hay clases disponibles</p>
                                 </div>
                                 :
-                                <select name="materia_seccion" className='sectionAsing' onChange={(e)=>changeUnits(e)}>
+                                <select  name="materia_seccion" className='sectionAsing' onChange={(e)=>changeUnits(e)}>
                                     {
                                         PMS.map((element, index) => (
                                             <option key={index} value={element.id}>{element.Materias_Secciones}</option>
@@ -208,7 +211,7 @@ export default function FormAsing() {
                                     <p className='notClas'>No hay clases disponibles</p>
                                 </div>
                                 :
-                                <select name="unidad" className='sectionAsing'>
+                                <select  name="unidad" className='sectionAsing'>
                                     {
                                         filterUnits.map((element, index) => (
                                             <option key={index} value={element.id}>{element.unidad + " " + element.tematica}</option>

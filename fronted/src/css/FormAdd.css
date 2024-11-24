@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 2vw;
+    gap: 20px;
     background-color: rgb(255, 255, 255);
     width: 100%;
     align-items: center;
@@ -39,7 +39,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 90vh;
 }
 
 .allForm {
@@ -67,7 +66,6 @@
     background-color: white;
     padding: 2vw;
     border-radius: 30px;
-    width: 70%;
     gap: 2vw;
     align-items: center;
     justify-content: center;
@@ -76,8 +74,8 @@
 
 .inputAsig {
     display: flex;
-    width: 50%;
-    justify-content: flex-start;
+    width: 100%;
+    justify-content: center;
     gap: 2vw;
     align-items: center;
 }
@@ -104,13 +102,14 @@
 
 .materiaAsing,
 .sectionAsing {
-    font-size: 30px;
+    font-size: 1.2rem;
     padding: .5vw;
+    width: 30%;
     border-radius: 10px;
 }
 
 .nameAsing {
-    font-size: 30px;
+    font-size: 1.2rem;
 }
 
 .notClas {
@@ -140,7 +139,6 @@
 .formAll {
     width: 80%;
     border-radius: 30px;
-    height: 70vh;
     display: flex;
     justify-content: center;
 }
@@ -169,14 +167,10 @@
     font-weight: bold;
 }
 
-@media screen and (max-width:1440px) {
-    .inputAdd {
-        font-size: 24px;
-    }
-}
+
 
 @media screen and (max-width:1024px) {
-    .inputAdd {
+    .inputAdd, .sectionAsing, .nameAsing {
         font-size: 1.2rem;
     }
 }
@@ -193,7 +187,7 @@
     .activities{
         font-size: 2.2rem;
     }
-    .inputAdd, .submitAdd {
+    .inputAdd,.sectionAsing, .nameAsing, .submitAdd {
         font-size: 1.1rem;
     }
     .logoAdd > h1{
@@ -225,7 +219,7 @@
     .mainDirector{
         width: 80%;
     }
-    .submitAdd,.inputAdd{
+    .submitAdd,.inputAdd, .sectionAsing, .nameAsing{
         font-size: 1rem;
     }
     .formAll{

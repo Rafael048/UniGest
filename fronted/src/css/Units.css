@@ -1,0 +1,93 @@
+.tableUnit{
+    background-color: white;
+    border-collapse: collapse;
+    border-radius: 30px;
+    width: 100%;
+}
+
+.theadUnit > tr >th {
+     padding: 10px;
+}
+
+.titleTeacherUnit{
+    font-size: 30px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+
+}
+.dataPlanith{
+    font-size: 1.4rem;
+}
+.theadUnit{
+    background-color: #E4F1F8;
+
+}
+
+.dataPlani{
+    font-size: 1.4rem;
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+}
+.indicadores{
+    font-size: 1.2rem;
+}
+
+.td-plani{
+    text-align: center;
+    font-size: 1.4rem;
+    padding: 15px;
+}
+.tableViewUnit{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+}
+
+@media screen and (max-width:1024px) {
+    .dataPlani,.td-plani{
+        font-size: 1.2rem;
+    }
+    .indicadores{
+        font-size: 1.1rem;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    .dataPlanith, .indicadores{
+        display: none;
+    }
+    .dataPlani, .td-plani{
+        display: flex;
+        gap: 1vw;
+        text-align: left;
+        padding: 2vw;
+    }
+    .dataPlani::before{
+        content: attr(data-label);
+        width: 50%;
+        color: black;
+    }
+    .one{
+        border-top: 1px solid black;
+    }
+    .td-plani::before{
+        content: attr(data-label);
+        width: 50%;
+        color: black;
+    }
+}
+
+@media screen and (max-width:650px) {
+    .dataPlani,.td-plani{
+        font-size: 1.1rem;
+    }
+}
+
+@media screen and (max-width:425px) {
+    .dataPlani,.td-plani{
+        font-size: .9rem;
+    }
+}

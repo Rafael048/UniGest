@@ -13,7 +13,7 @@ export default function FormActivitiesAdd() {
             <Header active={"Profesor"} color={color} activities={activities} />
             <section className='tableActivities'>
               <article className='tableShow'>
-                <FormAsing></FormAsing>
+                <FormAsing/>
               </article>
             </section>
             <Footer />
