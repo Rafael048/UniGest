@@ -47,7 +47,7 @@
 .bg-event {
     background-color: rgb(255, 255, 255);
     display: flex;
-    width: 25%;
+    width: 40%;
     flex-direction: column;
     padding: 3vh;
     gap: 1vw;
@@ -81,7 +81,7 @@
 }
 
 .titleDescription {
-    font-size: 30px;
+    font-size: 1.7rem;
 }
 
 .buttonCancelDescription {
@@ -255,10 +255,6 @@ input[type="checkbox"] {
 }
 
 @media screen and (max-width:1248px) {
-    .bg-event {
-        width: 35%;
-    }
-
     .containFiltrer {
         width: 50%;
     }
@@ -276,7 +272,9 @@ input[type="checkbox"] {
 }
 
 @media screen and (max-width:1024px) {
-
+    .bg-event{
+        width: 50%;
+    }
     .fc .fc-toolbar-title,
     .buttonFiltrer {
         font-size: 1.5em;
@@ -299,6 +297,9 @@ input[type="checkbox"] {
 
 
 @media screen and (max-width:768px) {
+    .bg-event{
+        width: 60%;
+    }
     .aceptButtonFiltrer{
         font-size: 1.5rem;
     }
@@ -329,7 +330,16 @@ input[type="checkbox"] {
 }
 
 @media screen and (max-width:650px) {
-
+    .bg-event{
+        width: 80%;
+    }
+    
+.titleDescription {
+    font-size: 1.5rem;
+}
+    .buttonClose,.descriptionActivities{
+        font-size: 1.2rem;
+    }
     .containFiltrer {
         width: 80%;
     }
@@ -361,7 +371,9 @@ input[type="checkbox"] {
 }
 
 @media screen and (max-width:375px) {
-
+    .buttonClose,.descriptionActivities{
+        font-size: 1rem;
+    }
     .fc .fc-toolbar-title {
         font-size: .9em;
     }

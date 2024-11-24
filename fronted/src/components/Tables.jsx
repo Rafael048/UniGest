@@ -510,7 +510,7 @@ export default function Tables(props) {
                       className="addButton"
                       whileHover={{ scale: 1.2, backgroundColor: "#008000" }}
                     >
-                      Planificacion unidades
+                      Unidades
                     </motion.button>
                     :
                     null
