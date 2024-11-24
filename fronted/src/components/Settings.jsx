@@ -10,6 +10,7 @@ export default function Settings() {
   const [loading, setLoading] = useState(true)
   const token = Cookies.get('jwt')
   const [warning, setWarning] = useState(null)
+  const [error, setError] = useState(null)
 
   function handleShowWarning() {
     setWarning(true)
@@ -27,6 +28,7 @@ export default function Settings() {
         window.location.replace('/')
       }).catch((err) => {
         console.log(err)
+        setError(err.response.data.message)
       });
   }
   useEffect(() => {
@@ -75,6 +77,7 @@ export default function Settings() {
         <div className='windonws'>
           <div className='textExit'>
             <p>¿Seguro que deseas eliminar?</p>
+
           </div>
           <div className='buttonsExitWindows'>
             <form onSubmit={(e) => deleteElement(e)} className="settingForm">
@@ -85,6 +88,11 @@ export default function Settings() {
                 Cancelar
               </button>
               <button className='buttonsDelete aceptButton' type="submit">Aceptar</button>
+              {error?
+            <p className="error">{error}</p>
+            :
+            null  
+          }
             </form>
           </div>
         </div>

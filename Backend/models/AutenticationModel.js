@@ -222,18 +222,29 @@ Delete(pass,user){
                 if(results.length===0){
                     reject(new Error("No se encontro el usuario"))
                 }else{
-                    let passBD = results[0].password
-                    let comparation = await bcryptjs.compare(pass, passBD)
-                    if(comparation){
-                        let consult = `DELETE FROM users WHERE userName = '${user}'`
-                        connection.query(consult,function(err,result){
-                            if(err){
-                                reject(err)
+                    let consultUserRoot = `SELECT * FROM users WHERE rol = "Director"`
+                    connection.query(consultUserRoot,async function(err, resultsRoot, fields){
+                        if(err){
+                            reject
+                        }else{
+                            if(resultsRoot.length<=1){
+                                reject(new Error("No se puede eliminar el unico director activo"))
                             }else{
-                                resolve(result)
+                                let passBD = results[0].password
+                                let comparation = await bcryptjs.compare(pass, passBD)
+                                if(comparation){
+                                    let consult = `DELETE FROM users WHERE userName = '${user}'`
+                                    connection.query(consult,function(err,result){
+                                        if(err){
+                                            reject(err)
+                                        }else{
+                                            resolve(result)
+                                        }
+                                    })
+                                }
                             }
-                        })
-                    }
+                        }
+                    })  
                 }
             }
         })

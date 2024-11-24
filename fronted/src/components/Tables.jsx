@@ -503,7 +503,7 @@ export default function Tables(props) {
 
                   )
                     : null}
-                  {role === "Profesor" && (props.uri === "apms" && idCookie) ?
+                  {role === "Profesor" && (props.uri === "apms" && idCookie)&&data.length>0 ?
                     <motion.button
                       onClick={() => changeViewUnitsTable()
                       }
