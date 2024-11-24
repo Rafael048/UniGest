@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import '../css/Units.css'
+import { IconContext } from "react-icons/lib";
+import { FaArrowAltCircleRight } from "react-icons/fa";
+import { FaArrowAltCircleLeft } from "react-icons/fa";
+
+
 export function Units(props) {
   const dataTotal = props.Data;
 
@@ -39,51 +44,24 @@ export function Units(props) {
               Planificacion por Semanas
             </motion.button>
           </div>
-          <div>
-            <div style={{ display: "flex", alignItems: "center" }} >
-              {offset <= 1 ? null : (
-                <button onClick={() => restOffset()}>click</button>
-              )}
-              {
-                data.length > 0 ?
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-
+          <div className="tableViewUnit">
+            <div>
+              <div>
+                {
+                  data.length > 0 ?
                     <div>
-                      <p>
-                        {"Semanas " + data[0].semana + " - " + data.toReversed()[0].semana}
-                      </p>
-                    </div>
-                    <div>
-
-                      <p>
+                      <p className="textSemanas">
                         {"Inicio de Semanas " +
                           data[0].date +
                           " - " +
                           data.toReversed()[0].date}
                       </p>
                     </div>
-                    <div>
-                      <p>{data[0].unidad + " " + data[0].tema}</p>
-                    </div>
-                    <div>
-                      {data.map((element, index) => (
-                        <>
-                          <div key={index}>
-                            <p>{element.title}</p>
-                          </div>
-                        </>
-                      ))}
+                    :
+                    <p>No hay datos</p>
+                }
 
-                    </div>
-                  </div>
-                  :
-                  <p>No hay datos</p>
-              }
-              {dataTotal.length-1 <= offset ? null : (
-                <button onClick={() => addOffset()}>click</button>
-              )}
-            </div>
-            <div className="tableViewUnit">
+              </div>
               <table className="tableUnit">
                 <thead className="theadUnit">
                   <tr className="trUnit">
@@ -119,11 +97,24 @@ export function Units(props) {
                       </tr>
                     )
                   })}
-
-
-
                 </tbody>
               </table>
+              <div className="buttonPanel">
+                {offset <= 1 ? null : (
+                  <button className="buttonUnit" onClick={() => restOffset()}>
+                    <IconContext.Provider value={{ className: "svgButton" }}>
+                      <FaArrowAltCircleLeft />
+                    </IconContext.Provider>
+                  </button>
+                )}
+                {dataTotal.length - 1 <= offset ? null : (
+                  <button className="buttonUnit" onClick={() => addOffset()}>
+                    <IconContext.Provider value={{ className: "svgButton" }}>
+                      <FaArrowAltCircleRight />
+                    </IconContext.Provider>
+                  </button>
+                )}
+              </div>
             </div>
 
 

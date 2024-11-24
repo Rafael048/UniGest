@@ -40,9 +40,34 @@
 }
 .tableViewUnit{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     padding: 20px;
     width: 100%;
+}
+.svgButton{
+    width: 50px;
+    height: 50px;
+}
+.buttonPanel{
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+.textSemanas{
+    font-size: 1.5rem;
+}
+
+.buttonUnit{
+    background: none;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}
+
+.buttonUnit:hover{
+    scale: .9;
+    transition: all .2s ease;
 }
 
 @media screen and (max-width:1024px) {
@@ -67,7 +92,7 @@
     }
     .dataPlani::before{
         content: attr(data-label);
-        width: 50%;
+        width: 60%;
         color: black;
     }
     .one{
@@ -84,10 +109,20 @@
     .dataPlani,.td-plani{
         font-size: 1.1rem;
     }
+    .textSemanas{
+        font-size: 1.1rem;
+    }
 }
 
 @media screen and (max-width:425px) {
-    .dataPlani,.td-plani{
+    .dataPlani,.td-plani, .textSemanas{
         font-size: .9rem;
+    }
+    .buttonPanel{
+        padding: 10px;
+    }
+    .svgButton{
+        width: 30px;
+        height: 30px;
     }
 }

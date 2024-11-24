@@ -162,7 +162,7 @@ export default function Menu({ btIni, btMateria, btSeccion, btActividades, btPro
                             </div>
                             <div className='buttons'>
                                 <motion.div whileHover={{ scale: 1.1 }} className='containerLink'>
-                                    <a href="/ajustes" className={`linksMenu ${ajustes}`}>
+                                    <a href="/Eventos" className={`linksMenu ${eventos}`}>
                                         <IconContext.Provider value={{ className: "svgMenu" }}>
                                            <MdEventAvailable/>
                                         </IconContext.Provider>

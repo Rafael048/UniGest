@@ -38,7 +38,7 @@ export default function FormEventsAdd() {
               <div className='logoDirectorSolo'>
                 <img src={logo} alt="" width={"80%"} />
               </div>
-              <Menu btActividades={btActive} />
+              <Menu btEventos={btActive} />
 
               <div className='formGeneral'>
                 <FormAdd
