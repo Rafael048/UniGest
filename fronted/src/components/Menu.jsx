@@ -138,6 +138,18 @@ export default function Menu({ btIni, btMateria, btSeccion, btActividades, btPro
                             </div>
                             <div className='buttons'>
                                 <motion.div whileHover={{ scale: 1.1 }} className='containerLink'>
+                                    <a href="/Eventos" className={`linksMenu ${eventos}`}>
+                                        <IconContext.Provider value={{ className: "svgMenu" }}>
+                                           <MdEventAvailable/>
+                                        </IconContext.Provider>
+                                        <motion.p animate={open ? linkClose : linkOpen} transition={{ duration: .5 }} className={classLinks}>
+                                            Eventos
+                                        </motion.p>
+                                    </a>
+                                </motion.div>
+                            </div>
+                            <div className='buttons'>
+                                <motion.div whileHover={{ scale: 1.1 }} className='containerLink'>
                                     <a href="/AgregarUsuario" className={`linksMenu`}>
                                         <IconContext.Provider value={{ className: "svgMenu" }}>
                                             <AiOutlineUserAdd />
@@ -160,18 +172,7 @@ export default function Menu({ btIni, btMateria, btSeccion, btActividades, btPro
                                     </a>
                                 </motion.div>
                             </div>
-                            <div className='buttons'>
-                                <motion.div whileHover={{ scale: 1.1 }} className='containerLink'>
-                                    <a href="/Eventos" className={`linksMenu ${eventos}`}>
-                                        <IconContext.Provider value={{ className: "svgMenu" }}>
-                                           <MdEventAvailable/>
-                                        </IconContext.Provider>
-                                        <motion.p animate={open ? linkClose : linkOpen} transition={{ duration: .5 }} className={classLinks}>
-                                            Eventos
-                                        </motion.p>
-                                    </a>
-                                </motion.div>
-                            </div>
+                        
                         </div>
                         <div onClick={() => handleShowExit()} className={`logout buttons ${mobile}`}>
                             <motion.div whileHover={{ scale: 1.1 }} className='containerLink'>

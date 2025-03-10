@@ -620,6 +620,9 @@ export default function Tables(props) {
                                           <div>
                                             {subItem}
                                           </div>
+                                          {role === "Director" && props.uri === "profesores"
+                                          ? 
+                                          null :
                                           <div style={{display:"flex", gap:"5px"}}>
                                             <motion.div whileHover={{ scale: 1.5 }}>
                                               <IconContext.Provider value={{ className: "searchsvg Aqui esta el boton" }}>
@@ -632,6 +635,7 @@ export default function Tables(props) {
                                               </IconContext.Provider>
                                             </motion.div>
                                           </div>
+                                          }
                                           {role === "Director" &&
                                             props.uri === "profesores" ? (
                                             <motion.div
