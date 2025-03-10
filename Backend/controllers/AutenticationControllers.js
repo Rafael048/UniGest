@@ -1,4 +1,4 @@
-const AutenticationModels = require("../Models/AutenticationModel")
+const AutenticationModels = require("../models/AutenticationModel")
 class AutenticationControllers{
     Register(userData){
         return new Promise((resolve, reject) => {
